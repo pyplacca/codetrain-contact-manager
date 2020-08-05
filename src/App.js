@@ -4,6 +4,7 @@ import ContentDisplay from './resources/components/content-display.jsx'
 import ContactCard from './resources/components/contact-card.jsx'
 import GroupCard from './resources/components/group-card.jsx'
 import AddButton from './resources/components/add-button.jsx'
+import ContactForm from './resources/components/contact-form.jsx'
 import './App.css';
 
 
@@ -23,6 +24,12 @@ const groups = [
 ]
 
 class App extends React.Component {
+
+	openContactForm () {
+		document.querySelector('.form-modal')
+		.classList
+		.toggle('hidden')
+	}
 	render () {
 		return (
 			<div className="App">
@@ -32,7 +39,7 @@ class App extends React.Component {
 							<h2>Contacts</h2>
 							<p>{contacts.length + ' contacts'}</p>
 						</div>
-						<AddButton clickCallback={null} />
+						<AddButton clickCallback={this.openContactForm} />
 					</div>
 					<ContentDisplay>
 						{
@@ -44,7 +51,9 @@ class App extends React.Component {
 				</ContentCategory>
 
 				<ContentCategory id="groups">
-					<h2>Groups</h2>
+					<div className="head">
+						<h2>Groups</h2>
+					</div>
 					{
 						groups.map(
 							(group, i) => <GroupCard {...group} key={i}/>
@@ -52,6 +61,7 @@ class App extends React.Component {
 					}
 					<AddButton clickCallback={null} />
 				</ContentCategory>
+				<ContactForm />
 			</div>
 		);
 	}
