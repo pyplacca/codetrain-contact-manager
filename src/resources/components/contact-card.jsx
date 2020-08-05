@@ -1,4 +1,5 @@
 import React from 'react'
+// import { unmountComponentAtNode } from 'react-dom'
 import Icons from '../icons.jsx'
 
 
@@ -13,10 +14,10 @@ class ContactCard extends React.Component {
 					<p className="number">{number}</p>
 				</div>
 				<div className="modify">
-					<button>
+					<button onClick={this.editContact}>
 						<Icons.Edit />
 					</button>
-					<button>
+					<button onClick={this.deleteContact}>
 						<Icons.Delete />
 					</button>
 				</div>
