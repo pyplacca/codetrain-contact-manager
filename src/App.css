@@ -1,38 +1,203 @@
+:root {
+	--space: 12px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Base styles */
+
+.App,
+.display,
+.category,
+.card,
+.form-modal form {
+	display: flex;
+}
+
+.category,
+.display,
+.form-modal form {
+	flex-direction: column;
+}
+
+button {
+	--size: 25px;
+	width: var(--size);
+	height: var(--size);
+	padding: 2.5px;
+
+	background-color: transparent;
+	border: none;
+	/*outline: */
+}
+
+button span {
+	pointer-events: none
+}
+
+.icon, .icon svg {
+	width: 100%;
+	height: 100%;
+}
+
+
+/* Actual styles and Overrides */
+
 .App {
-  text-align: center;
+	/*margin: auto;*/
+	padding: 50px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+/* Category */
+
+.category {
+	padding: 30px;
+	border: 1px solid #c4c4c4;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.category .head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.category#contacts {
+	width: 55%;
+	/*max-width: 330px;*/
+	max-width: 450px;
 }
 
-.App-link {
-  color: #61dafb;
+.category#groups {
+	width: 35%;
+	max-width: 350px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* Display */
+
+.display {
+	width: 100%;
 }
+
+
+/* Card */
+
+.card {
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space) 0;
+	border-bottom: 1px solid #ebebeb;
+}
+/*
+.card:not(:last-child) {
+	border-bottom: 1px solid #ebebeb;
+}*/
+
+#contacts .display .card .info {
+	flex-grow: 1;
+}
+
+#groups .display .card {
+
+}
+
+.category .display .card.delete {
+	transform: translateX(-70%);
+	opacity: 0;
+	transition: .5s ease .1s;
+}
+
+/* buttons and button icons */
+
+.category .add {
+	--size: 45px;
+}
+
+.category .display button {
+	margin-left: var(--space);
+}
+
+.category .display .card button {
+	opacity: .7;
+}
+
+.category .card button:hover {
+	opacity: 1
+}
+
+.category#groups .add {
+	margin: auto var(--space) var(--space) auto;
+}
+
+button #delete svg {
+	fill: red;
+}
+
+
+
+/* Form modal */
+
+.form-modal {
+	width: 100%;
+	height: 100vh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	backdrop-filter: blur(2px) grayscale(.5);
+
+	z-index: 5;
+	transition: .3s ease-in-out .1s;
+}
+
+.form-modal.hidden {
+	/*display: none;*/
+	transform: scale(0);
+}
+
+.form-modal .form-main {
+	--size: 25vmax;
+	padding: calc(var(--space) * 2);
+	background-color: #fff;
+	box-shadow: 0 0 4px #c4c4c4;
+	width: var(--size);
+	min-width: 320px;
+}
+
+.form-modal .form-main .title,
+.form-modal .form-main .field {
+	padding: var(--space) 0;
+}
+
+.form-modal .form-main .field .label {
+	padding: calc(var(--space) * .5) 0;
+	text-transform: capitalize;
+}
+
+.form-modal .form-main input {
+	width: 100%;
+	border: none;
+	padding: var(--space) 0;
+}
+
+.form-modal .form-main input:not([type="submit"]) {
+	/*border: none;*/
+	border-bottom: 1px solid #c4c4c4;
+	outline: none;
+}
+
+.form-modal .form-main input[type="submit"] {
+	text-transform: uppercase;
+}
+
