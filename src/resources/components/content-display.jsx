@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class ContentDisplay extends React {
+class ContentDisplay extends React.Component {
 
 	render () {
 		return (

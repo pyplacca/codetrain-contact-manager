@@ -1,28 +1,27 @@
 import React from 'react'
-import Button from 'button.jsx'
+import Icons from '../icons.jsx'
 
 
 class ContactCard extends React.Component {
 
 	render () {
-		const {name, number} = this.props
-		const buttons = [
-			{icon: 'edit', action: null},
-			{icon: 'delete', action: null}
-		]
-		<section className="card contact simple-view">
-			<div>
-				<p className="name">{name}</p>
-				<p className="number">{number}</p>
-			</div>
-			<div className="modify">
-				{
-					buttons.map(({name, action}) =>
-						<Button id={icon} {...icon} clickCallback={action}/>
-					)
-				}
-			</div>
-		</section>
+		const {name, number} = this.props.info
+		return (
+			<section className="card simple-view">
+				<div className="info">
+					<h4 className="name">{name}</h4>
+					<p className="number">{number}</p>
+				</div>
+				<div className="modify">
+					<button>
+						<Icons.Edit />
+					</button>
+					<button>
+						<Icons.Delete />
+					</button>
+				</div>
+			</section>
+		)
 	}
 }
 
