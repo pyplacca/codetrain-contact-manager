@@ -13,6 +13,7 @@ class FormField extends React.Component {
 	}
 }
 
+
 class Form extends React.Component {
 	closeForm ({target}) {
 		if (target.classList.contains('form-modal')) {
@@ -33,10 +34,6 @@ class Form extends React.Component {
 			</div>
 		)
 	}
-}
-
-Form.defaultProps = {
-	submit_name: 'Submit'
 }
 
 const form = { Form, FormField }

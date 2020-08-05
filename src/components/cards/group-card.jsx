@@ -6,7 +6,7 @@ class GroupCard extends React.Component {
 	render () {
 		const {name, count} = this.props
 		return (
-			<section className="card simple-view">
+			<section className="card group simple-view">
 				<p className="name">{name}</p>
 				<p className="number">{count + ' persons'}</p>
 			</section>

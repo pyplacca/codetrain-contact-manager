@@ -1,5 +1,5 @@
 import React from 'react'
-import Icons from '../icons.jsx'
+import Icons from './icons.jsx'
 
 
 class AddButton extends React.Component {
