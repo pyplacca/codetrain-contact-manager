@@ -1,33 +1,34 @@
 import React from 'react'
-import Form from './form.jsx'
+import form from './form.jsx'
 
 
 class GroupForm extends React.Component {
 	render () {
 		const {contact_list} = this.props
 		return (
-			<Form
+			<form.Form
 				title="New Group"
-				submit_name="Create Group"
 				id="group-form"
 			>
-				<section className="field">
-					<h4 className="label">Group Name</h4>
+				<form.FormField label="Group Name">
 					<input type="text" placeholder="Enter group name"/>
-				</section>
+				</form.FormField>
 
-				<section className="field">
-					<h4 className="label">Select Contacts</h4>
-				</section>
+				<form.FormField className="field" label="Select Contacts" />
+				<div className="checklist">
 					{
 						contact_list.map((contact, i) =>
-							<section key={i} className="field">
+							<form.FormField key={i}>
 								<input type="checkbox"/>
 								{contact.name}
-							</section>
+							</form.FormField>
 						)
 					}
-			</Form>
+				</div>
+				<form.FormField>
+					<input type="submit" value="Create Group"/>
+				</form.FormField>
+			</form.Form>
 		)
 	}
 }
