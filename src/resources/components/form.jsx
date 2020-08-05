@@ -1,6 +1,18 @@
 import React from 'react'
 
 
+class FormField extends React.Component {
+	render() {
+		const {label, children} = this.props
+		return (
+			<section className="field">
+				{label ? <label>{label}</label> : null}
+				{children}
+			</section>
+		)
+	}
+}
+
 class Form extends React.Component {
 	closeForm ({target}) {
 		if (target.classList.contains('form-modal')) {
@@ -9,14 +21,13 @@ class Form extends React.Component {
 	}
 
 	render () {
-		const {submit_name, title,  children, id} = this.props
+		const {title, children, id} = this.props
 		return (
 			<div className="form-modal hidden" onClick={this.closeForm} id={id}>
 				<div className="form-main">
-					<h2 className="title">{title}</h2>
+					{title ? <h2 className="title">{title}</h2> : null}
 					<form onSubmit={null}>
 						{children}
-						<input type="submit" value={submit_name}/>
 					</form>
 				</div>
 			</div>
@@ -28,5 +39,6 @@ Form.defaultProps = {
 	submit_name: 'Submit'
 }
 
+const form = { Form, FormField }
 
-export default Form
+export default form
