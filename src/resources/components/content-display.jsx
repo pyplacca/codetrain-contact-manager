@@ -4,7 +4,11 @@ import React from 'react'
 class ContentDisplay extends React {
 
 	render () {
-		null
+		return (
+			<div className="display">
+				{this.props.children}
+			</div>
+		)
 	}
 }
 
