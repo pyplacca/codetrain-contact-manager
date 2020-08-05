@@ -7,13 +7,14 @@ class Form extends React.Component {
 			target.classList.toggle('hidden')
 		}
 	}
+
 	render () {
-		const {submitCallback, submit_name, title,  children} = this.props
+		const {submit_name, title,  children, id} = this.props
 		return (
-			<div className="form-modal hidden" onClick={this.closeForm}>
+			<div className="form-modal hidden" onClick={this.closeForm} id={id}>
 				<div className="form-main">
 					<h2 className="title">{title}</h2>
-					<form onSubmit={submitCallback}>
+					<form onSubmit={null}>
 						{children}
 						<input type="submit" value={submit_name}/>
 					</form>
@@ -24,7 +25,6 @@ class Form extends React.Component {
 }
 
 Form.defaultProps = {
-	submitCallback: () => {},
 	submit_name: 'Submit'
 }
 
