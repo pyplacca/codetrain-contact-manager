@@ -5,6 +5,7 @@ import ContactCard from './resources/components/contact-card.jsx'
 import GroupCard from './resources/components/group-card.jsx'
 import AddButton from './resources/components/add-button.jsx'
 import ContactForm from './resources/components/contact-form.jsx'
+import GroupForm from './resources/components/group-form.jsx'
 import './App.css';
 
 
@@ -26,10 +27,17 @@ const groups = [
 class App extends React.Component {
 
 	openContactForm () {
-		document.querySelector('.form-modal')
+		document.querySelector('.form-modal#contact-form')
 		.classList
 		.toggle('hidden')
 	}
+
+	openGroupForm () {
+		document.querySelector('.form-modal#group-form')
+		.classList
+		.toggle('hidden')
+	}
+
 	render () {
 		return (
 			<div className="App">
@@ -59,9 +67,10 @@ class App extends React.Component {
 							(group, i) => <GroupCard {...group} key={i}/>
 						)
 					}
-					<AddButton clickCallback={null} />
+					<AddButton clickCallback={this.openGroupForm} />
 				</ContentCategory>
 				<ContactForm />
+				<GroupForm contact_list={contacts}/>
 			</div>
 		);
 	}
