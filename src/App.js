@@ -1,11 +1,11 @@
 import React from 'react';
-import ContentCategory from './resources/components/content-category.jsx'
-import ContentDisplay from './resources/components/content-display.jsx'
-import ContactCard from './resources/components/contact-card.jsx'
-import GroupCard from './resources/components/group-card.jsx'
-import AddButton from './resources/components/add-button.jsx'
-import ContactForm from './resources/components/contact-form.jsx'
-import GroupForm from './resources/components/group-form.jsx'
+import ContentCategory from './components/content-category.jsx'
+import ContentDisplay from './components/content-display.jsx'
+import ContactCard from './components/cards/contact-card.jsx'
+import GroupCard from './components/cards/group-card.jsx'
+import AddButton from './components/add-button.jsx'
+import ContactForm from './components/forms/contact-form.jsx'
+import GroupForm from './components/forms/group-form.jsx'
 import './App.css';
 
 
