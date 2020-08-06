@@ -1,28 +1,24 @@
 import React from 'react';
+import AddButton from './components/add-button.jsx'
 import ContentCategory from './components/content-category.jsx'
 import ContentDisplay from './components/content-display.jsx'
 import ContactCard from './components/cards/contact-card.jsx'
-import GroupCard from './components/cards/group-card.jsx'
-import AddButton from './components/add-button.jsx'
 import ContactForm from './components/forms/contact-form.jsx'
+import GroupCard from './components/cards/group-card.jsx'
 import GroupForm from './components/forms/group-form.jsx'
 import './App.css';
 
 
 const contacts = [
-	{name: 'Contact 1', number: 1234567890},
-	{name: 'Contact 2', number: 1234567891},
-	{name: 'Contact 3', number: 1234567892},
-	{name: 'Contact 4', number: 1234567893},
-	{name: 'Contact 5', number: 1234567894},
-	{name: 'Contact 6', number: 1234567895},
-	{name: 'Contact 7', number: 1234567896},
+	{name: 'Contact 1', number: 1234567890, group: 'family'},
+	{name: 'Contact 2', number: 1234567891, group: 'friends'},
+	{name: 'Contact 3', number: 1234567892, group: 'family'},
+	{name: 'Contact 4', number: 1234567893, group: 'family'},
+	{name: 'Contact 5', number: 1234567894, group: 'friends'},
+	{name: 'Contact 6', number: 1234567895, group: 'family'},
+	{name: 'Contact 7', number: 1234567896, group: 'friends'},
 ]
 
-const groups = [
-	{name: 'Family', count: 4},
-	{name: 'Friends', count: 3},
-]
 
 class App extends React.Component {
 
@@ -39,8 +35,17 @@ class App extends React.Component {
 	}
 
 	render () {
+		const groups = contacts.reduce((output, obj, i) => {
+			const {group} = obj
+			if (group) {
+				output[group] = [...(output[group] || []), obj]
+			}
+			return output
+		}, {})
+
 		return (
 			<div className="App">
+				{/* Contacts Category */}
 				<ContentCategory id="contacts">
 					<div className="head">
 						<div>
@@ -58,17 +63,22 @@ class App extends React.Component {
 					</ContentDisplay>
 				</ContentCategory>
 
+				{/* Groups Category */}
 				<ContentCategory id="groups">
 					<div className="head">
 						<h2>Groups</h2>
 					</div>
-					{
-						groups.map(
-							(group, i) => <GroupCard {...group} key={i}/>
-						)
-					}
+					<ContentDisplay>
+						{
+							Object.keys(groups).sort().map((name, i) =>
+								<GroupCard name={name} list={groups[name]} key={i}/>
+							)
+						}
+					</ContentDisplay>
 					<AddButton clickCallback={this.openGroupForm} />
 				</ContentCategory>
+
+				{/* Forms */}
 				<ContactForm />
 				<GroupForm contact_list={contacts}/>
 			</div>
