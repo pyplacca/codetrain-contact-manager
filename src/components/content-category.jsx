@@ -6,7 +6,7 @@ class ContentCategory extends React.Component {
 	render () {
 		const {id, children} = this.props
 		return (
-			<div className="category" id={id}>
+			<div className="content-category" id={id}>
 				{children}
 			</div>
 		)

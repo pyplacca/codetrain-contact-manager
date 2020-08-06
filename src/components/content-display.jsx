@@ -5,7 +5,7 @@ class ContentDisplay extends React.Component {
 
 	render () {
 		return (
-			<div className="display">
+			<div className="content-display">
 				{this.props.children}
 			</div>
 		)
