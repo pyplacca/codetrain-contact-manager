@@ -6,12 +6,16 @@ import Icons from '../icons.jsx'
 class ContactCard extends React.Component {
 
 	render () {
-		const {name, number} = this.props.info
+		const {info, clickCallback} = this.props
 		return (
-			<section className="card contact simple-view">
+			<section
+				id={info.id}
+				className="card contact"
+				onClick={clickCallback}
+			>
 				<div className="info">
-					<h4 className="name">{name}</h4>
-					<p className="number">{number}</p>
+					<h4 className="name">{info.name || info.number}</h4>
+					<p className="number">{info.number}</p>
 				</div>
 				<div className="modify">
 					<button onClick={this.editContact} title="Edit">
@@ -24,10 +28,6 @@ class ContactCard extends React.Component {
 			</section>
 		)
 	}
-}
-
-ContactCard.defaultProps = {
-	name: 'Unknown'
 }
 
 
