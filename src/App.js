@@ -1,48 +1,75 @@
-import React from 'react';
-import AddButton from './components/add-button.jsx'
-import ContentCategory from './components/content-category.jsx'
-import ContentDisplay from './components/content-display.jsx'
-import ContactCard from './components/cards/contact-card.jsx'
-import ContactForm from './components/forms/contact-form.jsx'
-import GroupCard from './components/cards/group-card.jsx'
-import GroupForm from './components/forms/group-form.jsx'
-import './App.css';
+import React from "react";
+import AddButton from "./components/add-button.jsx"
+import ContentCategory from "./components/content-category.jsx"
+import ContentDisplay from "./components/content-display.jsx"
+import ContactCard from "./components/cards/contact-card.jsx"
+import ContactForm from "./components/forms/contact-form.jsx"
+import GroupCard from "./components/cards/group-card.jsx"
+import GroupForm from "./components/forms/group-form.jsx"
+import "./App.css";
 
 
-const contacts = [
-	{name: 'Contact 1', number: 1234567890, group: 'family'},
-	{name: 'Contact 2', number: 1234567891, group: 'friends'},
-	{name: 'Contact 3', number: 1234567892, group: 'family'},
-	{name: 'Contact 4', number: 1234567893, group: 'family'},
-	{name: 'Contact 5', number: 1234567894, group: 'friends'},
-	{name: 'Contact 6', number: 1234567895, group: 'family'},
-	{name: 'Contact 7', number: 1234567896, group: 'friends'},
-]
+// contact and group names are case-sensitive
+const contacts = {
+	0: {name: "", number: 1234567890, group: ["Family"], id: 0},
+	1: {name: "Contact 2", number: 1234567891, group: ["Friends"], id: 1},
+	2: {name: "Contact 3", number: 1234567892, group: ["Family"], id: 2},
+	3: {name: "Contact 4", number: 1234567893, group: ["Family"], id: 3},
+	4: {name: "Contact 5", number: 1234567894, group: ["Friends"], id: 4},
+	5: {name: "Contact 6", number: 1234567895, group: ["Family"], id: 5},
+	6: {name: "Contact 7", number: 1234567896, group: ["Friends"], id: 6},
+}
 
+const preview = { contact: contacts[1], group: "colleagues" }
+
+const contacts_array = Object.values(contacts)
+const groups = contacts_array.reduce((output, obj, i) => {
+	const {group} = obj
+	if (group) {
+		group.forEach(name =>
+			output[name] = [...(output[name] || []), obj]
+		)
+	}
+	return output
+}, {})
+
+console.log(groups)
 
 class App extends React.Component {
 
 	openContactForm () {
-		document.querySelector('.form-modal#contact-form')
+		document.querySelector(".form-modal#contact-form")
 		.classList
-		.toggle('hidden')
+		.toggle("hidden")
 	}
 
 	openGroupForm () {
-		document.querySelector('.form-modal#group-form')
+		document.querySelector(".form-modal#group-form")
 		.classList
-		.toggle('hidden')
+		.toggle("hidden")
+	}
+
+	createContact (contact) {}
+
+	createGroup (group) {}
+
+	editContact (id) {}
+
+	previewGroup ({target}) {
+		const group_name = target.getAttribute("id")
+		if (target.classList.contains("card")) {
+			console.log(group_name, groups[group_name])
+		}
+	}
+
+	previewContact ({target}) {
+		const contact_id = target.getAttribute("id")
+		if (target.classList.contains("card")) {
+			console.log(contacts[contact_id])
+		}
 	}
 
 	render () {
-		const groups = contacts.reduce((output, obj, i) => {
-			const {group} = obj
-			if (group) {
-				output[group] = [...(output[group] || []), obj]
-			}
-			return output
-		}, {})
-
 		return (
 			<div className="App">
 				{/* Contacts Category */}
@@ -50,14 +77,18 @@ class App extends React.Component {
 					<div className="head">
 						<div>
 							<h2>Contacts</h2>
-							<p>{contacts.length + ' contacts'}</p>
+							<p>{contacts_array.length + " contacts"}</p>
 						</div>
 						<AddButton clickCallback={this.openContactForm} />
 					</div>
 					<ContentDisplay>
 						{
-							contacts.map(
-								(person, i) => <ContactCard info={person} key={i}/>
+							contacts_array.map((person, i) =>
+								<ContactCard
+									info={person}
+									clickCallback={this.previewContact}
+									key={i}
+								/>
 							)
 						}
 					</ContentDisplay>
@@ -71,7 +102,12 @@ class App extends React.Component {
 					<ContentDisplay>
 						{
 							Object.keys(groups).sort().map((name, i) =>
-								<GroupCard name={name} list={groups[name]} key={i}/>
+								<GroupCard
+									name={name}
+									list={groups[name]}
+									key={i}
+									clickCallback={this.previewGroup}
+								/>
 							)
 						}
 					</ContentDisplay>
@@ -80,7 +116,7 @@ class App extends React.Component {
 
 				{/* Forms */}
 				<ContactForm />
-				<GroupForm contact_list={contacts}/>
+				<GroupForm contacts={contacts} />
 			</div>
 		);
 	}
