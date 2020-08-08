@@ -22,10 +22,14 @@ class Form extends React.Component {
 	}
 
 	render () {
-		const {title, children, id} = this.props
+		const {title, children, id, className} = this.props
 		return (
-			<div className="form-modal hidden" onClick={this.closeForm} id={id}>
-				<div className="form-main">
+			<div
+				className="form-modal hidden"
+				onClick={this.closeForm}
+				id={id}
+			>
+				<div className={"form-main" + (className || '')}>
 					{title ? <h2 className="title">{title}</h2> : null}
 					<form onSubmit={null}>
 						{children}
