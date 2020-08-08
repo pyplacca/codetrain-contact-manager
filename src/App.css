@@ -35,10 +35,23 @@
 
 .content-category,
 .content-display,
-.form-modal form {
+.form-modal .form-main form {
 	flex-direction: column;
 }
 
+.card {
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--spacing) 0;
+	border-bottom: 1px solid var(--grey-light);
+	cursor: pointer;
+	/*transition: transform .1s ease-in-out;*/
+}
+
+/*.card:hover {
+	transform: translateX(-5px);
+}
+*/
 button {
 	--size: 25px;
 	width: var(--size);
@@ -48,6 +61,12 @@ button {
 	background-color: transparent;
 	border: none;
 	outline: none;
+	transition: transform .3s ease-in-out;
+}
+
+button:active,
+input[type="submit"]:active {
+	transform: scale(.9);
 }
 
 button span {
@@ -92,7 +111,6 @@ button span {
 	justify-content: center;
 }
 
-
 /* Content Category */
 
 .content-category {
@@ -120,25 +138,17 @@ button span {
 	max-width: 350px;
 }
 
-
 /* Content Display */
 
 .content-display {
 	width: 100%;
 	padding: 0 var(--spacing);
 	max-height: 500px;
-	overflow-y: auto
+	margin-bottom: var(--spacing);
+	overflow: hidden auto;
 }
-
 
 /* Card */
-
-.content-display .card {
-	align-items: center;
-	justify-content: space-between;
-	padding: var(--spacing) 0;
-	border-bottom: 1px solid var(--grey-light);
-}
 
 .content-category .content-display .card.delete {
 	transform: translateX(-70%);
@@ -146,33 +156,34 @@ button span {
 	transition: .5s ease .1s;
 }
 
-#contacts .content-display .card .info {
+.content-display .card.contact .info,
+.content-display .card.group > * {
+	pointer-events: none;
+}
+
+.content-display .card.contact .info {
 	flex-grow: 1;
 }
 
-#contacts .content-display .card .info .name {
+.content-display .card.contact .info .name {
 	font-weight: 600;
 }
 
-#contacts .content-display .card .info .number {
+.content-display .card.contact .info .number {
 	font-size: .9em;
 	color: var(--grey-mid);
 }
 
-#groups .content-display .card .name {
-	text-transform: capitalize;
+.content-display .card.group .count {
+	color: var(--grey-mid);
+	font-size: .9em;
+	font-style: italic;
 }
-
 
 /* Buttons and Button icons */
 
 .content-category button.add {
 	--size: 45px;
-	transition: all ease .3s;
-}
-
-.content-category button.add:active {
-	transform: scale(.9);
 }
 
 .content-category button.add svg path:first-child {
@@ -180,11 +191,16 @@ button span {
 }
 
 .content-category#groups .add {
-	margin: auto var(--spacing) var(--spacing) auto;
+	align-self: flex-end;
+	margin: auto 0 0 auto;
 }
 
 .content-category .content-display button {
 	margin-left: calc(var(--spacing) * 2);
+}
+
+.content-category .content-display button:active {
+	transform: none;
 }
 
 .content-category .card button #edit svg {
@@ -202,7 +218,6 @@ button span {
 .content-category .card button:hover #delete svg {
 	fill: var(--red);
 }
-
 
 /* Form modal */
 
@@ -245,8 +260,8 @@ button span {
 }
 
 .form-modal.hidden .form-main {
-	transform-origin: top;
-	transform: translateY(-110%) scale(0);
+	/*transform-origin: top;*/
+	transform: translate(0%, -110%) scale(0);
 }
 
 .form-modal .form-main .title {
@@ -266,15 +281,23 @@ button span {
 
 .form-modal .form-main input {
 	width: 100%;
-	border: none;
 	padding: var(--spacing) 0;
+	border: none;
+	outline: none;
+}
+
+.form-modal .form-main input[disabled] {
+	background-color: transparent;
 }
 
 .form-modal .form-main input:not([type="submit"]) {
 	/*border: none;*/
-	outline: none;
-	border-bottom: 1px solid var(--grey-light);
 	transition: border ease-in-out .3s;
+}
+
+/* hide input borders when in preview mode */
+.form-modal .form-main:not(.preview-mode) input:not([type="submit"]) {
+	border-bottom: 1px solid var(--grey-light);
 }
 
 .form-modal .form-main input:not([type="submit"])::placeholder {
