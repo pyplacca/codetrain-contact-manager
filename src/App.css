@@ -73,6 +73,10 @@ button span {
 	pointer-events: none
 }
 
+.icon svg {
+	pointer-events: none
+}
+
 .icon,
 .icon svg {
 	width: 100%;
@@ -239,7 +243,7 @@ button span {
 	z-index: 5;
 }
 
-.form-modal.hidden {
+.form-modal.closed {
 	pointer-events: none;
 	overflow-y: hidden;
 	backdrop-filter: none;
@@ -259,7 +263,7 @@ button span {
 	transition: all .5s ease-in-out;
 }
 
-.form-modal.hidden .form-main {
+.form-modal.closed .form-main {
 	/*transform-origin: top;*/
 	transform: translate(0%, -110%) scale(0);
 }
