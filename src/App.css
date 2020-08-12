@@ -118,6 +118,7 @@ button span {
 /* Content Category */
 
 .content-category {
+	align-self: flex-start;
 	padding: calc(var(--spacing) * 2);
 	margin: var(--spacing);
 	border: 1px solid var(--color-primary);
