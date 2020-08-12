@@ -15,18 +15,24 @@ class FormField extends React.Component {
 
 
 class Form extends React.Component {
-	closeForm ({target}) {
-		if (target.classList.contains('form-modal')) {
-			target.classList.toggle('hidden')
-		}
-	}
-
 	render () {
-		const {title, children, id, className, submitCallback} = this.props
+		const {
+			title,
+			children,
+			id,
+			className,
+			submitCallback,
+			form_view,
+			toggleForm,
+		} = this.props
 		return (
 			<div
-				className="form-modal hidden"
-				onClick={this.closeForm}
+				className={`form-modal ${className} ${form_view}`}
+				onClick={({target}) => {
+					if (target.classList.contains('form-modal')) {
+						toggleForm('closed')
+					}
+				}}
 				id={id}
 			>
 				<div className={"form-main" + (className || '')}>
