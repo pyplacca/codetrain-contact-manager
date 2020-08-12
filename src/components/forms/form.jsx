@@ -22,7 +22,7 @@ class Form extends React.Component {
 	}
 
 	render () {
-		const {title, children, id, className} = this.props
+		const {title, children, id, className, submitCallback} = this.props
 		return (
 			<div
 				className="form-modal hidden"
@@ -31,7 +31,7 @@ class Form extends React.Component {
 			>
 				<div className={"form-main" + (className || '')}>
 					{title ? <h2 className="title">{title}</h2> : null}
-					<form onSubmit={null}>
+					<form onSubmit={submitCallback}>
 						{children}
 					</form>
 				</div>

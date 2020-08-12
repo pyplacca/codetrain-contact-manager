@@ -50,9 +50,24 @@ class App extends React.Component {
 		.toggle("hidden")
 	}
 
-	createContact (contact) {}
+	createContact (contact) {
+		const {id} = this.state
+		// update contact with new id and empty group
+		contact.id = id
+		this.setState({
+			id: id + 1,
+			contacts: Object.assign(
+				this.state.contacts,
+				Object.fromEntries([[id, contact]])
+			)
+		})
+	}
 
-	createGroup (group) {}
+	createGroup ({name, contact_ids}) {
+		const {contacts} = this.state
+		contact_ids.forEach(id => contacts[id].group.add(name))
+		this.setState({contacts})
+	}
 
 	editContact (id) {}
 
@@ -71,7 +86,6 @@ class App extends React.Component {
 			}
 			return output
 		}, {})
-
 		return (
 			<div className="App">
 				{/* Contacts Category */}
@@ -117,8 +131,11 @@ class App extends React.Component {
 				</ContentCategory>
 
 				{/* Forms */}
-				<ContactForm />
-				<GroupForm contacts={this.state.contacts} />
+				<ContactForm submitCallback={this.createContact}/>
+				<GroupForm
+					contacts={this.state.contacts}
+					submitCallback={this.createGroup}
+				/>
 			</div>
 		);
 	}

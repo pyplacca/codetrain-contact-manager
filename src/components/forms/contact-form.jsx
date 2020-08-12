@@ -12,6 +12,11 @@ class ContactForm extends React.Component {
 		this.handleInputChange = this.handleInputChange.bind(this)
 	}
 
+	handleInputChange ({target}) {
+		this.setState(Object.fromEntries([[
+			target.name, target.value
+		]]))
+	}
 
 	modes = {
 		preview: "",
@@ -33,6 +38,10 @@ class ContactForm extends React.Component {
 				title={this.modes[mode]}
 				id="contact-form"
 				className={` ${mode}-mode`}
+				submitCallback={event => {
+					event.preventDefault()
+					submitCallback(this.state)
+				}}
 			>
 				<form.FormField label="Name">
 					<input
@@ -41,6 +50,7 @@ class ContactForm extends React.Component {
 						disabled={disabled}
 						name="name"
 						value={contact.name}
+						onChange={this.handleInputChange}
 
 					/>
 				</form.FormField>
@@ -51,6 +61,7 @@ class ContactForm extends React.Component {
 						disabled={disabled}
 						name="number"
 						value={contact.number}
+						onChange={this.handleInputChange}
 					/>
 				</form.FormField>
 				<form.FormField label="Email Address">
@@ -60,6 +71,7 @@ class ContactForm extends React.Component {
 						disabled={disabled}
 						name="email"
 						value={contact.email}
+						onChange={this.handleInputChange}
 					/>
 				</form.FormField>
 				{

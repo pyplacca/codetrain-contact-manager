@@ -11,8 +11,17 @@ class GroupForm extends React.Component {
 			contact_ids: new Set(),
 		}
 
+		this.handleSelection = this.handleSelection.bind(this)
 	}
 
+	handleSelection ({target}) {
+		const [{contact_ids}, id] = [this.state, target.value]
+		if (target.checked) {
+			contact_ids.add(id)
+		} else {
+			contact_ids.delete(id)
+		}
+	}
 
 	render () {
 		const {contacts, preview, submitCallback} = this.props
@@ -20,12 +29,17 @@ class GroupForm extends React.Component {
 			<form.Form
 				title={!preview ? "New Group" : "Update Group"}
 				id="group-form"
+				submitCallback={event => {
+					event.preventDefault()
+					submitCallback(this.state)
+				}}
 			>
 				<form.FormField label="Group Name">
 					<input
 						type="text"
 						placeholder="Enter group name"
 						value={preview}
+						onChange={({target}) => this.setState({name: target.value})}
 					/>
 				</form.FormField>
 
@@ -37,6 +51,7 @@ class GroupForm extends React.Component {
 								<input
 									type="checkbox"
 									checked={preview && contact.group.includes(preview)}
+									onChange={this.handleSelection}
 									value={contact.id}
 								/>
 								{contact.name || contact.number}
