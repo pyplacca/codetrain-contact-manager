@@ -6,22 +6,42 @@ import Icons from '../icons.jsx'
 class ContactCard extends React.Component {
 
 	render () {
-		const {info, clickCallback} = this.props
+		const {
+			info,
+			previewCallback,
+			editCallback,
+			deleteCallback
+		} = this.props
+
 		return (
 			<section
 				id={info.id}
 				className="card contact"
-				onClick={clickCallback}
+				onClick={(event) => {
+					event.stopPropagation()
+					previewCallback(event.target.id)
+				}}
 			>
 				<div className="info">
 					<h4 className="name">{info.name || info.number}</h4>
 					<p className="number">{info.number}</p>
 				</div>
 				<div className="modify">
-					<button onClick={this.editContact} title="Edit">
+					<button
+						onClick={event => {
+							event.stopPropagation()
+							editCallback(event.target.parentNode.parentNode.id)
+						}}
+						title="Edit"
+					>
 						<Icons.Edit />
 					</button>
-					<button onClick={this.deleteContact} title="Delete">
+					<button
+						onClick={event => {
+							event.stopPropagation()
+							deleteCallback(event.target.parentNode.parentNode.id)
+						}}
+						title="Delete">
 						<Icons.Delete />
 					</button>
 				</div>
