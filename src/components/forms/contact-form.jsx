@@ -5,20 +5,32 @@ import form from "./form.jsx"
 class ContactForm extends React.Component {
 	constructor (props) {
 		super(props)
+
 		this.state = {
+			name: '',
+			number: '',
+			email: '',
+			id: '',
 			group: new Set(),
 		}
 
 		this.handleInputChange = this.handleInputChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleInputChange ({target}) {
-		this.setState(Object.fromEntries([[
+		const update = Object.fromEntries([[
 			target.name, target.value
-		]]))
+		]])
+		this.setState({...update})
 	}
 
-	modes = {
+	handleSubmit (event) {
+		event.preventDefault()
+		this.props.submitCallback(this.state)
+	}
+
+	modeTitles = {
 		preview: "",
 		edit: "Edit Contact",
 		add: "New Contact"
@@ -26,22 +38,17 @@ class ContactForm extends React.Component {
 
 	render () {
 		// props: mode [preview, edit], contact (contact to be previewed or edited)
-		let {mode, contact, submitCallback} = this.props
-		const {name, number, email} = this.state
-		if (contact.name && mode !== "edit") {
-			mode = "preview"
-		}
+		let {mode, view, toggleForm} = this.props
 		const disabled = mode === "preview"
 
 		return (
 			<form.Form
-				title={this.modes[mode]}
+				title={this.modeTitles[mode]}
 				id="contact-form"
+				form_view={view}
 				className={` ${mode}-mode`}
-				submitCallback={event => {
-					event.preventDefault()
-					submitCallback(this.state)
-				}}
+				submitCallback={this.handleSubmit}
+				toggleForm={toggleForm}
 			>
 				<form.FormField label="Name">
 					<input
@@ -49,7 +56,7 @@ class ContactForm extends React.Component {
 						placeholder="Enter contact name"
 						disabled={disabled}
 						name="name"
-						value={contact.name}
+						value={this.state.name}
 						onChange={this.handleInputChange}
 
 					/>
@@ -60,8 +67,9 @@ class ContactForm extends React.Component {
 						placeholder="Enter mobile number"
 						disabled={disabled}
 						name="number"
-						value={contact.number}
+						value={this.state.number}
 						onChange={this.handleInputChange}
+						required
 					/>
 				</form.FormField>
 				<form.FormField label="Email Address">
@@ -70,7 +78,7 @@ class ContactForm extends React.Component {
 						placeholder="Email address"
 						disabled={disabled}
 						name="email"
-						value={contact.email}
+						value={this.state.email}
 						onChange={this.handleInputChange}
 					/>
 				</form.FormField>
