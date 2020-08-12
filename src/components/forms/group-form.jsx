@@ -7,39 +7,52 @@ class GroupForm extends React.Component {
 		super(props)
 
 		this.state = {
-			name: undefined,
-			contact_ids: new Set(),
+			name: '',
+			contactIDs: {}
 		}
 
 		this.handleSelection = this.handleSelection.bind(this)
 	}
 
 	handleSelection ({target}) {
-		const [{contact_ids}, id] = [this.state, target.value]
-		if (target.checked) {
-			contact_ids.add(id)
-		} else {
-			contact_ids.delete(id)
-		}
+		const {contactIDs} = this.state
+		contactIDs[target.id] = target.checked
+		this.setState({contactIDs})
 	}
 
 	render () {
-		const {contacts, preview, submitCallback} = this.props
+		const {
+			contacts,
+			submitCallback,
+			view,
+			mode,
+			group,
+			toggleForm
+		} = this.props
+
 		return (
 			<form.Form
-				title={!preview ? "New Group" : "Update Group"}
+				title={mode !== 'edit' ? "New Group" : "Edit Group"}
 				id="group-form"
+				form_view={view}
+				toggleForm={toggleForm}
+				className={` ${mode}-mode`}
 				submitCallback={event => {
 					event.preventDefault()
-					submitCallback(this.state)
+					submitCallback(group, this.state)
 				}}
 			>
 				<form.FormField label="Group Name">
 					<input
 						type="text"
 						placeholder="Enter group name"
-						value={preview}
-						onChange={({target}) => this.setState({name: target.value})}
+						value={this.state.name}
+						onChange={
+							({target}) => {
+								this.setState({name: target.value})
+							}
+						}
+						required
 					/>
 				</form.FormField>
 
@@ -50,9 +63,10 @@ class GroupForm extends React.Component {
 							<form.FormField key={i}>
 								<input
 									type="checkbox"
-									checked={preview && contact.group.includes(preview)}
+									checked={this.state.contactIDs[contact.id]}
 									onChange={this.handleSelection}
-									value={contact.id}
+									value={this.state.contactIDs[contact.id]}
+									id={contact.id}
 								/>
 								{contact.name || contact.number}
 							</form.FormField>
@@ -62,7 +76,7 @@ class GroupForm extends React.Component {
 				<form.FormField>
 					<input
 						type="submit"
-						value={(preview ? 'Update' : 'Create Group')}
+						value={(mode === 'edit' ? 'Update' : 'Create Group')}
 					/>
 				</form.FormField>
 			</form.Form>
