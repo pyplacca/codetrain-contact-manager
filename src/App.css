@@ -318,11 +318,22 @@ button span {
 	color: var(--grey-light);
 }
 
-.form-modal .form-main input[type="submit"] {
+.form-modal .form-main input[type="submit"],
+.form-modal .form-main input[type="button"] {
 	text-transform: uppercase;
 	background-color: var(--color-primary);
 	color: #fff;
 	border-radius: calc(var(--radius) * .25)
+}
+
+.form-modal .form-main input[type="button"] {
+	background-color: #d2d2d2;
+}
+
+.form-modal .form-main form .form-buttons {
+	display: grid;
+	column-gap: var(--spacing);
+	grid-template-columns: 1fr 1fr;
 }
 
 .form-modal#group-form .form-main input[type="checkbox"] {

@@ -85,12 +85,21 @@ class ContactForm extends React.Component {
 				</form.FormField>
 				{
 					mode === "preview" ? null :
-					<form.FormField>
-						<input
-							type="submit"
-							value={mode === "edit" ? "Update" : "Add Contact"}
-						/>
-					</form.FormField>
+					<div className="form-buttons">
+						<form.FormField>
+							<input
+								type="button"
+								value="Cancel"
+								onClick={() => toggleForm('closed')}
+							/>
+						</form.FormField>
+						<form.FormField>
+							<input
+								type="submit"
+								value={mode === "edit" ? "Update" : "Add Contact"}
+							/>
+						</form.FormField>
+					</div>
 				}
 			</form.Form>
 		)

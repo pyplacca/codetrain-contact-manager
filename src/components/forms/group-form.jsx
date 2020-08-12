@@ -73,12 +73,21 @@ class GroupForm extends React.Component {
 						)
 					}
 				</div>
-				<form.FormField>
-					<input
-						type="submit"
-						value={(mode === 'edit' ? 'Update' : 'Create Group')}
-					/>
-				</form.FormField>
+				<div className="form-buttons">
+					<form.FormField>
+						<input
+							type="button"
+							value="Cancel"
+							onClick={() => toggleForm('closed')}
+						/>
+					</form.FormField>
+					<form.FormField>
+						<input
+							type="submit"
+							value={(mode === 'edit' ? 'Update' : 'Create Group')}
+						/>
+					</form.FormField>
+				</div>
 			</form.Form>
 		)
 	}
