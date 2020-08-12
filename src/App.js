@@ -23,7 +23,7 @@ class App extends React.Component {
 				association of a contact to multiple groups without duplication.
 			*/
 			contacts: {},
-			// for previewing and editing
+			// for previewing and editing purposese
 			modify: {
 				contact: {
 					mode: 'add',
