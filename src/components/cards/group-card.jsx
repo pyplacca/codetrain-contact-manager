@@ -7,7 +7,11 @@ class GroupCard extends React.Component {
 		const {name, list, clickCallback} = this.props
 		const total = list.length
 		return (
-			<section id={name} className="card group" onClick={clickCallback}>
+			<section
+				id={name}
+				className="card group"
+				onClick={({target}) => clickCallback(target.id)}
+			>
 				<p className="name">{name}</p>
 				<p className="count">
 					{`${total} contact${total > 1 ? 's' : ''}`}
