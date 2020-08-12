@@ -3,6 +3,15 @@ import form from "./form.jsx"
 
 
 class ContactForm extends React.Component {
+	constructor (props) {
+		super(props)
+		this.state = {
+			group: new Set(),
+		}
+
+		this.handleInputChange = this.handleInputChange.bind(this)
+	}
+
 
 	modes = {
 		preview: "",
@@ -12,7 +21,8 @@ class ContactForm extends React.Component {
 
 	render () {
 		// props: mode [preview, edit], contact (contact to be previewed or edited)
-		let {mode, contact} = this.props
+		let {mode, contact, submitCallback} = this.props
+		const {name, number, email} = this.state
 		if (contact.name && mode !== "edit") {
 			mode = "preview"
 		}

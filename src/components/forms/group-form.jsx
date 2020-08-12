@@ -7,18 +7,15 @@ class GroupForm extends React.Component {
 		super(props)
 
 		this.state = {
-			name: undefined
+			name: undefined,
+			contact_ids: new Set(),
 		}
 
-		this.handleChange = this.handleChange.bind(this)
 	}
 
-	handleChange ({target}) {
-		console.log(target.value, target.checked)
-	}
 
 	render () {
-		const {contacts, preview} = this.props
+		const {contacts, preview, submitCallback} = this.props
 		return (
 			<form.Form
 				title={!preview ? "New Group" : "Update Group"}
@@ -29,7 +26,6 @@ class GroupForm extends React.Component {
 						type="text"
 						placeholder="Enter group name"
 						value={preview}
-						onChange={this.handleChange}
 					/>
 				</form.FormField>
 
@@ -41,7 +37,6 @@ class GroupForm extends React.Component {
 								<input
 									type="checkbox"
 									checked={preview && contact.group.includes(preview)}
-									onChange={this.handleChange}
 									value={contact.id}
 								/>
 								{contact.name || contact.number}

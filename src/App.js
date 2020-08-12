@@ -9,33 +9,34 @@ import GroupForm from "./components/forms/group-form.jsx"
 import "./App.css";
 
 
-// contact and group names are case-sensitive
-const contacts = {
-	0: {name: "", number: 1234567890, group: ["Family"], id: 0},
-	1: {name: "Contact 2", number: 1234567891, group: ["Friends"], id: 1},
-	2: {name: "Contact 3", number: 1234567892, group: ["Family"], id: 2},
-	3: {name: "Contact 4", number: 1234567893, group: ["Family"], id: 3},
-	4: {name: "Contact 5", number: 1234567894, group: ["Friends"], id: 4},
-	5: {name: "Contact 6", number: 1234567895, group: ["Family"], id: 5},
-	6: {name: "Contact 7", number: 1234567896, group: ["Friends"], id: 6},
-}
-
-const preview = { contact: contacts[1], group: "colleagues" }
-
-const contacts_array = Object.values(contacts)
-const groups = contacts_array.reduce((output, obj, i) => {
-	const {group} = obj
-	if (group) {
-		group.forEach(name =>
-			output[name] = [...(output[name] || []), obj]
-		)
-	}
-	return output
-}, {})
-
-console.log(groups)
-
 class App extends React.Component {
+
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			// id helps keep track of a contact
+			id: 1,
+			// Each contact entry is an object with integer(s), string(s) and/or array(s)
+			// A contact's group entry must be an Set in order to accomodate the
+			// possibility of having a contact appear in more than one group without duplicates.
+			contacts: {},
+			// contact and group names are case-sensitive
+			preview: {
+				contact: {},
+				group: undefined,
+			}
+		}
+
+		this.createContact = this.createContact.bind(this)
+		this.createGroup = this.createGroup.bind(this)
+
+		this.openContactForm = this.openContactForm.bind(this)
+		this.openGroupForm = this.openGroupForm.bind(this)
+
+		this.previewContact = this.previewContact.bind(this)
+		this.previewGroup = this.previewGroup.bind(this)
+	}
 
 	openContactForm () {
 		document.querySelector(".form-modal#contact-form")
@@ -55,21 +56,22 @@ class App extends React.Component {
 
 	editContact (id) {}
 
-	previewGroup ({target}) {
-		const group_name = target.getAttribute("id")
-		if (target.classList.contains("card")) {
-			console.log(group_name, groups[group_name])
-		}
-	}
+	previewGroup ({target}) {}
 
-	previewContact ({target}) {
-		const contact_id = target.getAttribute("id")
-		if (target.classList.contains("card")) {
-			console.log(contacts[contact_id])
-		}
-	}
+	previewContact ({target}) {}
 
 	render () {
+		const contacts_array = Object.values(this.state.contacts)
+		const groups = contacts_array.reduce((output, obj, i) => {
+			const {group} = obj
+			if (group) {
+				group.forEach(name =>
+					output[name] = [...(output[name] || []), obj]
+				)
+			}
+			return output
+		}, {})
+
 		return (
 			<div className="App">
 				{/* Contacts Category */}
@@ -116,7 +118,7 @@ class App extends React.Component {
 
 				{/* Forms */}
 				<ContactForm />
-				<GroupForm contacts={contacts} />
+				<GroupForm contacts={this.state.contacts} />
 			</div>
 		);
 	}
