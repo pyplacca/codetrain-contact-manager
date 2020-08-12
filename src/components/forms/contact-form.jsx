@@ -50,10 +50,11 @@ class ContactForm extends React.Component {
 				submitCallback={this.handleSubmit}
 				toggleForm={toggleForm}
 			>
+				{/* don't show placeholders when in preview mode */}
 				<form.FormField label="Name">
 					<input
 						type="text"
-						placeholder="Enter contact name"
+						placeholder={mode !== 'preview' ? "Enter contact name" : ''}
 						disabled={disabled}
 						name="name"
 						value={this.state.name}
@@ -64,7 +65,7 @@ class ContactForm extends React.Component {
 				<form.FormField label="Mobile Number">
 					<input
 						type="tel"
-						placeholder="Enter mobile number"
+						placeholder={mode !== 'preview' ? "Enter mobile number" : ''}
 						disabled={disabled}
 						name="number"
 						value={this.state.number}
@@ -75,7 +76,7 @@ class ContactForm extends React.Component {
 				<form.FormField label="Email Address">
 					<input
 						type="email"
-						placeholder="Email address"
+						placeholder={mode !== 'preview' ? "Email address" : ''}
 						disabled={disabled}
 						name="email"
 						value={this.state.email}
