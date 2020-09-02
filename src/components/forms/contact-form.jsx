@@ -2,32 +2,91 @@ import React from "react"
 import form from "./form.jsx"
 
 
+const inputs = [
+	{
+		type: 'text',
+		name: 'name',
+		label: 'Name',
+		placeholder: 'Enter contact name'
+	},
+	{
+		type: 'tel',
+		name: 'number',
+		label: 'Mobile',
+		placeholder: 'Enter mobile number'
+	},
+	{
+		type: 'email',
+		name: 'email',
+		label: 'Email Address',
+		placeholder: 'Enter email'
+	},
+	{
+		type: 'text',
+		name: 'occupation',
+		label: 'Occupation',
+		placeholder: 'Enter occupation'
+	},
+	{
+		type: 'text',
+		name: 'organization',
+		label: 'Organization',
+		placeholder: 'Enter company name'
+	},
+	{
+		type: 'text',
+		name: 'department',
+		label: 'Department',
+		placeholder: 'Company department'
+	},
+	{
+		type: 'text',
+		name: 'position',
+		label: 'Position',
+		placeholder: 'Position'
+	},
+	{
+		type: 'url',
+		name: 'website',
+		label: 'Website',
+		placeholder: 'Enter url'
+	},
+	{
+		type: 'date',
+		name: 'anniversary',
+		label: 'Anniversary',
+		placeholder: 'Anniversary / Birthday'
+	},
+]
+
 class ContactForm extends React.Component {
 	constructor (props) {
 		super(props)
 
-		this.state = {
-			name: '',
-			number: '',
-			email: '',
+		this.state = Object.assign({
 			id: '',
 			group: new Set(),
-		}
+		}, Object.fromEntries(inputs.map(input => [input.name, ''])))
 
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleInputChange ({target}) {
-		const update = Object.fromEntries([[
-			target.name, target.value
-		]])
-		this.setState({...update})
+		const {name, value} = target
+		this.setState({ [name] : value })
 	}
 
 	handleSubmit (event) {
 		event.preventDefault()
 		this.props.submitCallback(this.state)
+		// reset form state
+		this.setState({
+			...Object.fromEntries(
+				Object.keys(this.state).map(key => [key, ''])
+			),
+			group: new Set()
+		})
 	}
 
 	modeTitles = {
@@ -37,8 +96,7 @@ class ContactForm extends React.Component {
 	}
 
 	render () {
-		// props: mode [preview, edit], contact (contact to be previewed or edited)
-		let {mode, view, toggleForm} = this.props
+		const {mode, view, toggleFunc} = this.props
 		const disabled = mode === "preview"
 
 		return (
@@ -48,49 +106,35 @@ class ContactForm extends React.Component {
 				form_view={view}
 				className={` ${mode}-mode`}
 				submitCallback={this.handleSubmit}
-				toggleForm={toggleForm}
+				toggleFunc={toggleFunc}
 			>
-				{/* don't show placeholders when in preview mode */}
-				<form.FormField label="Name">
-					<input
-						type="text"
-						placeholder={mode !== 'preview' ? "Enter contact name" : ''}
-						disabled={disabled}
-						name="name"
-						value={this.state.name}
-						onChange={this.handleInputChange}
-
-					/>
-				</form.FormField>
-				<form.FormField label="Mobile Number">
-					<input
-						type="tel"
-						placeholder={mode !== 'preview' ? "Enter mobile number" : ''}
-						disabled={disabled}
-						name="number"
-						value={this.state.number}
-						onChange={this.handleInputChange}
-						required
-					/>
-				</form.FormField>
-				<form.FormField label="Email Address">
-					<input
-						type="email"
-						placeholder={mode !== 'preview' ? "Email address" : ''}
-						disabled={disabled}
-						name="email"
-						value={this.state.email}
-						onChange={this.handleInputChange}
-					/>
-				</form.FormField>
 				{
+					inputs.map((input, i) =>
+						// when in preview mode,
+						// don't display a field that doesn't have a state value
+						mode === 'preview' && !this.state[input.name] ? null :
+						<form.FormField label={input.label} key={i}>
+							<input
+								type={input.type}
+								// don't show placeholders when in preview mode
+								placeholder={mode !== 'preview' ? input.placeholder : ''}
+								disabled={disabled}
+								name={input.name}
+								value={this.state[input.name]}
+								onChange={this.handleInputChange}
+							/>
+						</form.FormField>
+					)
+				}
+				{
+					// don't show these buttons when in preview mode
 					mode === "preview" ? null :
 					<div className="form-buttons">
 						<form.FormField>
 							<input
 								type="button"
 								value="Cancel"
-								onClick={() => toggleForm('closed')}
+								onClick={() => toggleFunc('closed')}
 							/>
 						</form.FormField>
 						<form.FormField>

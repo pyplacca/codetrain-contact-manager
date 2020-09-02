@@ -8,65 +8,58 @@ class GroupForm extends React.Component {
 
 		this.state = {
 			name: '',
-			contactIDs: {}
+			...Object.fromEntries(
+				Object.keys(this.props.contacts)
+				.map(id => [id, false])
+			)
 		}
 
 		this.handleSelection = this.handleSelection.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleSelection ({target}) {
-		const {contactIDs} = this.state
-		contactIDs[target.id] = target.checked
-		this.setState({contactIDs})
+		this.setState({[target.name] : target.checked})
+	}
+
+	handleSubmit (event) {
+		event.preventDefault()
+		this.props.submitCallback(this.props.group, this.state)
 	}
 
 	render () {
-		const {
-			contacts,
-			submitCallback,
-			view,
-			mode,
-			group,
-			toggleForm
-		} = this.props
+		const { contacts, view, mode, toggleFunc } = this.props
 
 		return (
 			<form.Form
 				title={mode !== 'edit' ? "New Group" : "Edit Group"}
 				id="group-form"
 				form_view={view}
-				toggleForm={toggleForm}
+				toggleFunc={toggleFunc}
 				className={` ${mode}-mode`}
-				submitCallback={event => {
-					event.preventDefault()
-					submitCallback(group, this.state)
-				}}
+				submitCallback={this.handleSubmit}
 			>
 				<form.FormField label="Group Name">
 					<input
 						type="text"
 						placeholder="Enter group name"
+						name="name"
 						value={this.state.name}
-						onChange={
-							({target}) => {
-								this.setState({name: target.value})
-							}
-						}
+						onChange={({target}) => this.setState({name: target.value})}
 						required
 					/>
 				</form.FormField>
 
-				<form.FormField className="field" label="Select Contacts" />
+				<form.FormField label="Select Contacts" />
 				<div className="checklist">
 					{
-						Object.values(contacts).map((contact, i) =>
-							<form.FormField key={i}>
+						Object.values(contacts).map(contact =>
+							<form.FormField key={contact.id.toString()}>
 								<input
 									type="checkbox"
-									checked={this.state.contactIDs[contact.id]}
+									checked={this.state[contact.id]}
 									onChange={this.handleSelection}
-									value={this.state.contactIDs[contact.id]}
-									id={contact.id}
+									name={contact.id}
 								/>
 								{contact.name || contact.number}
 							</form.FormField>
@@ -78,7 +71,7 @@ class GroupForm extends React.Component {
 						<input
 							type="button"
 							value="Cancel"
-							onClick={() => toggleForm('closed')}
+							onClick={() => toggleFunc('closed')}
 						/>
 					</form.FormField>
 					<form.FormField>
