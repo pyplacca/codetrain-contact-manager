@@ -41,8 +41,8 @@ class App extends React.Component {
 		}
 
 		// Form refs.
-		this.contactFormRef = React.createRef()
-		this.groupFormRef = React.createRef()
+		this.cform = React.createRef()
+		this.gform = React.createRef()
 
 		// Form toggling methods.
 		this.toggleContactForm = this.toggleContactForm.bind(this)
@@ -86,28 +86,27 @@ class App extends React.Component {
 		})
 	}
 
+	// Creates or updates a contact entry
 	modifyContact (contact) {
-		// Creates a new contact entry or update an old one
-		// if [contact] has an id, then we're updating an old contact entry else,
-		// we're creating a new contact entry
+		// If [contact] has an id, then we'll update the contact's entry else,
+		// we'll create a new contact entry
 		let has_id = false
 		const {id} = this.state
 		contact.id ? has_id = true : contact.id = id
 		this.setState({
 			id: !has_id ? id + 1 : id,
-			contacts: Object.assign(
-				this.state.contacts,
-				Object.fromEntries([[contact.id, contact]])
-			)
+			contacts: {...this.state.contacts, [contact.id]: contact}
 		// close contact form when done
 		}, () => this.toggleContactForm('closed'))
 	}
 
-	modifyGroup (oldgroup, {contactIDs, name}) {
-		// Add or remove contact from a group
-		const {contacts} = this.state
-		for (let id in contactIDs) {
-			if (contactIDs[id]) {
+	// Adds or removes contact(s) from a group
+	modifyGroup (oldgroup, new_data) {
+		const [{contacts}, {name}] = [this.state, new_data]
+		delete new_data['name']
+
+		for (let id in new_data) {
+			if (new_data[id]) {
 				// if there's been a change to the group name,
 				// replace the old name with the new
 				contacts[id].group.delete(oldgroup)
@@ -117,16 +116,11 @@ class App extends React.Component {
 				contacts[id].group.delete(name)
 			}
 		}
-		this.setState(
-			contacts,
-			() => {
-				this.toggleGroupForm('closed')
-			}
-		)
+		this.setState(contacts, () => this.toggleGroupForm('closed'))
 	}
 
 	newContact () {
-		// Create a new contact form by resetting the input values,
+		// Create a new contact form by resetting states,
 		this.setState({
 			modify: {
 				...this.state.modify,
@@ -136,20 +130,22 @@ class App extends React.Component {
 				},
 			},
 		}, () => {
-			this.contactFormRef.current.setState ({
-				name: '',
-				number: '',
-				email: '',
-				id: '',
+			this.cform.current.setState({
+				...Object.keys(this.cform.current.state)
+				.reduce((output, key) => {
+					output[key] = ''
+					return output
+				}, {}),
 				group: new Set(),
+			}, () => {
+				// then open the contact form for the creation of a new contact
+				this.toggleContactForm('open')
 			})
-			// then open the contact form for the creation of a new contact
-			this.toggleContactForm('open')
 		})
 	}
 
 	newGroup () {
-		// Create a new group form by resetting the input values
+		// Create a new group form by resetting states
 		this.setState({
 			modify: {
 				...this.state.modify,
@@ -159,12 +155,17 @@ class App extends React.Component {
 				},
 			},
 		}, () => {
-			this.groupFormRef.current.setState({
+			this.gform.current.setState({
 				name: '',
-				contactIDs: {},
+				...Object.keys(this.state.contacts)
+				.reduce((output, id) => {
+					output[id] = false
+					return output
+				}, {})
+			}, () => {
+				// then open the group form for the creation of a new group
+				this.toggleGroupForm('open')
 			})
-			// then open the group form for the creation of a new group
-			this.toggleGroupForm('open')
 		})
 	}
 
@@ -181,9 +182,10 @@ class App extends React.Component {
 			},
 		}, () => {
 			// pre-fill the contact form with retrieved values,...
-			this.contactFormRef.current.setState({...entry})
-			// then open the contact form for editing
-			this.toggleContactForm('open')
+			this.cform.current.setState({...entry}, () => {
+				// then open the contact form for editing
+				this.toggleContactForm('open')
+			})
 		})
 	}
 
@@ -197,18 +199,17 @@ class App extends React.Component {
 				}
 			}
 		}, () => {
-			// grab ids of all contacts that belong to a particular group,
+			// grab ids of all contacts that belong to the selected group [name],
 			const contactIDs = Object.values(this.state.contacts)
 			.reduce((ids, contact) => {
 				ids[contact.id] = contact.group.has(name)
 				return ids
 			}, {})
-			// then let group form know which group is to be previewed
-			this.groupFormRef.current.setState({
-				name,
-				contactIDs,
-			})
-			this.toggleGroupForm('open')
+			// then preview that group and its selected contacts with the group form.
+			this.gform.current.setState(
+				{ name, ...contactIDs },
+				() => this.toggleGroupForm('open')
+			)
 		})
 	}
 
@@ -225,8 +226,10 @@ class App extends React.Component {
 			},
 		}, () => {
 			// pass the information down to the contact form for previewing
-			this.contactFormRef.current.setState({...entry})
-			this.toggleContactForm('open')
+			this.cform.current.setState({...entry}, () => {
+				// then open the contact form
+				this.toggleContactForm('open')
+			})
 		})
 	}
 
@@ -239,7 +242,7 @@ class App extends React.Component {
 	render () {
 		const {modify, contacts, view} = this.state
 		const contacts_array = Object.values(contacts)
-		const groups = contacts_array.reduce((output, person, i) => {
+		const groups = contacts_array.reduce((output, person) => {
 			const {group} = person
 			if (group) {
 				group.forEach(name =>
@@ -282,6 +285,8 @@ class App extends React.Component {
 					</div>
 					<ContentDisplay>
 						{
+							// a group card is automatically deleted once there are
+							// no contacts present in that group after update.
 							Object.keys(groups).sort().map((name, i) =>
 								<GroupCard
 									name={name}
@@ -297,21 +302,21 @@ class App extends React.Component {
 
 				{/*
 					Both contact and group forms are multipurpose.
-					They can be used to create a new, edit and preview and old contact/group
+					They can be used to create, edit and preview a contact / group
 				*/}
 				<ContactForm
-					ref={this.contactFormRef}
+					ref={this.cform}
 					view={view.contactForm}
-					toggleForm={this.toggleContactForm}
+					toggleFunc={this.toggleContactForm}
 					submitCallback={this.modifyContact}
 					mode={modify.contact.mode}
 					contact={modify.contact.entry}
 				/>
 				<GroupForm
-					ref={this.groupFormRef}
+					ref={this.gform}
 					view={view.groupForm}
 					mode={modify.group.mode}
-					toggleForm={this.toggleGroupForm}
+					toggleFunc={this.toggleGroupForm}
 					contacts={this.state.contacts}
 					submitCallback={this.modifyGroup}
 					group={modify.group.entry}
