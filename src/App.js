@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux'
 import AddButton from "./components/add-button.jsx"
 import ContentCategory from "./components/content-category.jsx"
 import ContentDisplay from "./components/content-display.jsx"
@@ -240,6 +241,7 @@ class App extends React.Component {
 	}
 
 	render () {
+
 		const {modify, contacts, view} = this.state
 		const contacts_array = Object.values(contacts)
 		const groups = contacts_array.reduce((output, person) => {
@@ -326,4 +328,8 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+	contacts: state.contacts
+})
+
+export default connect(mapStateToProps)(App);
