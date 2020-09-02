@@ -281,7 +281,8 @@ button span {
 .form-modal .form-main .field label {
 	padding: var(--spacing) 0;
 	text-transform: capitalize;
-	font-weight: 500;
+	font-weight: bold;
+	font-size: .9rem;
 }
 
 .form-modal .form-main input {
@@ -323,11 +324,17 @@ button span {
 	text-transform: uppercase;
 	background-color: var(--color-primary);
 	color: #fff;
+	overflow: hidden;
 	border-radius: calc(var(--radius) * .25)
 }
 
 .form-modal .form-main input[type="button"] {
 	background-color: #d2d2d2;
+}
+
+.form-modal .form-main input[type="submit"]:focus,
+.form-modal .form-main input[type="button"]:focus {
+	outline: 2px solid #000;
 }
 
 .form-modal .form-main form .form-buttons {
