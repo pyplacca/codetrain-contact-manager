@@ -39,13 +39,24 @@
 	flex-direction: column;
 }
 
+.form-modal .form-main,
+.card {
+	-webkit-animation: dropIn .3s ease-out forwards;
+	-moz-animation: dropIn .3s ease-out forwards;
+	-ms-animation: dropIn .3s ease-out forwards;
+	-o-animation: dropIn .3s ease-out forwards;
+	animation: dropIn .3s ease-out forwards;
+}
+
 .card {
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--spacing) 0;
 	border-bottom: 1px solid var(--grey-light);
 	cursor: pointer;
-	/*transition: transform .1s ease-in-out;*/
+	background-color: inherit;
+	opacity: 0;
+	transform: translateY(-80%);
 }
 
 /*.card:hover {
@@ -83,6 +94,13 @@ button span {
 	height: 100%;
 }
 
+.emphasis {
+	color: var(--color-primary);
+	margin: 0px 5px;
+	font-size: 1.2rem;
+	font-weight: 900;
+}
+
 /* Scrollbars */
 
 .App *::-webkit-scrollbar {
@@ -91,7 +109,7 @@ button span {
 
 .App *::-webkit-scrollbar-track,
 .App *::-webkit-scrollbar-thumb {
-	border-radius: var(--radius);
+	/*border-radius: var(--radius);*/
 }
 
 .App *::-webkit-scrollbar-track {
@@ -111,8 +129,9 @@ button span {
 
 .App {
 	/*margin: auto;*/
-	padding: 50px;
+	padding: 50px 0px;
 	justify-content: center;
+	flex-flow: row wrap;
 }
 
 /* Content Category */
@@ -134,13 +153,11 @@ button span {
 }
 
 .content-category#contacts {
-	width: 55%;
-	max-width: 450px;
+	width: clamp(300px, 50%, 500px);
 }
 
 .content-category#groups {
-	width: 35%;
-	max-width: 350px;
+	width: clamp(300px, 50%, 400px);
 }
 
 /* Content Display */
@@ -167,7 +184,15 @@ button span {
 }
 
 .content-display .card.contact .info {
-	flex-grow: 1;
+	/*flex-grow: 1;*/
+	width: clamp(125px, 65%, 376px);
+}
+
+.content-display .card.contact .info > *,
+.content-display .card.group .name {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
 }
 
 .content-display .card.contact .info .name {
@@ -177,6 +202,10 @@ button span {
 .content-display .card.contact .info .number {
 	font-size: .9em;
 	color: var(--grey-mid);
+}
+
+.content-display .card.group .name {
+	width: clamp(100px, 65%, 200px);
 }
 
 .content-display .card.group .count {
@@ -200,7 +229,7 @@ button span {
 	margin: auto 0 0 auto;
 }
 
-.content-category .content-display button {
+.content-category#contacts .content-display button:not(:first-child) {
 	margin-left: calc(var(--spacing) * 2);
 }
 
@@ -238,34 +267,20 @@ button span {
 	position: absolute;
 	top: 0;
 	left: 0;
-	backdrop-filter: blur(2px) grayscale(.5);
 
+	backdrop-filter: blur(2px) grayscale(.5);
 	transition: all .5s ease-in-out;
 	z-index: 5;
 }
 
-.form-modal.closed {
-	pointer-events: none;
-	overflow-y: hidden;
-	backdrop-filter: none;
-}
-
 .form-modal .form-main {
-	--size: 25vmax;
-	width: var(--size);
-	min-width: 320px;
-	padding: calc(var(--spacing) * 2);
+	width: clamp(300px, 90%, 370px);
+	padding: var(--spacing) calc(var(--spacing) * 2);
 
 	border-radius: calc(var(--radius) * .5);
 	background-color: #fff;
 	box-shadow: 0 0 4px var(--grey-mid);
 
-	transition-property: transform;
-	transition: all .5s ease-in-out;
-}
-
-.form-modal.closed .form-main {
-	/*transform-origin: top;*/
 	transform: translate(0%, -110%) scale(0);
 }
 
@@ -343,6 +358,17 @@ button span {
 	grid-template-columns: 1fr 1fr;
 }
 
+.form-modal#contact-form .form-main {
+	position: relative;
+}
+
+.form-modal#contact-form .form-main .close-icon {
+	position: absolute;
+	top: var(--spacing);
+	right: var(--spacing);
+	cursor: pointer;
+}
+
 .form-modal#group-form .form-main input[type="checkbox"] {
 	width: unset;
 	margin-right: var(--spacing);
@@ -351,4 +377,12 @@ button span {
 .form-modal#group-form .form-main .checklist {
 	max-height: 220px;
 	overflow-y: scroll;
+}
+
+
+@keyframes dropIn {
+	to {
+		transform: translate(0%) scale(1);
+		opacity: 1;
+	}
 }
