@@ -1,4 +1,6 @@
 import React from "react"
+import { connect } from 'react-redux'
+import { toggleGroupForm, modifyGroup } from '../../store/actions'
 import form from "./form.jsx"
 
 
@@ -6,37 +8,51 @@ class GroupForm extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			name: '',
-			...Object.fromEntries(
-				Object.keys(this.props.contacts)
-				.map(id => [id, false])
-			)
-		}
-
-		this.handleSelection = this.handleSelection.bind(this)
+		this.closeForm = this.closeForm.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	handleSelection ({target}) {
-		this.setState({[target.name] : target.checked})
+	closeForm () {
+		this.props.toggleGroupForm('closed')
 	}
 
 	handleSubmit (event) {
 		event.preventDefault()
-		this.props.submitCallback(this.props.group, this.state)
+		const [{target}, {modify, contacts}] = [event, this.props]
+		const [
+			oldGroupName,
+			groupName,
+			checklist
+		] = [
+			modify.entry,
+			target[0].value,
+			target.children[2]
+		]
+		// Sift (add or remove) contacts based on their checked states
+		for (let child of checklist.children) {
+			const checkbox = child.children[0]
+			const id = checkbox.name
+			if (checkbox.checked) {
+				contacts[id].group.delete(oldGroupName)
+				contacts[id].group.add(groupName)
+			} else {
+				// remove contact from group if it was unchecked
+				contacts[id].group.delete(groupName)
+			}
+		}
+		this.props.modifyGroup(contacts)
+		this.closeForm()
 	}
 
 	render () {
-		const { contacts, view, mode, toggleFunc } = this.props
+		const { contacts, modify } = this.props
 
 		return (
 			<form.Form
-				title={mode !== 'edit' ? "New Group" : "Edit Group"}
+				title={modify.mode !== 'edit' ? "New Group" : "Edit Group"}
 				id="group-form"
-				form_view={view}
-				toggleFunc={toggleFunc}
-				className={` ${mode}-mode`}
+				toggleFunc={this.closeForm}
+				className={` ${modify.mode}-mode`}
 				submitCallback={this.handleSubmit}
 			>
 				<form.FormField label="Group Name">
@@ -44,8 +60,8 @@ class GroupForm extends React.Component {
 						type="text"
 						placeholder="Enter group name"
 						name="name"
-						value={this.state.name}
-						onChange={({target}) => this.setState({name: target.value})}
+						id="group-name"
+						defaultValue={modify.entry}
 						required
 					/>
 				</form.FormField>
@@ -57,8 +73,7 @@ class GroupForm extends React.Component {
 							<form.FormField key={contact.id.toString()}>
 								<input
 									type="checkbox"
-									checked={this.state[contact.id]}
-									onChange={this.handleSelection}
+									defaultChecked={contact.group.has(modify.entry)}
 									name={contact.id}
 								/>
 								{contact.name || contact.number}
@@ -71,13 +86,13 @@ class GroupForm extends React.Component {
 						<input
 							type="button"
 							value="Cancel"
-							onClick={() => toggleFunc('closed')}
+							onClick={this.closeForm}
 						/>
 					</form.FormField>
 					<form.FormField>
 						<input
 							type="submit"
-							value={(mode === 'edit' ? 'Update' : 'Create Group')}
+							value={(modify.mode === 'edit' ? 'Update' : 'Create Group')}
 						/>
 					</form.FormField>
 				</div>
@@ -86,9 +101,16 @@ class GroupForm extends React.Component {
 	}
 }
 
-GroupForm.defaultProps = {
-	contacts: {},
+
+const mapStateToProps = state => ({
+	contacts: state.contacts,
+	modify: state.groupModProps
+})
+
+const mapDispatchToProps = {
+	toggleGroupForm,
+	modifyGroup
 }
 
 
-export default GroupForm
+export default connect(mapStateToProps, mapDispatchToProps)(GroupForm)

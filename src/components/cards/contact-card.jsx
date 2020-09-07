@@ -1,47 +1,79 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { changeContactModProps, toggleContactForm, eraseContact } from '../../store/actions'
 // import { unmountComponentAtNode } from 'react-dom'
 import Icons from '../icons.jsx'
 
 
 class ContactCard extends React.Component {
 
+	constructor(props) {
+		super(props)
+
+		this.toggleEdit = this.toggleEdit.bind(this)
+		this.deleteContact = this.deleteContact.bind(this)
+		this.togglePreview = this.togglePreview.bind(this)
+	}
+
+	toggleEdit (event) {
+		event.stopPropagation()
+		const [
+			{changeContactModProps, toggleContactForm},
+			entry
+		] = [
+			this.props,
+			this.getEntry()
+		]
+		changeContactModProps({mode: 'edit', entry})
+		toggleContactForm('open')
+	}
+
+	deleteContact (event) {
+		event.stopPropagation()
+		this.props.eraseContact(this.props.info.id)
+	}
+
+	getEntry () {
+		const {contacts, info} = this.props
+		return contacts[info.id]
+	}
+
+	togglePreview (event) {
+		event.stopPropagation()
+		const { changeContactModProps, toggleContactForm } = this.props
+
+		changeContactModProps({
+			mode: 'preview',
+			entry: this.getEntry()
+		})
+		toggleContactForm('open')
+	}
+
 	render () {
-		const {
-			info,
-			previewCallback,
-			editCallback,
-			deleteCallback
-		} = this.props
+		const { info } = this.props
+		const name = info.name || info.number
 
 		return (
 			<section
-				id={info.id}
 				className="card contact"
-				onClick={(event) => {
-					event.stopPropagation()
-					previewCallback(event.target.id)
-				}}
+				onClick={this.togglePreview}
+				title={`Click to view ${name}'s details`}
 			>
 				<div className="info">
-					<h4 className="name">{info.name || info.number}</h4>
+					<h4 className="name">{name}</h4>
 					<p className="number">{info.number}</p>
 				</div>
 				<div className="modify">
 					<button
-						onClick={event => {
-							event.stopPropagation()
-							editCallback(event.target.parentNode.parentNode.id)
-						}}
 						title="Edit"
+						onClick={this.toggleEdit}
 					>
 						<Icons.Edit />
 					</button>
 					<button
-						onClick={event => {
-							event.stopPropagation()
-							deleteCallback(event.target.parentNode.parentNode.id)
-						}}
-						title="Delete">
+						title="Delete"
+						onClick={this.deleteContact}
+					>
 						<Icons.Delete />
 					</button>
 				</div>
@@ -50,5 +82,14 @@ class ContactCard extends React.Component {
 	}
 }
 
+const mapStateToProps = state => ({
+	contacts: state.contacts
+})
 
-export default ContactCard
+const mapDispatchToProps = {
+	changeContactModProps,
+	eraseContact,
+	toggleContactForm
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactCard)

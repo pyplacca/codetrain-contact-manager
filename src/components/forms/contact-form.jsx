@@ -1,75 +1,21 @@
 import React from "react"
+import { connect } from 'react-redux'
+import { toggleContactForm, modifyContact, updateId } from '../../store/actions'
 import form from "./form.jsx"
+// import { fields } from './fields'
 
-
-const inputs = [
-	{
-		type: 'text',
-		name: 'name',
-		label: 'Name',
-		placeholder: 'Enter contact name'
-	},
-	{
-		type: 'tel',
-		name: 'number',
-		label: 'Mobile',
-		placeholder: 'Enter mobile number'
-	},
-	{
-		type: 'email',
-		name: 'email',
-		label: 'Email Address',
-		placeholder: 'Enter email'
-	},
-	{
-		type: 'text',
-		name: 'occupation',
-		label: 'Occupation',
-		placeholder: 'Enter occupation'
-	},
-	{
-		type: 'text',
-		name: 'organization',
-		label: 'Organization',
-		placeholder: 'Enter company name'
-	},
-	{
-		type: 'text',
-		name: 'department',
-		label: 'Department',
-		placeholder: 'Company department'
-	},
-	{
-		type: 'text',
-		name: 'position',
-		label: 'Position',
-		placeholder: 'Position'
-	},
-	{
-		type: 'url',
-		name: 'website',
-		label: 'Website',
-		placeholder: 'Enter url'
-	},
-	{
-		type: 'date',
-		name: 'anniversary',
-		label: 'Anniversary',
-		placeholder: 'Anniversary / Birthday'
-	},
-]
 
 class ContactForm extends React.Component {
 	constructor (props) {
 		super(props)
 
-		this.state = Object.assign({
-			id: '',
-			group: new Set(),
-		}, Object.fromEntries(inputs.map(input => [input.name, ''])))
-
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.closeForm = this.closeForm.bind(this)
+	}
+
+	closeForm () {
+		this.props.toggleContactForm('closed')
 	}
 
 	handleInputChange ({target}) {
@@ -77,16 +23,30 @@ class ContactForm extends React.Component {
 		this.setState({ [name] : value })
 	}
 
+	getInputValues (form) {
+		const {id, modify} = this.props
+		const {entry} = modify
+		const values = {
+			group: entry.group || new Set(),
+			id: entry.id || id
+		}
+
+		for (let section of form.children) {
+			const input = section.lastElementChild
+			values[input.name] = input.value
+			input.value = ''
+		}
+
+		return values
+	}
+
 	handleSubmit (event) {
 		event.preventDefault()
-		this.props.submitCallback(this.state)
-		// reset form state
-		this.setState({
-			...Object.fromEntries(
-				Object.keys(this.state).map(key => [key, ''])
-			),
-			group: new Set()
-		})
+
+		const info = this.getInputValues(event.target)
+		this.props.modifyContact(info)
+		this.props.updateId(this.props.id + 1)
+		this.closeForm()
 	}
 
 	modeTitles = {
@@ -96,45 +56,58 @@ class ContactForm extends React.Component {
 	}
 
 	render () {
-		const {mode, view, toggleFunc} = this.props
+		const {mode, entry} = this.props.modify
 		const disabled = mode === "preview"
 
 		return (
 			<form.Form
 				title={this.modeTitles[mode]}
 				id="contact-form"
-				form_view={view}
 				className={` ${mode}-mode`}
 				submitCallback={this.handleSubmit}
-				toggleFunc={toggleFunc}
+				toggleFunc={this.closeForm}
 			>
 				{
-					inputs.map((input, i) =>
+					mode === 'preview'
+					?
+					<span
+						className="close-icon"
+						role="img"
+						aria-label="icon"
+						aria-hidden="true"
+						onClick={this.closeForm}
+					>&#x274C;</span>
+					:
+					null
+				}
+				{
+					this.props.fields.map((field, i) =>
 						// when in preview mode,
-						// don't display a field that doesn't have a state value
-						mode === 'preview' && !this.state[input.name] ? null :
-						<form.FormField label={input.label} key={i}>
+						// don't display a field that has no value
+						mode === 'preview' && !/*this.state*/entry[field.name] ? null :
+						<form.FormField label={field.label} key={i}>
 							<input
-								type={input.type}
-								// don't show placeholders when in preview mode
-								placeholder={mode !== 'preview' ? input.placeholder : ''}
+								type={field.type}
+								placeholder={field.placeholder}
 								disabled={disabled}
-								name={input.name}
-								value={this.state[input.name]}
-								onChange={this.handleInputChange}
+								name={field.name}
+								defaultValue={entry[field.name]}
 							/>
 						</form.FormField>
 					)
 				}
 				{
 					// don't show these buttons when in preview mode
-					mode === "preview" ? null :
+					mode === "preview"
+					?
+					null
+					:
 					<div className="form-buttons">
 						<form.FormField>
 							<input
 								type="button"
 								value="Cancel"
-								onClick={() => toggleFunc('closed')}
+								onClick={this.closeForm}
 							/>
 						</form.FormField>
 						<form.FormField>
@@ -150,10 +123,15 @@ class ContactForm extends React.Component {
 	}
 }
 
-ContactForm.defaultProps = {
-	mode: "add",
-	contact: {},
+const mapStateToProps = state => ({
+	id: state.id,
+	modify: state.contactModProps,
+})
+
+const mapDispatchToProps = {
+	modifyContact,
+	toggleContactForm,
+	updateId
 }
 
-
-export default ContactForm
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)

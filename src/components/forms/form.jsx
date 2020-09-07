@@ -22,14 +22,15 @@ class Form extends React.Component {
 			id,
 			className,
 			submitCallback,
-			form_view,
 			toggleFunc,
 		} = this.props
+
 		return (
 			<div
-				className={`form-modal ${className} ${form_view}`}
-				onClick={({target}) => {
-					if (target.classList.contains('form-modal')) {
+				className="form-modal"
+				onClick={event => {
+					event.stopPropagation()
+					if (event.target.classList.contains('form-modal')) {
 						toggleFunc('closed')
 					}
 				}}

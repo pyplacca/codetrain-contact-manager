@@ -1,16 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { changeGroupModProps, toggleGroupForm } from '../../store/actions'
 
 
 class GroupCard extends React.Component {
 
 	render () {
-		const {name, list, clickCallback} = this.props
+		const {name, list} = this.props
 		const total = list.length
 		return (
 			<section
-				id={name}
 				className="card group"
-				onClick={({target}) => clickCallback(target.id)}
+				onClick={({target}) => {
+					this.props.changeGroupModProps({
+						mode: 'edit',
+						entry: name
+					})
+					this.props.toggleGroupForm('open')
+				}}
 			>
 				<p className="name">{name}</p>
 				<p className="count">
@@ -21,5 +28,10 @@ class GroupCard extends React.Component {
 	}
 }
 
+const mapDispatchToProps = {
+	changeGroupModProps,
+	toggleGroupForm
+}
 
-export default GroupCard
+
+export default connect(null, mapDispatchToProps)(GroupCard)
