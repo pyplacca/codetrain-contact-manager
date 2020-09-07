@@ -16,7 +16,7 @@ import ContentDisplay from "./components/content-display.jsx"
 import ContactForm from "./components/forms/contact-form.jsx"
 import GroupCard from "./components/cards/group-card.jsx"
 import GroupForm from "./components/forms/group-form.jsx"
-// Styling
+// Styles
 import "./App.css";
 
 
@@ -51,8 +51,8 @@ class App extends React.Component {
 	render () {
 
 		const {contacts, view} = this.props
-		const contacts_array = Object.values(contacts)
-		const groups = contacts_array.reduce((output, person) => {
+		const contactList = Object.values(contacts)
+		const groups = contactList.reduce((output, person) => {
 			const {group} = person
 			if (group) {
 				group.forEach(name =>
@@ -69,18 +69,24 @@ class App extends React.Component {
 					<div className="head">
 						<div>
 							<h2>Contacts</h2>
-							<p>{contacts_array.length + " contacts"}</p>
+							<p>{
+								contactList.length +
+								" contact" +
+								(contactList.length !== 1 ? 's' : '')
+							}</p>
 						</div>
 						<AddButton clickCallback={this.newContactForm} />
 					</div>
 					<ContentDisplay>
 						{
-							contacts_array.length ?
-							contacts_array.map(
+							contactList.length
+							?
+							contactList.map(
 								(info, i) => <ContactCard info={info} key={i}/>
-							) :
+							)
+							:
 							<p>
-								No contacts to display.
+								No contacts to display.<br/>
 								Start by clicking/tapping the
 								<span className="emphasis">+</span>
 								icon above.
@@ -96,7 +102,8 @@ class App extends React.Component {
 					</div>
 					<ContentDisplay>
 						{
-							!contacts_array.length ?
+							!contactList.length
+							?
 							// placeholder text to be shown when there
 							// aren't any contacts available
 							<p>
@@ -105,7 +112,8 @@ class App extends React.Component {
 							</p>
 							:
 							(
-								Object.keys(groups).length ?
+								Object.keys(groups).length
+								?
 								// a group card is automatically deleted once there are
 								// no contacts present in that group after update.
 								Object.keys(groups).sort().map((name, i) =>
@@ -114,9 +122,10 @@ class App extends React.Component {
 										list={groups[name]}
 										key={i}
 									/>
-								) :
+								)
+								:
 								// placeholder text to be shown when there are contacts
-								// available without any groups added yet.
+								// available but no groups.
 								<p>
 									Create a new group by clicking/tapping
 									<span className="emphasis">+</span>
@@ -125,7 +134,11 @@ class App extends React.Component {
 							)
 						}
 					</ContentDisplay>
-					<AddButton clickCallback={contacts_array.length ? this.newGroupForm : null} />
+					<AddButton
+						clickCallback={
+							contactList.length ? this.newGroupForm : null
+						}
+					/>
 				</ContentCategory>
 
 				{/*

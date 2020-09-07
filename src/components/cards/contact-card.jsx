@@ -57,11 +57,10 @@ class ContactCard extends React.Component {
 			<section
 				className="card contact"
 				onClick={this.togglePreview}
-				title={`Click to view ${name}'s details`}
 			>
 				<div className="info">
 					<h4 className="name">{name}</h4>
-					<p className="number">{info.number}</p>
+					<p className="number">{info.number || 'No number'}</p>
 				</div>
 				<div className="modify">
 					<button

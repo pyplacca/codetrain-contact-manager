@@ -70,7 +70,7 @@ class GroupForm extends React.Component {
 				<div className="checklist">
 					{
 						Object.values(contacts).map(contact =>
-							<form.FormField key={contact.id.toString()}>
+							<form.FormField key={contact.id}>
 								<input
 									type="checkbox"
 									defaultChecked={contact.group.has(modify.entry)}

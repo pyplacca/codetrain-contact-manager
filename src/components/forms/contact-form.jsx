@@ -84,7 +84,7 @@ class ContactForm extends React.Component {
 					this.props.fields.map((field, i) =>
 						// when in preview mode,
 						// don't display a field that has no value
-						mode === 'preview' && !/*this.state*/entry[field.name] ? null :
+						mode === 'preview' && !entry[field.name] ? null :
 						<form.FormField label={field.label} key={i}>
 							<input
 								type={field.type}
@@ -97,11 +97,11 @@ class ContactForm extends React.Component {
 					)
 				}
 				{
-					// don't show these buttons when in preview mode
 					mode === "preview"
 					?
 					null
 					:
+					// don't show these buttons when in preview mode
 					<div className="form-buttons">
 						<form.FormField>
 							<input

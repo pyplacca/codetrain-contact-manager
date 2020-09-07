@@ -56,13 +56,18 @@
 	cursor: pointer;
 	background-color: inherit;
 	opacity: 0;
-	transform: translateY(-80%);
+	transform: translateX(-80%);
 }
 
-/*.card:hover {
-	transform: translateX(-5px);
+.card:hover .info .name::after {
+	content: "Click to view details";
+	color: var(--grey-dark);
+	margin-left: var(--spacing);
+	font-weight: normal;
+	font-size: .86em;
+	/*font-style: italic;*/
 }
-*/
+
 button {
 	--size: 25px;
 	width: var(--size);
@@ -313,6 +318,8 @@ button span {
 
 .form-modal .form-main input:not([type="submit"]) {
 	/*border: none;*/
+	font-size: .95em;
+	font-family: Roboto, serif;
 	transition: border ease-in-out .3s;
 }
 
