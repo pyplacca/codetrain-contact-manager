@@ -1,5 +1,6 @@
 const initialState = {
-	// An id helps keep track of each contact
+	// An id helps keep track of each contact,
+	// and also helps to easily modify or delete a contact from the store
 	id: 1,
 	/*
 	Each contact entry is an object with integer(s), string(s) and/or array(s)
@@ -12,10 +13,12 @@ const initialState = {
 		mode: 'add',
 		entry: {}
 	},
+	// for previewing and editing purposes
 	groupModProps: {
 		mode: 'add',
 		entry: undefined
 	},
+	// dictates when and which form to toggle
 	view: {
 		contactForm: 'closed',
 		groupForm: 'closed'
@@ -48,7 +51,7 @@ export default function reducer (state=initialState, action) {
 				contacts
 			}
 
-		// creates a new or edits an old contact
+		// creates a new or updates an old contact
 		case 'MODIFY_CONTACT':
 			return {
 				...state,

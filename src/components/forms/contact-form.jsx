@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import { toggleContactForm, modifyContact, updateId } from '../../store/actions'
 import form from "./form.jsx"
-// import { fields } from './fields'
+import { fields } from './fields'
 
 
 class ContactForm extends React.Component {
@@ -31,10 +31,12 @@ class ContactForm extends React.Component {
 			id: entry.id || id
 		}
 
-		for (let section of form.children) {
-			const input = section.lastElementChild
-			values[input.name] = input.value
-			input.value = ''
+		for (let child of form.children) {
+			if (child.classList.contains('field')) {
+				const input = child.lastElementChild
+				values[input.name] = input.value
+				input.value = ''
+			}
 		}
 
 		return values
@@ -65,23 +67,10 @@ class ContactForm extends React.Component {
 				id="contact-form"
 				className={` ${mode}-mode`}
 				submitCallback={this.handleSubmit}
-				toggleFunc={this.closeForm}
+				closeCallback={this.closeForm}
 			>
 				{
-					mode === 'preview'
-					?
-					<span
-						className="close-icon"
-						role="img"
-						aria-label="icon"
-						aria-hidden="true"
-						onClick={this.closeForm}
-					>&#x274C;</span>
-					:
-					null
-				}
-				{
-					this.props.fields.map((field, i) =>
+					fields.map((field, i) =>
 						// when in preview mode,
 						// don't display a field that has no value
 						mode === 'preview' && !entry[field.name] ? null :
@@ -103,19 +92,10 @@ class ContactForm extends React.Component {
 					:
 					// don't show these buttons when in preview mode
 					<div className="form-buttons">
-						<form.FormField>
-							<input
-								type="button"
-								value="Cancel"
-								onClick={this.closeForm}
-							/>
-						</form.FormField>
-						<form.FormField>
-							<input
-								type="submit"
-								value={mode === "edit" ? "Update" : "Add Contact"}
-							/>
-						</form.FormField>
+						<input
+							type="submit"
+							value={mode === "edit" ? "Update" : "Add Contact"}
+						/>
 					</div>
 				}
 			</form.Form>

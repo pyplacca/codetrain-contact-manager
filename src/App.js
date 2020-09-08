@@ -81,11 +81,11 @@ class App extends React.Component {
 						{
 							contactList.length
 							?
-							contactList.map(
+							contactList.sort().map(
 								(info, i) => <ContactCard info={info} key={i}/>
 							)
 							:
-							<p>
+							<p className="tip">
 								No contacts to display.<br/>
 								Start by clicking/tapping the
 								<span className="emphasis">+</span>
@@ -106,7 +106,7 @@ class App extends React.Component {
 							?
 							// placeholder text to be shown when there
 							// aren't any contacts available
-							<p>
+							<p className="tip">
 								You can create a new group after adding
 								one or more contacts to your contact list
 							</p>
@@ -119,17 +119,17 @@ class App extends React.Component {
 								Object.keys(groups).sort().map((name, i) =>
 									<GroupCard
 										name={name}
-										list={groups[name]}
+										count={groups[name].length}
 										key={i}
 									/>
 								)
 								:
 								// placeholder text to be shown when there are contacts
 								// available but no groups.
-								<p>
-									Create a new group by clicking/tapping
+								<p className="tip">
+									Click/tap the
 									<span className="emphasis">+</span>
-									icon below.
+									icon below to create a new group.
 								</p>
 							)
 						}
@@ -146,11 +146,7 @@ class App extends React.Component {
 					They can be used to create, edit and preview a contact / group
 				*/}
 				{
-					view.contactForm === 'open'
-					?
-					<ContactForm fields={fields} />
-					:
-					null
+					view.contactForm === 'open' ? <ContactForm /> : null
 				}
 				{
 					view.groupForm === 'open' ? <GroupForm /> : null

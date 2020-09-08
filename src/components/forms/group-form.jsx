@@ -8,6 +8,10 @@ class GroupForm extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			selected: true
+		}
+
 		this.closeForm = this.closeForm.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -29,19 +33,27 @@ class GroupForm extends React.Component {
 			target.children[2]
 		]
 		// Sift (add or remove) contacts based on their checked states
+		let count = 0 // keeps track of selected contacts
 		for (let child of checklist.children) {
 			const checkbox = child.children[0]
 			const id = checkbox.name
 			if (checkbox.checked) {
 				contacts[id].group.delete(oldGroupName)
 				contacts[id].group.add(groupName)
+				count++
 			} else {
 				// remove contact from group if it was unchecked
 				contacts[id].group.delete(groupName)
 			}
 		}
-		this.props.modifyGroup(contacts)
-		this.closeForm()
+		// check if at least a contact has been selected
+		if (count) {
+			this.props.modifyGroup(contacts)
+			this.closeForm()
+		} else {
+			// show an alert if not
+			this.setState({selected: false})
+		}
 	}
 
 	render () {
@@ -51,7 +63,7 @@ class GroupForm extends React.Component {
 			<form.Form
 				title={modify.mode !== 'edit' ? "New Group" : "Edit Group"}
 				id="group-form"
-				toggleFunc={this.closeForm}
+				closeCallback={this.closeForm}
 				className={` ${modify.mode}-mode`}
 				submitCallback={this.handleSubmit}
 			>
@@ -66,7 +78,14 @@ class GroupForm extends React.Component {
 					/>
 				</form.FormField>
 
-				<form.FormField label="Select Contacts" />
+				<form.FormField label="Select Contacts">
+					{
+						this.state.selected ? null :
+						<p style={{color: "red", fontSize: ".9em"}}>
+							Select at least one contact
+						</p>
+					}
+				</form.FormField>
 				<div className="checklist">
 					{
 						Object.values(contacts).map(contact =>
@@ -82,19 +101,10 @@ class GroupForm extends React.Component {
 					}
 				</div>
 				<div className="form-buttons">
-					<form.FormField>
-						<input
-							type="button"
-							value="Cancel"
-							onClick={this.closeForm}
-						/>
-					</form.FormField>
-					<form.FormField>
-						<input
-							type="submit"
-							value={(modify.mode === 'edit' ? 'Update' : 'Create Group')}
-						/>
-					</form.FormField>
+					<input
+						type="submit"
+						value={(modify.mode === 'edit' ? 'Update' : 'Create Group')}
+					/>
 				</div>
 			</form.Form>
 		)

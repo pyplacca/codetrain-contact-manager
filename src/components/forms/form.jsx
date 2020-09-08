@@ -22,7 +22,7 @@ class Form extends React.Component {
 			id,
 			className,
 			submitCallback,
-			toggleFunc,
+			closeCallback,
 		} = this.props
 
 		return (
@@ -31,13 +31,22 @@ class Form extends React.Component {
 				onClick={event => {
 					event.stopPropagation()
 					if (event.target.classList.contains('form-modal')) {
-						toggleFunc('closed')
+						closeCallback()
 					}
 				}}
 				id={id}
 			>
 				<div className={"form-main" + (className || '')}>
 					{title ? <h2 className="title">{title}</h2> : null}
+					{
+						<span
+							className="close-icon"
+							role="img"
+							aria-label="icon"
+							aria-hidden="true"
+							onClick={closeCallback}
+						>&#x274C;</span>
+					}
 					<form onSubmit={submitCallback}>
 						{children}
 					</form>

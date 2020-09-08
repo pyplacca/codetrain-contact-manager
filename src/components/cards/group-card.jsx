@@ -6,8 +6,7 @@ import { changeGroupModProps, toggleGroupForm } from '../../store/actions'
 class GroupCard extends React.Component {
 
 	render () {
-		const {name, list} = this.props
-		const total = list.length
+		const {name, count} = this.props
 		return (
 			<section
 				className="card group"
@@ -21,7 +20,7 @@ class GroupCard extends React.Component {
 			>
 				<p className="name">{name}</p>
 				<p className="count">
-					{`${total} contact${total > 1 ? 's' : ''}`}
+					{`${count} contact${count > 1 ? 's' : ''}`}
 				</p>
 			</section>
 		)

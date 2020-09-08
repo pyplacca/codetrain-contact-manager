@@ -59,13 +59,21 @@
 	transform: translateX(-80%);
 }
 
+/* should not be applicable to mobile devices */
+.card .modify {
+	display: none;
+}
+
 .card:hover .info .name::after {
-	content: "Click to view details";
+	content: "Click/tap to view details";
 	color: var(--grey-dark);
 	margin-left: var(--spacing);
 	font-weight: normal;
 	font-size: .86em;
-	/*font-style: italic;*/
+}
+
+.card:hover .modify {
+	display: unset;
 }
 
 button {
@@ -190,7 +198,7 @@ button span {
 
 .content-display .card.contact .info {
 	/*flex-grow: 1;*/
-	width: clamp(125px, 65%, 376px);
+	width: clamp(125px, 70%, 376px);
 }
 
 .content-display .card.contact .info > *,
@@ -235,7 +243,7 @@ button span {
 }
 
 .content-category#contacts .content-display button:not(:first-child) {
-	margin-left: calc(var(--spacing) * 2);
+	margin-left: var(--spacing);
 }
 
 .content-category .content-display button:active {
@@ -351,7 +359,7 @@ button span {
 }
 
 .form-modal .form-main input[type="button"] {
-	background-color: #d2d2d2;
+	background-color: var(--grey-dark);
 }
 
 .form-modal .form-main input[type="submit"]:focus,
@@ -360,16 +368,17 @@ button span {
 }
 
 .form-modal .form-main form .form-buttons {
-	display: grid;
+	/*display: : grid;*/
 	column-gap: var(--spacing);
 	grid-template-columns: 1fr 1fr;
+	padding: var(--spacing) 0;
 }
 
 .form-modal#contact-form .form-main {
 	position: relative;
 }
 
-.form-modal#contact-form .form-main .close-icon {
+.form-modal .form-main .close-icon {
 	position: absolute;
 	top: var(--spacing);
 	right: var(--spacing);
