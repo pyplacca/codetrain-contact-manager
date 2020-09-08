@@ -88,7 +88,7 @@ class App extends React.Component {
 							<p className="tip">
 								No contacts to display.<br/>
 								Start by clicking/tapping the
-								<span className="emphasis">+</span>
+								<span className="emphasis">&#43;</span>
 								icon above.
 							</p>
 						}
@@ -128,7 +128,7 @@ class App extends React.Component {
 								// available but no groups.
 								<p className="tip">
 									Click/tap the
-									<span className="emphasis">+</span>
+									<span className="emphasis">&#43;</span>
 									icon below to create a new group.
 								</p>
 							)
