@@ -82,7 +82,7 @@ class GroupForm extends React.Component {
 					{
 						this.state.selected ? null :
 						<p style={{color: "red", fontSize: ".9em"}}>
-							Select at least one contact
+							You need to select at least one contact
 						</p>
 					}
 				</form.FormField>
