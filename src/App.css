@@ -48,34 +48,6 @@
 	animation: dropIn .3s ease-out forwards;
 }
 
-.card {
-	align-items: center;
-	justify-content: space-between;
-	padding: var(--spacing) 0;
-	border-bottom: 1px solid var(--grey-light);
-	cursor: pointer;
-	background-color: inherit;
-	opacity: 0;
-	transform: translateX(-80%);
-}
-
-/* should not be applicable to mobile devices */
-.card .modify {
-	display: none;
-}
-
-.card:hover .info .name::after {
-	content: "Click/tap to view details";
-	color: var(--grey-dark);
-	margin-left: var(--spacing);
-	font-weight: normal;
-	font-size: .86em;
-}
-
-.card:hover .modify {
-	display: unset;
-}
-
 button {
 	--size: 25px;
 	width: var(--size);
@@ -183,7 +155,19 @@ button span {
 	overflow: hidden auto;
 }
 
+
 /* Card */
+
+.card {
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--spacing) 0;
+	border-bottom: 1px solid var(--grey-light);
+	cursor: pointer;
+	background-color: inherit;
+	opacity: 0;
+	transform: translateX(-80%);
+}
 
 .content-category .content-display .card.delete {
 	transform: translateX(-70%);
@@ -400,5 +384,33 @@ button span {
 	to {
 		transform: translate(0%) scale(1);
 		opacity: 1;
+	}
+}
+
+
+@media (hover: hover) {
+
+	/* hide the edit and delete buttons if
+		the pointing device can hover over the card */
+	.card .modify {
+		display: none;
+	}
+
+	.card:hover .modify {
+		display: unset;
+	}
+
+	.card:hover .info .name::after {
+		content: "Click to view details";
+		color: var(--grey-dark);
+		margin-left: var(--spacing);
+		font-weight: normal;
+		font-size: .86em;
+	}
+}
+
+@media (hover: none) {
+	.content-category .head .tip {
+		/*display: unset;*/
 	}
 }
