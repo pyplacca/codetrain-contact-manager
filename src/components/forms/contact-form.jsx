@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { toggleContactForm, modifyContact, updateId } from '../../store/actions'
+import { toggleContactForm, modifyContact } from '../../store/actions'
 import form from "./form.jsx"
 import { fields } from './fields'
 
@@ -8,6 +8,8 @@ import { fields } from './fields'
 class ContactForm extends React.Component {
 	constructor (props) {
 		super(props)
+
+		this.state = this.props.entry
 
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,31 +25,16 @@ class ContactForm extends React.Component {
 		this.setState({ [name] : value })
 	}
 
-	getInputValues (form) {
-		const {id, modify} = this.props
-		const {entry} = modify
-		const values = {
-			group: entry.group || new Set(),
-			id: entry.id || id
-		}
-
-		for (let child of form.children) {
-			if (child.classList.contains('field')) {
-				const input = child.lastElementChild
-				values[input.name] = input.value
-				input.value = ''
-			}
-		}
-
-		return values
-	}
-
 	handleSubmit (event) {
 		event.preventDefault()
-
-		const info = this.getInputValues(event.target)
-		this.props.modifyContact(info)
-		this.props.updateId(this.props.id + 1)
+		const {entry, modifyContact} = this.props
+		modifyContact({
+			...this.state,
+			id: entry.id || new Date().getTime(), /* this strategy takes advantage of
+			the ability to either create or edit a contact using the same form.
+			When an id is present, that means an old contact is being edited else otherwise */
+			group: entry.group || new Set() // same applies here.
+		})
 		this.closeForm()
 	}
 
@@ -58,7 +45,7 @@ class ContactForm extends React.Component {
 	}
 
 	render () {
-		const {mode, entry} = this.props.modify
+		const {mode} = this.props
 		const disabled = mode === "preview"
 
 		return (
@@ -73,14 +60,15 @@ class ContactForm extends React.Component {
 					fields.map((field, i) =>
 						// when in preview mode,
 						// don't display a field that has no value
-						mode === 'preview' && !entry[field.name] ? null :
+						mode === 'preview' && !this.state[field.name] ? null :
 						<form.FormField label={field.label} key={i}>
 							<input
 								type={field.type}
 								placeholder={field.placeholder}
 								disabled={disabled}
 								name={field.name}
-								defaultValue={entry[field.name]}
+								value={this.state[field.name]}
+								onChange={this.handleInputChange}
 							/>
 						</form.FormField>
 					)
@@ -103,15 +91,17 @@ class ContactForm extends React.Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	id: state.id,
-	modify: state.contactModProps,
-})
+const mapStateToProps = state => {
+	const {mode, entry} = state.contactModProps
+	return {
+		mode,
+		entry
+	}
+}
 
 const mapDispatchToProps = {
 	modifyContact,
 	toggleContactForm,
-	updateId
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)
