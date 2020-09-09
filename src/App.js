@@ -81,7 +81,7 @@ class App extends React.Component {
 						{
 							contactList.length
 							?
-							contactList.sort().map(
+							contactList.map(
 								info => <ContactCard info={info} key={info.id}/>
 							)
 							:
