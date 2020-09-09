@@ -42,5 +42,3 @@ export const modifyGroup = info => newAction('MODIFY_GROUP', info)
 export const toggleContactForm = to => createFormAction('contact', 'toggle', to)
 
 export const toggleGroupForm = to => createFormAction('group', 'toggle', to)
-
-export const updateId = id => newAction('UPDATE_ID', id)

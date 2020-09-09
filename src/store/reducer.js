@@ -1,7 +1,4 @@
 const initialState = {
-	// An id helps keep track of each contact,
-	// and also helps to easily modify or delete a contact from the store
-	id: 1,
 	/*
 	Each contact entry is an object with integer(s), string(s) and/or array(s)
 	A contact's group entry must be a Set in order to accomodate the
@@ -83,12 +80,6 @@ export default function reducer (state=initialState, action) {
 					...state.view,
 					groupForm: payload
 				}
-			}
-
-		case 'UPDATE_ID':
-			return {
-				...state,
-				id: payload
 			}
 
 		default: return state
