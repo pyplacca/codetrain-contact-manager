@@ -180,11 +180,11 @@ button span {
 	transition: .5s ease .1s;
 }
 
-.content-display .card.contact .info,
+/*.content-display .card.contact .info,
 .content-display .card.group > * {
 	pointer-events: none;
 }
-
+*/
 .content-display .card.contact .info {
 	/*flex-grow: 1;*/
 	width: clamp(125px, 70%, 376px);
@@ -213,7 +213,7 @@ button span {
 .content-display .card.group .count {
 	color: var(--grey-mid);
 	font-size: .9em;
-	font-style: italic;
+	/*font-style: italic;*/
 }
 
 /* Buttons and Button icons */
@@ -405,7 +405,7 @@ button span {
 		display: unset;
 	}
 
-	.card:hover .info .name::after {
+	.card .info:hover .name::after {
 		content: "Click to view details";
 		color: var(--grey-dark);
 		margin-left: var(--spacing);
