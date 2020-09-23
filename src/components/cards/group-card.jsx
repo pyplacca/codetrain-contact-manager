@@ -1,12 +1,13 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { changeGroupModProps, toggleGroupForm } from '../../store/actions'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { changeGroupModProps, toggleGroupForm } from '../../store/actions';
 
 
 class GroupCard extends React.Component {
 
 	render () {
-		const {name, count} = this.props
+		const {name, count} = this.props;
 		return (
 			<section
 				className="card group"
@@ -23,14 +24,26 @@ class GroupCard extends React.Component {
 					{`${count} contact${count > 1 ? 's' : ''}`}
 				</p>
 			</section>
-		)
-	}
-}
+		);
+	};
+};
 
 const mapDispatchToProps = {
 	changeGroupModProps,
 	toggleGroupForm
-}
+};
+
+GroupCard.defaultProps = {
+	name: 'Unknown',
+	count: 0
+};
+
+GroupCard.propTypes = {
+	name: PropTypes.string.isRequired,
+	count: PropTypes.number.isRequired,
+	toggleGroupForm: PropTypes.func,
+	changeGroupModProps: PropTypes.func
+};
 
 
 export default connect(null, mapDispatchToProps)(GroupCard)
