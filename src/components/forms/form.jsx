@@ -47,7 +47,7 @@ class Form extends React.Component {
 							onClick={closeCallback}
 						>&#x274C;</span>
 					}
-					<form onSubmit={submitCallback}>
+					<form id={id} onSubmit={submitCallback}>
 						{children}
 					</form>
 				</div>
