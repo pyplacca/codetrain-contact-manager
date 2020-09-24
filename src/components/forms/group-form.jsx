@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toggleGroupForm, modifyGroup } from '../../store/actions'
 import form from "./form.jsx"
@@ -8,15 +9,11 @@ class GroupForm extends React.Component {
 	constructor(props) {
 		super(props)
 
-		const {name, contacts} = this.props
+		const {name, groups} = this.props
+		const members = groups[name] || {}
 		this.state = {
-			madeSelection: true,
 			name,
-			members: Object.fromEntries(
-				Object.values(contacts).map(
-					({id, group}) => [id, group.has(name)]
-				)
-			)
+			members
 		}
 
 		this.closeForm = this.closeForm.bind(this)
@@ -29,50 +26,28 @@ class GroupForm extends React.Component {
 	}
 
 	handleSelection ({target}) {
+		let {members, memberCount} = this.state
+		const {name, checked} = target
+		if (checked) {
+			members[name] = this.props.contacts[name]
+		} else {
+			members.delete(name)
+		}
 		this.setState({
-			...this.state,
-			members: {
-				...this.state.members,
-				[target.name]: target.checked
-			}
+			...this.state, members
 		})
 	}
 
 	handleSubmit (event) {
 		event.preventDefault()
-		const {contacts} = this.props
-		let count = 0 // keeps track of selected contacts
-		// Sift (add or remove) contacts based on their checked states
-		const {name, members} = this.state
-		for (let id in members) {
-			if (members[id]) {
-				/*
-					Delete group name received from props from the contact's group set.
-					This way, if that name was changed during editing, it would...
-				*/
-				contacts[id].group.delete(this.props.name)
-				// ...be replaced with the new name.
-				contacts[id].group.add(name)
-				count++
-			} else {
-				// Remove group's name from the contact's group set if it was unchecked
-				contacts[id].group.delete(name)
-			}
-		}
-		// Check if at least a contact has been selected...
-		if (count) {
-			this.props.modifyGroup(contacts)
-			this.closeForm()
-		} else {
-			// ...show an alert if not.
-			this.setState({madeSelection: false})
-		}
+		this.props.modifyGroup(this.state)
+		this.closeForm()
 	}
 
 	render () {
 		const [
 			{ contacts, mode },
-			{name, madeSelection, members}
+			{ name, memberCount, members }
 		] = [
 			this.props,
 			this.state
@@ -100,14 +75,14 @@ class GroupForm extends React.Component {
 					/>
 				</form.FormField>
 
-				<form.FormField label="Select Contacts">
-					{
-						madeSelection ? null :
+				<form.FormField label="Select Contacts" />
+					{/*
+						memberCount ? null :
 						<p className="alert">
-							You need to select at least one contact
+							Please select at least one contact
 						</p>
-					}
 				</form.FormField>
+					*/}
 				<div className="checklist">
 					{
 						Object.values(contacts).map(contact =>
@@ -115,7 +90,7 @@ class GroupForm extends React.Component {
 								<input
 									type="checkbox"
 									name={contact.id}
-									checked={members[contact.id]}
+									checked={Boolean(members[contact.id])}
 									onChange={this.handleSelection}
 								/>
 								{contact.name || contact.number}
@@ -134,11 +109,20 @@ class GroupForm extends React.Component {
 	}
 }
 
+GroupForm.propTypes = {
+	contacts: PropTypes.objectOf(PropTypes.object),
+	groups: PropTypes.object.isRequired,
+	name: PropTypes.string.isRequired,
+	mode: PropTypes.string,
+	toggleGroupForm: PropTypes.func,
+	modifyGroup: PropTypes.func
+}
 
 const mapStateToProps = state => {
 	const {mode, entry} = state.groupModProps
 	return {
 		contacts: state.contacts,
+		groups: state.groups,
 		name: entry || '',
 		mode,
 	}
