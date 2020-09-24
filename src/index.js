@@ -18,8 +18,8 @@ const store = createStore(
 	// middleware
 	compose(
 		applyMiddleware(thunk.withExtraArgument({
-			getFirebase,
-			getFirestore
+			// getFirebase,
+			db: getFirestore
 		})),
 		reduxFirestore(firebase),
 		reactReduxFirebase(firebase),
