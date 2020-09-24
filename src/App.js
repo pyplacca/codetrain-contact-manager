@@ -16,6 +16,7 @@ import ContentDisplay from "./components/content-display.jsx"
 import ContactForm from "./components/forms/contact-form.jsx"
 import GroupCard from "./components/cards/group-card.jsx"
 import GroupForm from "./components/forms/group-form.jsx"
+// import Footer from "./components/footer.jsx"
 // Styles
 import "./App.css";
 
@@ -50,17 +51,9 @@ class App extends React.Component {
 
 	render () {
 
-		const {contacts, view} = this.props
+		const {contacts, view, groups} = this.props
+		const groupNames = Object.keys(groups)
 		const contactList = Object.values(contacts)
-		const groups = contactList.reduce((output, person) => {
-			const {group} = person
-			if (group) {
-				group.forEach(name =>
-					output[name] = [...(output[name] || []), person]
-				)
-			}
-			return output
-		}, {})
 
 		return (
 			<div className="App">
@@ -112,14 +105,14 @@ class App extends React.Component {
 							</p>
 							:
 							(
-								Object.keys(groups).length
+								groupNames.length
 								?
 								// a group card is automatically deleted once there are
 								// no contacts present in that group after update.
-								Object.keys(groups).sort().map((name, i) =>
+								groupNames.sort().map((name, i) =>
 									<GroupCard
 										name={name}
-										count={groups[name].length}
+										count={Object.keys(groups[name]).length}
 										key={i}
 									/>
 								)
@@ -151,6 +144,7 @@ class App extends React.Component {
 				{
 					view.groupForm === 'open' ? <GroupForm /> : null
 				}
+				{/*<Footer />*/}
 			</div>
 		);
 	}
