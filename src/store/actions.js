@@ -35,9 +35,35 @@ export const changeGroupModProps = props => createFormAction('group', 'changeMod
 
 export const eraseContact = id => newAction('ERASE_CONTACT', id)
 
-export const modifyContact = info => newAction('MODIFY_CONTACT', info)
+export const modifyContact = info => {
+	return (dispatch, getState, {db}) => {
+		db()
+			.collection('Contacts App')
+			.doc('phonebook')
+			.collection('contacts')
+			.doc(info.id)
+			.set(info)
+			.then(() => {
+				dispatch(newAction('MODIFY_CONTACT', info))
+			})
+			.catch(err => console.log)
+	}
+}
 
-export const modifyGroup = info => newAction('MODIFY_GROUP', info)
+export const modifyGroup = group => {
+	return (dispatch, getState, {db}) => {
+		db()
+			.collection('Contacts App')
+			.doc('phonebook')
+			.collection('groups')
+			.doc(group.name)
+			.set(group.members)
+			.then(() => {
+				dispatch(newAction('MODIFY_GROUP', group))
+			})
+			.catch(err => console.log)
+	}
+}
 
 export const toggleContactForm = to => createFormAction('contact', 'toggle', to)
 
