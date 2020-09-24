@@ -1,10 +1,7 @@
 const initialState = {
-	/*
-	Each contact entry is an object with integer(s), string(s) and/or array(s)
-	A contact's group entry must be a Set in order to accomodate the
-		association of a contact to multiple groups without duplication.
-	*/
+	// Each contact entry is an object with integer(s), string(s) and/or array(s)
 	contacts: {},
+	groups: {},
 	// for previewing and editing purposes
 	contactModProps: {
 		mode: 'add',
@@ -61,7 +58,10 @@ export default function reducer (state=initialState, action) {
 		case 'MODIFY_GROUP':
 			return {
 				...state,
-				contacts: payload
+				groups: {
+					...state.groups,
+					[payload.name]: payload.members
+				}
 			}
 
 		case 'TOGGLE_CONTACT_FORM':
