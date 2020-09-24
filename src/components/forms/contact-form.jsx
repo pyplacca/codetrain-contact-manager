@@ -1,52 +1,62 @@
-import React from "react"
-import { connect } from 'react-redux'
-import { toggleContactForm, modifyContact } from '../../store/actions'
-import form from "./form.jsx"
-import { fields } from './fields'
+import React from "react";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { toggleContactForm, modifyContact } from '../../store/actions';
+import form from "./form.jsx";
+import { fields } from './fields';
+import { v4 as uuid4 } from 'uuid';
 
 
 class ContactForm extends React.Component {
 	constructor (props) {
-		super(props)
+		super(props);
 
-		this.state = this.props.entry
+		this.state = {...this.props.entry, novalue: false};
 
-		this.handleInputChange = this.handleInputChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
-		this.closeForm = this.closeForm.bind(this)
-	}
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.closeForm = this.closeForm.bind(this);
+	};
 
 	closeForm () {
-		this.props.toggleContactForm('closed')
-	}
+		this.props.toggleContactForm('closed');
+	};
 
 	handleInputChange ({target}) {
-		const {name, value} = target
-		this.setState({ [name] : value })
-	}
+		const {name, value} = target;
+		this.setState({ [name] : value });
+	};
 
 	handleSubmit (event) {
-		event.preventDefault()
-		const {entry, modifyContact} = this.props
+		event.preventDefault();
+		const {entry, modifyContact} = this.props;
+		// don't create a contact entry if a name or number has not been provided
+		if (!(this.state.name || this.state.number)) {
+			this.setState({
+				...this.state,
+				novalue: true
+			})
+			return;
+		};
+		delete this.state['novalue'];
 		modifyContact({
 			...this.state,
-			id: entry.id || new Date().getTime(), /* this strategy takes advantage of
+			id: entry.id || uuid4(), /* this strategy takes advantage of
 			the ability to either create or edit a contact using the same form.
-			When an id is present, that means an old contact is being edited else otherwise */
-			group: entry.group || new Set() // same applies here.
-		})
-		this.closeForm()
-	}
+			When an id already exists, that means an old contact is being edited else otherwise */
+		});
+		this.closeForm();
+	};
 
 	modeTitles = {
 		preview: "",
 		edit: "Edit Contact",
 		add: "New Contact"
-	}
+	};
 
 	render () {
-		const {mode} = this.props
-		const disabled = mode === "preview"
+		const {mode} = this.props;
+		const disabled = mode === "preview";
 
 		return (
 			<form.Form
@@ -56,6 +66,15 @@ class ContactForm extends React.Component {
 				submitCallback={this.handleSubmit}
 				closeCallback={this.closeForm}
 			>
+				{
+					this.state.novalue
+					?
+					<p className="alert">
+						Please provide at least a name or number
+					</p>
+					:
+					null
+				}
 				{
 					fields.map((field, i) =>
 						// when in preview mode,
@@ -87,21 +106,28 @@ class ContactForm extends React.Component {
 					</div>
 				}
 			</form.Form>
-		)
-	}
-}
+		);
+	};
+};
 
 const mapStateToProps = state => {
-	const {mode, entry} = state.contactModProps
+	const {mode, entry} = state.contactModProps;
 	return {
 		mode,
 		entry
-	}
-}
+	};
+};
 
 const mapDispatchToProps = {
 	modifyContact,
 	toggleContactForm,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)
+ContactForm.propTypes = {
+	mode: PropTypes.string.isRequired,
+	entry: PropTypes.object,
+	modifyContact: PropTypes.func,
+	toggleContactForm: PropTypes.func
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
