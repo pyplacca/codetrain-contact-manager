@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 // Redux store
 import { connect } from 'react-redux'
 import {
@@ -11,7 +11,7 @@ import { fields } from './components/forms/fields'
 // Components
 import AddButton from "./components/add-button.jsx"
 import ContentCategory from "./components/content-category.jsx"
-import ContactCard from "./components/cards/contact-card.jsx"
+import CardSegment from "./components/name-group.jsx"
 import ContentDisplay from "./components/content-display.jsx"
 import ContactForm from "./components/forms/contact-form.jsx"
 import GroupCard from "./components/cards/group-card.jsx"
@@ -50,10 +50,17 @@ class App extends React.Component {
 	}
 
 	render () {
-
-		const {contacts, view, groups} = this.props
+		const { view, groups } = this.props
 		const groupNames = Object.keys(groups)
-		const contactList = Object.values(contacts)
+		let {contacts} = this.props
+		const contactsCount = Object.keys(contacts).length
+		contacts = Object.values(contacts)
+			.reduce((output, contact) => {
+				const {name} = contact
+				const key = (name ? name[0].toUpperCase() : '#')
+				output[key] = [...(output[key] || []), contact]
+				return output
+			} , {})
 
 		return (
 			<div className="App">
@@ -63,19 +70,24 @@ class App extends React.Component {
 						<div>
 							<h2>Contacts</h2>
 							<p>{
-								contactList.length +
+								(contactsCount || 0) +
 								" contact" +
-								(contactList.length !== 1 ? 's' : '')
+								(contactsCount !== 1 ? 's' : '')
 							}</p>
 						</div>
 						<AddButton clickCallback={this.newContactForm} />
 					</div>
 					<ContentDisplay>
 						{
-							contactList.length
+							contactsCount
 							?
-							contactList.map(
-								info => <ContactCard info={info} key={info.id}/>
+							Object.keys(contacts).sort().map(
+								(key, i) =>
+									<CardSegment
+										title={key}
+										collection={contacts[key].sort()}
+										key={i}
+									/>
 							)
 							:
 							<p className="tip">
@@ -86,6 +98,23 @@ class App extends React.Component {
 							</p>
 						}
 					</ContentDisplay>
+
+					{/* Contacts segment shortcuts */}
+					<div className="contact-shortcuts">
+						{
+							"#ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(
+								(char, i) =>
+									<a
+										className={
+											"shortcut" +
+											(contacts[char] ? " is-linked" : "")
+										}
+										href={"#" + char}
+										key={i}
+									>{char}</a>
+							)
+						}
+					</div>
 				</ContentCategory>
 
 				{/* Groups Category */}
@@ -95,7 +124,7 @@ class App extends React.Component {
 					</div>
 					<ContentDisplay>
 						{
-							!contactList.length
+							!contactsCount
 							?
 							// placeholder text to be shown when there
 							// aren't any contacts available
@@ -129,7 +158,7 @@ class App extends React.Component {
 					</ContentDisplay>
 					<AddButton
 						clickCallback={
-							contactList.length ? this.newGroupForm : null
+							contactsCount ? this.newGroupForm : null
 						}
 					/>
 				</ContentCategory>
