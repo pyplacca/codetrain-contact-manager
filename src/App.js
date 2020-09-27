@@ -11,7 +11,7 @@ import { fields } from './components/forms/fields'
 // Components
 import AddButton from "./components/add-button.jsx"
 import ContentCategory from "./components/content-category.jsx"
-import CardSegment from "./components/name-group.jsx"
+import CardSegment from "./components/card-segment.jsx"
 import ContentDisplay from "./components/content-display.jsx"
 import ContactForm from "./components/forms/contact-form.jsx"
 import GroupCard from "./components/cards/group-card.jsx"
@@ -85,7 +85,13 @@ class App extends React.Component {
 								(key, i) =>
 									<CardSegment
 										title={key}
-										collection={contacts[key].sort()}
+										collection={
+											contacts[key]
+											.sort(
+												(a.name < b.name) ? -1 :
+												((a.name > b.name) ? 1 : 0)
+											)
+										}
 										key={i}
 									/>
 							)
