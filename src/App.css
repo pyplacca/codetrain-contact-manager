@@ -324,7 +324,7 @@ button span {
 .shortcut.is-linked {
 	font-size: .9rem;
 	color: unset;
-	font-weight: 500;
+	font-weight: 600;
 	cursor: pointer;
 }
 
