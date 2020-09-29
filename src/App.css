@@ -153,6 +153,7 @@ button span {
 	padding: 50px 0px;
 	justify-content: center;
 	flex-flow: row wrap;
+	background-color: #fff;
 }
 
 /* # Content Category */
@@ -163,6 +164,7 @@ button span {
 	margin: var(--spacing);
 	border: 1px solid var(--color-primary);
 	border-radius: var(--radius);
+	background-color: inherit;
 }
 
 .content-category .head {
@@ -171,6 +173,7 @@ button span {
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 30px;
+	background-color: inherit;
 }
 
 .content-category#contacts {
@@ -190,13 +193,14 @@ button span {
 	margin-bottom: var(--spacing);
 	overflow: hidden auto;
 	scroll-behavior: smooth;
+	background-color: inherit;
 }
 
 /* Card segment */
 
 .card-segment {
 	margin: .5rem 0 1rem 0;
-	background-color: #fff;
+	background-color: inherit;
 }
 
 .card-segment h3 {
@@ -313,16 +317,19 @@ button span {
 }
 
 .shortcut {
+	list-style: none;
+	margin: 2px calc(var(--spacing) / 2);
+}
+
+.shortcut a {
 	font-family: Roboto, sans-serif;
-	font-size: .75rem;
+	font-size: .9rem;
 	color: var(--grey-light);
 	text-decoration: none;
-	margin: 6px;
 	cursor: default;
 }
 
-.shortcut.is-linked {
-	font-size: .9rem;
+.shortcut.is-linked a {
 	color: unset;
 	font-weight: 600;
 	cursor: pointer;
@@ -471,6 +478,15 @@ button span {
 /* MEDIA QUERIES */
 
 @media (hover: hover) {
+
+	/* hide scrollbar if cursor is out the content box */
+	.content-category#contacts .content-display::-webkit-scrollbar {
+		width: 0px;
+	}
+
+	.content-category#contacts .content-display:hover::-webkit-scrollbar {
+		width: 6px;
+	}
 
 	/* hide the edit and delete buttons if
 		the pointing device can hover over the card */
