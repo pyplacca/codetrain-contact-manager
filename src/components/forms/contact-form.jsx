@@ -11,7 +11,7 @@ class ContactForm extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {...this.props.entry, novalue: false};
+		this.state = {...this.props.entry, novalue: undefined};
 
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
