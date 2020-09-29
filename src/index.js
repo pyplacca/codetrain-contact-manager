@@ -5,7 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux'
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { getFirebase, reactReduxFirebase } from 'react-redux-firebase';
+import { /*getFirebase,*/ reactReduxFirebase } from 'react-redux-firebase';
 import { getFirestore, reduxFirestore } from 'redux-firestore';
 import * as serviceWorker from './serviceWorker';
 import firebase from './firebase/config';
