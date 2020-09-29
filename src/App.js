@@ -54,6 +54,7 @@ class App extends React.Component {
 		const groupNames = Object.keys(groups)
 		let {contacts} = this.props
 		const contactsCount = Object.keys(contacts).length
+		// segment contacts into groups by alphabets or hashtag (#)
 		contacts = Object.values(contacts)
 			.reduce((output, contact) => {
 				const {name} = contact
@@ -83,11 +84,14 @@ class App extends React.Component {
 							?
 							Object.keys(contacts).sort().map(
 								(key, i) =>
+									// create segments of each alphabet group.
 									<CardSegment
 										title={key}
 										collection={
+											// sort contacts in each segment
+											// by name in ascending order
 											contacts[key]
-											.sort(
+											.sort((a, b) =>
 												(a.name < b.name) ? -1 :
 												((a.name > b.name) ? 1 : 0)
 											)
@@ -106,21 +110,22 @@ class App extends React.Component {
 					</ContentDisplay>
 
 					{/* Contacts segment shortcuts */}
-					<div className="contact-shortcuts">
+					<ul className="contact-shortcuts">
 						{
 							"#ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(
 								(char, i) =>
-									<a
+									<li
 										className={
 											"shortcut" +
 											(contacts[char] ? " is-linked" : "")
 										}
-										href={"#" + char}
 										key={i}
-									>{char}</a>
+									>
+										<a href={"#" + char}>{char}</a>
+									</li>
 							)
 						}
-					</div>
+					</ul>
 				</ContentCategory>
 
 				{/* Groups Category */}
