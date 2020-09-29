@@ -85,7 +85,12 @@ class GroupForm extends React.Component {
 					*/}
 				<div className="checklist">
 					{
-						Object.values(contacts).map(contact =>
+						Object.values(contacts)
+						.sort((a, b) =>
+							(a.name < b.name) ? -1 :
+							((a.name > b.name) ? 1 : 0)
+						)
+						.map(contact =>
 							<form.FormField key={contact.id}>
 								<input
 									type="checkbox"
