@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeContactModProps, toggleContactForm, eraseContact } from '../../store/actions';
+import { changeContactModProps, toggleContactForm, eraseData } from '../../store/actions';
 // import { unmountComponentAtNode } from 'react-dom';
 import Icons from '../icons.jsx';
 
@@ -31,7 +31,7 @@ class ContactCard extends React.Component {
 
 	deleteContact (event) {
 		event.stopPropagation();
-		this.props.eraseContact(this.props.info.id);
+		this.props.eraseData('contacts', this.props.info.id);
 	};
 
 	getEntry () {
@@ -88,13 +88,13 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
 	changeContactModProps,
-	eraseContact,
+	eraseData,
 	toggleContactForm
 };
 
 ContactCard.propTypes = {
 	contacts: PropTypes.objectOf(PropTypes.object).isRequired,
-	eraseContact: PropTypes.func,
+	eraseData: PropTypes.func,
 	toggleContactForm: PropTypes.func,
 	changeContactModProps: PropTypes.func,
 };
