@@ -1,11 +1,13 @@
 import React, {Fragment} from "react";
 // Redux store
 import { connect } from 'react-redux'
+// dispatch actions
 import {
 	toggleContactForm,
 	toggleGroupForm,
 	changeContactModProps,
-	changeGroupModProps
+	changeGroupModProps,
+	retrieveData
 } from './store/actions'
 import { fields } from './components/forms/fields'
 // Components
@@ -47,6 +49,12 @@ class App extends React.Component {
 			entry: undefined
 		})
 		this.props.toggleGroupForm('open')
+	}
+
+	componentDidMount() {
+		const {retrieveData} = this.props
+		retrieveData('contacts', 'RETRIEVE_CONTACTS')
+		retrieveData('groups', 'RETRIEVE_GROUPS')
 	}
 
 	render () {
@@ -199,6 +207,7 @@ const mapDispatchToProps = {
 	toggleGroupForm,
 	changeContactModProps,
 	changeGroupModProps,
+	retrieveData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
