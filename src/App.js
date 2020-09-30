@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 // Redux store
 import { connect } from 'react-redux'
 // dispatch actions
@@ -62,7 +62,7 @@ class App extends React.Component {
 		const groupNames = Object.keys(groups)
 		let {contacts} = this.props
 		const contactsCount = Object.keys(contacts).length
-		// segment contacts into groups by alphabets or hashtag (#)
+		// segment contacts into groups of alphabets or #
 		contacts = Object.values(contacts)
 			.reduce((output, contact) => {
 				const {name} = contact
@@ -92,7 +92,6 @@ class App extends React.Component {
 							?
 							Object.keys(contacts).sort().map(
 								(key, i) =>
-									// create segments of each alphabet group.
 									<CardSegment
 										title={key}
 										collection={

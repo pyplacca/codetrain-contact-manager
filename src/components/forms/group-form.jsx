@@ -26,7 +26,7 @@ class GroupForm extends React.Component {
 	}
 
 	handleSelection ({target}) {
-		let {members, memberCount} = this.state
+		let {members} = this.state
 		const {name, checked} = target
 		if (checked) {
 			members[name] = this.props.contacts[name]
@@ -51,7 +51,7 @@ class GroupForm extends React.Component {
 	render () {
 		const [
 			{ contacts, mode },
-			{ name, memberCount, members }
+			{ name, members }
 		] = [
 			this.props,
 			this.state
