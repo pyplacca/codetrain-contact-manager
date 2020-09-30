@@ -37,34 +37,6 @@ export default function reducer (state=initialState, action) {
 				groupModProps: payload,
 			}
 
-		case 'ERASE_CONTACT':
-			const contacts = {...state.contacts}
-			delete contacts[payload]
-			return {
-				...state,
-				contacts
-			}
-
-		// creates a new or updates an old contact
-		/*
-		case 'MODIFY_CONTACT':
-			return {
-				...state,
-				contacts: {
-					...state.contacts,
-					[payload.id]: payload
-				}
-			}
-
-		case 'MODIFY_GROUP':
-			return {
-				...state,
-				groups: {
-					...state.groups,
-					[payload.name]: payload.members
-				}
-			}
-		*/
 		case 'RETRIEVE_CONTACTS':
 			return {
 				...state,
