@@ -17,51 +17,85 @@ function createFormAction(form, actionType, payload) {
 		}
 	}
 
-	return {
-		contact: newAction(
+	return newAction(...{
+		contact: [
 			types.contact[actionType],
 			payload
-		),
-		group: newAction(
+		],
+		group: [
 			types.group[actionType],
 			payload
-		)
-	}[form]
+		]
+	}[form])
 }
 
 export const changeContactModProps = props => createFormAction('contact', 'changeMod', props)
 
 export const changeGroupModProps = props => createFormAction('group', 'changeMod', props)
 
-export const eraseContact = id => newAction('ERASE_CONTACT', id)
+export const eraseData = (collection, docId) => {
+	return (dispatch, getState, {db}) => {
+		db()
+			.collection('Contacts Manager')
+			.doc('phonebook')
+			.collection(collection)
+			.doc(docId)
+			.delete()
+			.catch(err => console.log)
+	}
+}
 
 export const modifyContact = info => {
 	return (dispatch, getState, {db}) => {
 		db()
-			.collection('Contacts App')
+			.collection('Contacts Manager')
 			.doc('phonebook')
 			.collection('contacts')
 			.doc(info.id)
 			.set(info)
-			.then(() => {
-				dispatch(newAction('MODIFY_CONTACT', info))
-			})
 			.catch(err => console.log)
 	}
 }
 
 export const modifyGroup = group => {
 	return (dispatch, getState, {db}) => {
-		db()
-			.collection('Contacts App')
+		const collection = db()
+			.collection('Contacts Manager')
 			.doc('phonebook')
 			.collection('groups')
+		/*
+		Updating a group whose name was modified requires that we delete the group
+			data bearing the old name (group.oldname) and replace it with the group
+			data bearing the new name (group.name)
+		This complication is due to the structure or technique used to store the group(s) data
+
+		Let me know if you know a better way.
+		*/
+		if (group.oldname && group.oldname !== group.name) {
+			collection.doc(group.oldname).delete()
+		}
+
+		collection
 			.doc(group.name)
 			.set(group.members)
-			.then(() => {
-				dispatch(newAction('MODIFY_GROUP', group))
-			})
 			.catch(err => console.log)
+	}
+}
+
+export const retrieveData = (collection, actionType) => {
+	return (dispatch, getState, {db}) => {
+		db()
+			.collection('Contacts Manager')
+			.doc('phonebook')
+			.collection(collection)
+			.onSnapshot(snapshot => {
+				let output = {}
+				snapshot.forEach(entry => output[entry.id] = entry.data())
+				dispatch({
+					type: actionType,
+					payload: output
+				})
+			})
 	}
 }
 
