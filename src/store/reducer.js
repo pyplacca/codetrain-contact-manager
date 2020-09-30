@@ -46,6 +46,7 @@ export default function reducer (state=initialState, action) {
 			}
 
 		// creates a new or updates an old contact
+		/*
 		case 'MODIFY_CONTACT':
 			return {
 				...state,
@@ -62,6 +63,18 @@ export default function reducer (state=initialState, action) {
 					...state.groups,
 					[payload.name]: payload.members
 				}
+			}
+		*/
+		case 'RETRIEVE_CONTACTS':
+			return {
+				...state,
+				contacts: payload
+			}
+
+		case 'RETRIEVE_GROUPS':
+			return {
+				...state,
+				groups: payload
 			}
 
 		case 'TOGGLE_CONTACT_FORM':
