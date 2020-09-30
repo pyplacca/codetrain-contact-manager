@@ -31,16 +31,20 @@ class GroupForm extends React.Component {
 		if (checked) {
 			members[name] = this.props.contacts[name]
 		} else {
-			members.delete(name)
+			delete members[name]
 		}
 		this.setState({
-			...this.state, members
+			...this.state,
+			members,
 		})
 	}
 
 	handleSubmit (event) {
 		event.preventDefault()
-		this.props.modifyGroup(this.state)
+		this.props.modifyGroup({
+			...this.state,
+			oldname: this.props.name
+		})
 		this.closeForm()
 	}
 
