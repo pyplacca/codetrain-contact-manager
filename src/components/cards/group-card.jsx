@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeGroupModProps, toggleGroupForm } from '../../store/actions';
+import { changeGroupModProps, toggleGroupForm, eraseData } from '../../store/actions';
+import Icons from '../icons.jsx';
 
 
 class GroupCard extends React.Component {
 
 	render () {
-		const {name, count} = this.props;
+		const {name, count, eraseData} = this.props;
 		return (
 			<section
 				className="card group"
@@ -23,6 +24,17 @@ class GroupCard extends React.Component {
 				<p className="count">
 					{`${count} contact${count > 1 ? 's' : ''}`}
 				</p>
+				<div className="modify">
+					<button
+						title="Edit"
+						onClick={event => {
+							event.stopPropagation()
+							eraseData('groups', name)
+						}}
+					>
+						<Icons.Delete />
+					</button>
+				</div>
 			</section>
 		);
 	};
@@ -30,7 +42,8 @@ class GroupCard extends React.Component {
 
 const mapDispatchToProps = {
 	changeGroupModProps,
-	toggleGroupForm
+	toggleGroupForm,
+	eraseData
 };
 
 GroupCard.defaultProps = {
@@ -42,7 +55,8 @@ GroupCard.propTypes = {
 	name: PropTypes.string.isRequired,
 	count: PropTypes.number.isRequired,
 	toggleGroupForm: PropTypes.func,
-	changeGroupModProps: PropTypes.func
+	changeGroupModProps: PropTypes.func,
+	eraseData: PropTypes.func
 };
 
 
