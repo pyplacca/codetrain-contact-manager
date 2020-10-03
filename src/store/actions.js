@@ -17,16 +17,7 @@ function createFormAction(form, actionType, payload) {
 		}
 	}
 
-	return newAction(...{
-		contact: [
-			types.contact[actionType],
-			payload
-		],
-		group: [
-			types.group[actionType],
-			payload
-		]
-	}[form])
+	return newAction(types[form][actionType], payload)
 }
 
 export const changeContactModProps = props => createFormAction('contact', 'changeMod', props)
