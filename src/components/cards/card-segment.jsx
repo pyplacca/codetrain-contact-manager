@@ -1,8 +1,8 @@
 import React from 'react'
-import ContactCard from "./cards/contact-card.jsx"
+import { ContactCard } from "."
 
 
-function CardSegment ({title, collection}) {
+export default function CardSegment ({title, collection}) {
 	return (
 		<div
 			id={title}
@@ -21,6 +21,3 @@ function CardSegment ({title, collection}) {
 		</div>
 	)
 }
-
-
-export default CardSegment

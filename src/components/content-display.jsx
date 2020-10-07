@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class ContentDisplay extends React.Component {
+export class ContentDisplay extends React.Component {
 
 	render () {
 		return (
@@ -11,6 +11,3 @@ class ContentDisplay extends React.Component {
 		)
 	}
 }
-
-
-export default ContentDisplay

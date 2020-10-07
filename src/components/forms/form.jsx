@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class FormField extends React.Component {
+export class FormField extends React.Component {
 	render() {
 		const {label, children} = this.props
 		return (
@@ -14,7 +14,7 @@ class FormField extends React.Component {
 }
 
 
-class Form extends React.Component {
+export class Form extends React.Component {
 	render () {
 		const {
 			title,
@@ -55,7 +55,3 @@ class Form extends React.Component {
 		)
 	}
 }
-
-const form = { Form, FormField }
-
-export default form

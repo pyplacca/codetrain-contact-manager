@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-class ContentCategory extends React.Component {
+export class ContentCategory extends React.Component {
 
 	render () {
 		const {id, children} = this.props
@@ -12,5 +12,3 @@ class ContentCategory extends React.Component {
 		)
 	}
 }
-
-export default ContentCategory

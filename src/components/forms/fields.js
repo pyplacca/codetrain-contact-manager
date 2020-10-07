@@ -1,4 +1,4 @@
-export const fields = [
+const fields = [
 	{
 		type: 'text',
 		name: 'name',
@@ -54,3 +54,5 @@ export const fields = [
 		placeholder: 'Anniversary / Birthday'
 	},
 ]
+
+export default fields

@@ -1,19 +1,16 @@
 import React from 'react'
-import Icons from './icons.jsx'
+import { icons } from '.'
 
 
-class AddButton extends React.Component {
+export class AddButton extends React.Component {
 	render () {
 		return (
 			<button
 				className="add"
 				onClick={this.props.clickCallback}
 			>
-				<Icons.Add />
+				<icons.Add />
 			</button>
 		)
 	}
 }
-
-
-export default AddButton

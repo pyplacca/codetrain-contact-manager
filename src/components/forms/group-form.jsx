@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { toggleGroupForm, modifyGroup } from '../../store/actions'
-import form from "./form.jsx"
+import { form } from '.';
 
 
 class GroupForm extends React.Component {
@@ -128,10 +128,11 @@ GroupForm.propTypes = {
 }
 
 const mapStateToProps = state => {
-	const {mode, entry} = state.groupModProps
+	const {mainReducer} =  state
+	const {mode, entry} = mainReducer.groupModProps
 	return {
-		contacts: state.contacts,
-		groups: state.groups,
+		contacts: mainReducer.contacts,
+		groups: mainReducer.groups,
 		name: entry || '',
 		mode,
 	}

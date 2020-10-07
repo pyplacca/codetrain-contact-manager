@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeContactModProps, toggleContactForm, eraseData } from '../../store/actions';
 // import { unmountComponentAtNode } from 'react-dom';
-import Icons from '../icons.jsx';
+import { icons } from '../.';
 
 
 class ContactCard extends React.Component {
@@ -68,13 +68,13 @@ class ContactCard extends React.Component {
 						title="Edit"
 						onClick={this.toggleEdit}
 					>
-						<Icons.Edit />
+						<icons.Edit />
 					</button>
 					<button
 						title="Delete"
 						onClick={this.deleteContact}
 					>
-						<Icons.Delete />
+						<icons.Delete />
 					</button>
 				</div>
 			</section>
@@ -83,7 +83,7 @@ class ContactCard extends React.Component {
 };
 
 const mapStateToProps = state => ({
-	contacts: state.contacts
+	contacts: state.mainReducer.contacts
 });
 
 const mapDispatchToProps = {

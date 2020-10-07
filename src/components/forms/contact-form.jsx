@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleContactForm, modifyContact } from '../../store/actions';
-import form from "./form.jsx";
-import { fields } from './fields';
+import { fields, form } from '.';
 import { v4 as uuid4 } from 'uuid';
 
 
@@ -111,7 +110,7 @@ class ContactForm extends React.Component {
 };
 
 const mapStateToProps = state => {
-	const {mode, entry} = state.contactModProps;
+	const {mode, entry} = state.mainReducer.contactModProps;
 	return {
 		mode,
 		entry
