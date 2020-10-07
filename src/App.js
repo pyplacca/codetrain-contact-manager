@@ -9,18 +9,18 @@ import {
 	changeGroupModProps,
 	retrieveData
 } from './store/actions'
-import { fields } from './components/forms/fields'
 // Components
-import AddButton from "./components/add-button.jsx"
-import ContentCategory from "./components/content-category.jsx"
-import CardSegment from "./components/card-segment.jsx"
-import ContentDisplay from "./components/content-display.jsx"
-import ContactForm from "./components/forms/contact-form.jsx"
-import GroupCard from "./components/cards/group-card.jsx"
-import GroupForm from "./components/forms/group-form.jsx"
-// import Footer from "./components/footer.jsx"
+import {
+	AddButton,
+	ContentCategory,
+	cards,
+	ContentDisplay,
+	forms,
+} from "./components"
 // Styles
 import "./App.css";
+
+console.log(forms)
 
 
 class App extends React.Component {
@@ -34,7 +34,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			fields.map(obj => [obj.name, ''])
+			forms.fields.map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',
@@ -92,7 +92,7 @@ class App extends React.Component {
 							?
 							Object.keys(contacts).sort().map(
 								(key, i) =>
-									<CardSegment
+									<cards.CardSegment
 										title={key}
 										collection={
 											// sort contacts in each segment
@@ -157,7 +157,7 @@ class App extends React.Component {
 								// a group card is automatically deleted once there are
 								// no contacts present in that group after update.
 								groupNames.sort().map((name, i) =>
-									<GroupCard
+									<cards.GroupCard
 										name={name}
 										count={Object.keys(groups[name]).length}
 										key={i}
@@ -186,10 +186,10 @@ class App extends React.Component {
 					They can be used to create, edit and preview a contact / group
 				*/}
 				{
-					view.contactForm === 'open' ? <ContactForm /> : null
+					view.contactForm === 'open' ? <forms.ContactForm /> : null
 				}
 				{
-					view.groupForm === 'open' ? <GroupForm /> : null
+					view.groupForm === 'open' ? <forms.GroupForm /> : null
 				}
 				{/*<Footer />*/}
 			</div>
@@ -198,7 +198,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	...state
+	...state.mainReducer
 })
 
 const mapDispatchToProps = {
