@@ -1,16 +1,17 @@
 import firebase from 'firebase';
 
+console.log(process.env)
 // Firebase configuration
 var firebaseConfig = {
-	apiKey: "AIzaSyDv8Wr5cp6z_FYcCBYypL3gvioc-bO0bs8",
-	authDomain: "ct-g14-m.firebaseapp.com",
-	databaseURL: "https://ct-g14-m.firebaseio.com",
-	projectId: "ct-g14-m",
-	storageBucket: "ct-g14-m.appspot.com",
-	messagingSenderId: "671773754814",
-	appId: "1:671773754814:web:33a7a28be0e85dc9bce5ef",
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	databaseURL: process.env.REACT_APP_DB_URL,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_STORAGE_BKT,
+	messagingSenderId: process.env.REACT_APP_MSG_SNDR_ID,
+	appId: process.env.REACT_APP_APP_ID,
 	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-	measurementId: "G-T64CKLLSW2"
+	measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
