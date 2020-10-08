@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeGroupModProps, toggleGroupForm, eraseData } from '../../store/actions';
-import { icons } from '.././';
+import { Misc } from '.././';
 
 
 class GroupCard extends React.Component {
@@ -32,7 +32,7 @@ class GroupCard extends React.Component {
 							eraseData('groups', name)
 						}}
 					>
-						<icons.Delete />
+						<Misc.Icons.Delete />
 					</button>
 				</div>
 			</section>

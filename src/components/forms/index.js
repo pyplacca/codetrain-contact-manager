@@ -1,5 +1,5 @@
-import ContactForm from './contact-form';
-import GroupForm from './group-form';
+import ContactForm from './ContactForm';
+import GroupForm from './GroupForm';
 import fields from './fields';
 import * as form from './form';
 

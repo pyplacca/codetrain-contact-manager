@@ -1,26 +1,18 @@
 import React from "react";
-// Redux store
+// Redux store subscriber
 import { connect } from 'react-redux'
-// dispatch actions
+// components
+import { Misc, Cards, Forms } from "."
+// styles
+import "../css/app.css";
+// store actions
 import {
 	toggleContactForm,
 	toggleGroupForm,
 	changeContactModProps,
 	changeGroupModProps,
 	retrieveData
-} from './store/actions'
-// Components
-import {
-	AddButton,
-	ContentCategory,
-	cards,
-	ContentDisplay,
-	forms,
-} from "./components"
-// Styles
-import "./App.css";
-
-console.log(forms)
+} from '../store/actions'
 
 
 class App extends React.Component {
@@ -34,7 +26,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			forms.fields.map(obj => [obj.name, ''])
+			Forms.fields.map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',
@@ -74,7 +66,7 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				{/* Contacts Category */}
-				<ContentCategory id="contacts">
+				<Misc.ContentCategory id="contacts">
 					<div className="head">
 						<div>
 							<h2>Contacts</h2>
@@ -84,15 +76,15 @@ class App extends React.Component {
 								(contactsCount !== 1 ? 's' : '')
 							}</p>
 						</div>
-						<AddButton clickCallback={this.newContactForm} />
+						<Misc.Buttons.Add clickCallback={this.newContactForm} />
 					</div>
-					<ContentDisplay>
+					<Misc.ContentDisplay>
 						{
 							contactsCount
 							?
 							Object.keys(contacts).sort().map(
 								(key, i) =>
-									<cards.CardSegment
+									<Cards.CardSegment
 										title={key}
 										collection={
 											// sort contacts in each segment
@@ -114,7 +106,7 @@ class App extends React.Component {
 								icon above.
 							</p>
 						}
-					</ContentDisplay>
+					</Misc.ContentDisplay>
 
 					{/* Contacts segment shortcuts */}
 					<ul className="contact-shortcuts">
@@ -133,14 +125,14 @@ class App extends React.Component {
 							)
 						}
 					</ul>
-				</ContentCategory>
+				</Misc.ContentCategory>
 
 				{/* Groups Category */}
-				<ContentCategory id="groups">
+				<Misc.ContentCategory id="groups">
 					<div className="head">
 						<h2>Groups</h2>
 					</div>
-					<ContentDisplay>
+					<Misc.ContentDisplay>
 						{
 							!contactsCount
 							?
@@ -157,7 +149,7 @@ class App extends React.Component {
 								// a group card is automatically deleted once there are
 								// no contacts present in that group after update.
 								groupNames.sort().map((name, i) =>
-									<cards.GroupCard
+									<Cards.GroupCard
 										name={name}
 										count={Object.keys(groups[name]).length}
 										key={i}
@@ -173,25 +165,22 @@ class App extends React.Component {
 								</p>
 							)
 						}
-					</ContentDisplay>
-					<AddButton
+					</Misc.ContentDisplay>
+					<Misc.Buttons.Add
 						clickCallback={
 							contactsCount ? this.newGroupForm : null
 						}
 					/>
-				</ContentCategory>
+				</Misc.ContentCategory>
 
 				{/*
 					Both contact and group forms are multipurposed.
 					They can be used to create, edit and preview a contact / group
 				*/}
-				{
-					view.contactForm === 'open' ? <forms.ContactForm /> : null
-				}
-				{
-					view.groupForm === 'open' ? <forms.GroupForm /> : null
-				}
-				{/*<Footer />*/}
+				{[
+					view.contactForm === 'open' ? <Forms.ContactForm key={1} /> : null,
+					view.groupForm === 'open' ? <Forms.GroupForm key={2}/> : null
+				]}
 			</div>
 		);
 	}

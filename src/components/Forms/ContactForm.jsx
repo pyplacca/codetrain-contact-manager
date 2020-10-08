@@ -31,10 +31,7 @@ class ContactForm extends React.Component {
 		const {entry, modifyContact} = this.props;
 		// don't create a contact entry if a name or number has not been provided
 		if (!(this.state.name || this.state.number)) {
-			this.setState({
-				...this.state,
-				novalue: true
-			})
+			this.setState({novalue: true})
 			return;
 		};
 		delete this.state['novalue'];
@@ -79,8 +76,9 @@ class ContactForm extends React.Component {
 						// when in preview mode,
 						// don't display a field that has no value
 						mode === 'preview' && !this.state[field.name] ? null :
-						<form.FormField label={field.label} key={i}>
+						<form.InputField label={field.label} key={i}>
 							<input
+								autoFocus={!i}
 								type={field.type}
 								placeholder={field.placeholder}
 								disabled={disabled}
@@ -88,7 +86,7 @@ class ContactForm extends React.Component {
 								value={this.state[field.name]}
 								onChange={this.handleInputChange}
 							/>
-						</form.FormField>
+						</form.InputField>
 					)
 				}
 				{

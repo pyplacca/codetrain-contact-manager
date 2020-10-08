@@ -33,10 +33,7 @@ class GroupForm extends React.Component {
 		} else {
 			delete members[name]
 		}
-		this.setState({
-			...this.state,
-			members,
-		})
+		this.setState({members})
 	}
 
 	handleSubmit (event) {
@@ -67,6 +64,7 @@ class GroupForm extends React.Component {
 			>
 				<form.FormField label="Group Name">
 					<input
+						autoFocus
 						type="text"
 						placeholder="Enter group name"
 						name="name"

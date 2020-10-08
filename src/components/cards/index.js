@@ -1,6 +1,6 @@
-import GroupCard from './group-card';
-import ContactCard from './contact-card';
-import CardSegment from './card-segment';
+import GroupCard from './GroupCard';
+import ContactCard from './ContactCard';
+import CardSegment from './CardSegment';
 
 export {
 	CardSegment,
