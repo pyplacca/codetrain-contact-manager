@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeGroupModProps, toggleGroupForm, eraseData } from '../../store/actions';
-// import { changeGroupModProps, toggleGroupForm, eraseData } from 'store/actions';
-import * as Misc from '../../components/Misc';
-// import { Misc } from 'components';
+// import { changeGroupModProps, toggleGroupForm, eraseData } from '../../store/actions';
+import { changeGroupModProps, toggleGroupForm, eraseData } from 'store/actions';
+// import * as Misc from '../../components/Misc';
+import { Misc } from 'components';
 
 
 class GroupCard extends React.Component {

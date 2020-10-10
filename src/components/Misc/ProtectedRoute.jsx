@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import * as Misc from './components/Misc';
-// import { Misc } from 'components'
+// import * as Misc from './components/Misc';
+import { Misc } from 'components'
 
 class ProtectedRoute extends React.Component {
 	render () {
