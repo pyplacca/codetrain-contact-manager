@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route } from 'react-router-dom';
-import { Misc, Pages } from 'components';
+import * as Misc from 'components/Misc';
+import * as Pages from 'components/Pages';
+// import { Misc, Pages } from 'components';
 
 
 export default function Router () {
