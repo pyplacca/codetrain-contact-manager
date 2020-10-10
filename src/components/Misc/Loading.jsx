@@ -5,9 +5,9 @@ export default function Loading () {
 	return (
 		<div className="Loading">
 			<h2 className="Loading__text">Contact Manager</h2>
-			<span className="Loading__loader" />
+			<span className="loader" />
 			<p className="Loading__signature">
-				version 4.0.1
+				{'version ' +  process.env.REACT_APP_VERSION}
 			</p>
 		</div>
 	)
