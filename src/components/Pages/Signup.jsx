@@ -6,7 +6,7 @@ import { signUp } from 'store/actions';
 import "static/css/signin.css";
 
 
-class Login extends React.Component {
+class Signup extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -78,7 +78,7 @@ class Login extends React.Component {
 								autoComplete: 'new-password'
 							}}
 						/>
-						<input type="submit" value="Let's get started" />
+						<input type="submit" value="Sign Up" />
 					</form>
 					<p className="Signin__or">or Sign up with</p>
 					<div className="Signin__options">
@@ -135,4 +135,4 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
