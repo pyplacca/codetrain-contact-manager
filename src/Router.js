@@ -20,5 +20,5 @@ export default function Router () {
 				component={Pages.Signup}
 			/>
 		</BrowserRouter>
-	)
-}
+	);
+};
