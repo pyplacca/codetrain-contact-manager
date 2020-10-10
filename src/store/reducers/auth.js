@@ -1,28 +1,27 @@
 const authState = {
-	isLoggingIn: true,
-	isSigningUp: false,
-	isLoggedIn: false,
-	loggedInWith: '',
-	isAuthenticating: false,
-	user: undefined,
+	loginError: null,
+	hasSetLoginError: false,
+	signupError: null,
+	hasSetSignupError: false,
 }
-
 
 export default function authReducer (state=authState, action) {
 	const {type, payload} = action;
-
 	switch (type) {
-		case 'USE_LOG_IN': return {
-			...state,
-			isLoggingIn: true,
-			isSigningUp: false,
-		}
 
-		case 'USE_SIGN_UP': return {
-			...state,
-			isSigningUp: true,
-			isLoggingIn: false
-		}
+		case 'SET_LOG_IN_ERROR':
+			return {
+				...state,
+				loginError: payload,
+				hasSetLoginError: Boolean(payload)
+			}
+
+		case 'SET_SIGN_UP_ERROR':
+			return {
+				...state,
+				loginError: payload,
+				hasSetSigninError: Boolean(payload)
+			}
 
 		default: return state
 	}
