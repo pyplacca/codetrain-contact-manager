@@ -195,7 +195,6 @@ button span {
 
 .card-segment h3 {
 	color: var(--color-primary);
-	/*text-align: right;*/
 	padding-bottom: var(--spacing);
 	position: sticky;
 	top: 0;
@@ -433,7 +432,6 @@ button span {
 }
 
 .form-modal .form-main form .form-buttons {
-	/*display: : grid;*/
 	column-gap: var(--spacing);
 	grid-template-columns: 1fr 1fr;
 	padding: var(--spacing) 0;
@@ -503,8 +501,9 @@ button span {
 	}
 }
 
+/*
 @media (hover: none) {
 	.content-category .head .tip {
-		/*display: unset;*/
 	}
 }
+*/
