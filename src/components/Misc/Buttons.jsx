@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icons } from '.';
+import { Icons } from './Icons';
+// import { Icons } from '.';
 
 
 export class Add extends React.Component {

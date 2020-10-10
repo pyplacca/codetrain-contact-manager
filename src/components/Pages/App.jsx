@@ -2,13 +2,13 @@ import React from "react";
 // Redux store subscriber
 import { connect } from 'react-redux'
 // components
-import * as Cards from 'components/Cards';
-import * as Misc from 'components/Misc';
-import * as Forms from 'components/Forms';
+import * as Cards from '../../components/Cards';
+import * as Misc from '../../components/Misc';
+import * as Forms from '../../components/Forms';
 // import { Misc, Cards, Forms } from "components";
 
 // styles
-import "static/css/app.css";
+import "../../static/css/app.css";
 // store actions
 import {
 	toggleContactForm,
