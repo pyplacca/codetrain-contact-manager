@@ -48,3 +48,24 @@
 	font-family: Robo;
 	src: url('../fonts/Roboto-Regular.ttf');
 }
+
+.loader {
+	width: var(--size);
+	height: var(--size);
+	margin-top: var(--size);
+	border: 2px solid var(--color-primary);
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-radius: 50%;
+	-webkit-animation: animateLoader 1s linear 0s infinite;
+	-moz-animation: animateLoader 1s linear 0s infinite;
+	-ms-animation: animateLoader 1s linear 0s infinite;
+	-o-animation: animateLoader 1s linear 0s infinite;
+	animation: animateLoader 1s linear 0s infinite;
+}
+
+@keyframes animateLoader {
+	to {
+		transform: rotate(360deg);
+	}
+}
