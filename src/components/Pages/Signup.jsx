@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import * as Forms from 'components/Forms';
-import * as Misc from 'components/Misc';
-// import { Forms, Misc } from 'components';
+import { Forms, Misc } from 'components';
 import { signUp, signIn } from 'store/actions';
 import "static/css/signin.css";
 
