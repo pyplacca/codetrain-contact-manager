@@ -7,18 +7,24 @@ class Header extends React.Component {
 		super(props)
 		this.state = {
 			showMenu: false,
-		}
-	}
+		};
+	};
 
 	render () {
-		const {dp, name, signOutFunc} = this.props
+		const {dp, name, signOutFunc} = this.props;
+
 		return (
 			<header className="Header">
+				<h3 className="Header__app_title">
+					{
+						process.env.REACT_APP_NAME
+					}
+				</h3>
 				<div className="Header__profile">
 					<img
 						className="Header__profile__image"
 						src={dp || "assets/images/user.png"}
-						alt="profile image"
+						alt="user profile"
 						onClick={
 							() => this.setState({
 								showMenu: !this.state.showMenu
@@ -29,7 +35,7 @@ class Header extends React.Component {
 						"Header__profile__menu" +
 						(this.state.showMenu ? ' show' : '')
 					}>
-						<p className="username">{name}</p>
+						<p className="username" title={name}>{name}</p>
 						<button
 							className="signout_btn"
 							onClick={signOutFunc}
@@ -37,9 +43,9 @@ class Header extends React.Component {
 					</div>
 				</div>
 			</header>
-		)
-	}
-}
+		);
+	};
+};
 
 
 export default Header
