@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as Forms from './components/Forms';
-import * as Misc from './components/Misc';
-// import { Forms, Misc } from 'components';
-import { signIn } from '../../store/actions';
-import "../../static/css/signin.css";
-// import "static/css/signin.css";
+import { Forms, Misc } from 'components';
+// import * as Forms from './components/Forms';
+// import * as Misc from './components/Misc';
+import { signIn } from 'store/actions';
+// import { signIn } from '../../store/actions';
+import "static/css/signin.css";
+// import "../../static/css/signin.css";
 
 
 class Login extends React.Component {
