@@ -2,49 +2,106 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Forms, Misc } from 'components';
-import { signUp } from 'store/actions';
+import { signUp, signIn } from 'store/actions';
 import "static/css/signin.css";
 
 
 class Signup extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			loginInstead: false,
 			isLoggingIn: false,
+			isAuthenticating: false,
 			// showPassword: false
-			errorMsg: ''
-		}
-		this.signupWithEmail = this.signupWithEmail.bind(this)
-		this.signupWithProvider = this.signupWithProvider.bind(this)
-	}
-
-	componentDidMount () {
-
+			error: null,
+			errorMsg: '',
+			hasSetError: false,
+		};
+		this.signupWithEmail = this.signupWithEmail.bind(this);
+		this.signupWithProvider = this.signupWithProvider.bind(this);
 	}
 
 	signupWithProvider ({currentTarget}) {
-		console.log(currentTarget.name)
+		this.props.signIn(currentTarget.name);
 	}
 
 	signupWithEmail (event) {
 		event.preventDefault()
 		const {email, password, password2} = event.target.elements;
-		if (password !== password2) {
+		const check = this.checkPassword(password.value, password2.value);
+		if (!check.code) {
+			this.setState({isAuthenticating: true})
+			this.props.signUp(email.value, password.value);
+		} else {
+			this.setErrorMessage(check)
+		}
+	};
+
+	setErrorMessage (error) {
+		let [{code, email, message}, errorType] = [error,];
+		[errorType, code] = code.split('/');
+
+		if (errorType === 'auth') {
+			if (code.includes('exists')) {
+				message = 'An account already exists with' + email +
+					'Please log in instead with the credentials linked to that email'
+			};
 			this.setState({
-				errorMsg: 'Passwords do not match. Please try again.'
-			})
+				error,
+				errorMsg: message,
+				hasSetError: true,
+				isAuthenticating: false
+			});
 		}
 	}
 
+	checkPassword(pw1, pw2) {
+		if (pw1 !== pw2) {
+			return {
+				message: 'Passwords do not match. Please check and try again',
+				code: 'auth/password-mismatch'
+			}
+		} else if (pw1.length < 6) {
+			return {
+				message: 'Password too short. Must be at least 6 characters long',
+				code: 'auth/short-password'
+			}
+		}
+		return {}
+	}
+
 	render () {
-		const {loginInstead, errorMsg} = this.state
+		const {
+			loginInstead, errorMsg, hasSetError, error, isAuthenticating
+		} = this.state;
+		const {fbRdcr, signupError, hasSetSignupError} = this.props;
+		const {auth, authError} = fbRdcr;
+
+		if (!auth.isLoaded) {
+			return <Misc.Loading />
+		};
+
+		if (auth.isLoaded && auth.uid) {
+			return <Redirect to={{pathname: '/'}} />
+		};
+
+		const tmpError = authError || signupError;
+		if (
+			(tmpError && !hasSetError) ||
+			(hasSetSignupError && error.code !== tmpError.code)
+		) {
+			this.setErrorMessage(tmpError)
+		}
+
 		return !loginInstead ? (
 			<div className="Signin">
 				<div className="Signin__container">
 					<h1 className="title">Create an Account</h1>
 					<p className="sub_title">
-						Getting started here is easy. <br/> Just enter your email and a strong password.
+						Getting started here is easy.
+						<br/>
+						Just enter your email and a strong password.
 					</p>
 					<form onSubmit={this.signupWithEmail}>
 						<p className="Signin__error">{errorMsg}</p>
@@ -78,12 +135,12 @@ class Signup extends React.Component {
 								autoComplete: 'new-password'
 							}}
 						/>
-						<input type="submit" value="Sign Up" />
+						<input type="submit" value="Sign Up" tabIndex="0" />
 					</form>
 					<p className="Signin__or">or Sign up with</p>
 					<div className="Signin__options">
 						{
-							['google', 'github', 'apple'].map((provider, i) =>
+							['google', 'github', 'facebook'].map((provider, i) =>
 								<button
 									className="option"
 									name={provider}
@@ -93,6 +150,7 @@ class Signup extends React.Component {
 										provider[0].toUpperCase() +
 										provider.substring(1)
 									}
+									tabIndex="0"
 									key={i}
 								>
 									<img
@@ -112,10 +170,16 @@ class Signup extends React.Component {
 									this.setState({loginInstead: true})
 								}
 							}
+							tabIndex="0"
 						>
 							Log in instead
 						</span>
 					</p>
+					{
+						isAuthenticating ?
+						<span className="loader" /> :
+						null
+					}
 				</div>
 				<Misc.Footer />
 			</div>
@@ -125,13 +189,18 @@ class Signup extends React.Component {
 	};
 };
 
-const mapStateToProps = state => ({
-	fbRdcr: state.firebaseReducer,
-	authRdcr: state.authReducer,
-})
+const mapStateToProps = state => {
+	const {signupError, hasSetSignupError} = state.authReducer
+	return {
+		fbRdcr: state.firebaseReducer,
+		signupError,
+		hasSetSignupError
+	}
+}
 
 const mapDispatchToProps = {
-	signUp
+	signUp,
+	signIn
 }
 
 

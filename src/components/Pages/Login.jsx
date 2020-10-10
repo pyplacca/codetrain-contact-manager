@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Forms, Misc } from 'components';
-import { logIn } from 'store/actions';
+import { signIn } from 'store/actions';
 import "static/css/signin.css";
 
 
@@ -12,36 +12,71 @@ class Login extends React.Component {
 		this.state = {
 			signupInstead: false,
 			isLoggingIn: false,
+			isAuthenticating: false,
 			// showPassword: false
-			errorMsg: ''
+			error: null,
+			errorMsg: '',
+			hasSetErrorMsg: false
 		}
 		this.loginWithEmail = this.loginWithEmail.bind(this)
 		this.loginWithProvider = this.loginWithProvider.bind(this)
 	}
 
-	componentDidMount () {
-
-	}
-
 	loginWithProvider ({currentTarget}) {
-		console.log(currentTarget.name)
+		this.props.signIn(currentTarget.name)
 	}
 
 	loginWithEmail (event) {
 		event.preventDefault()
-		// const {email, password, password2} = event.target.elements;
-	}
+		const {email, password} = event.target.elements;
+		this.setState({isAuthenticating: true})
+		this.props.signIn('email', {
+			email: email.value,
+			password: password.value
+		});
+	};
+
+	setErrorMessage (error) {
+		let [{code, message}, errorType] = [error,];
+		[errorType, code] = code.split('/');
+
+		if (errorType === 'auth') {
+			if (code === 'user-not-found') {
+				message = 'No login credentials found. Please create an account instead';
+			};
+			if (code === 'wrong-password') {
+				message = 'The password you entered is invalid';
+			}
+			this.setState({
+				error,
+				errorMsg: message,
+				hasSetErrorMsg: true,
+				isAuthenticating: false
+			});
+		}
+	};
 
 	render () {
-		const {errorMsg, signupInstead} = this.state;
-		const {auth} = this.props.fbRdcr;
-		console.log(this.props.fbRdcr)
+		const {
+			errorMsg, signupInstead, hasSetErrorMsg, error, isAuthenticating
+		} = this.state;
+		const {fbRdcr, loginError, hasSetLoginError} = this.props;
+		const {auth, authError} = fbRdcr;
+
 		if (!auth.isLoaded) {
 			return <Misc.Loading />
 		};
 
 		if (auth.isLoaded && auth.uid) {
 			return <Redirect to={{pathname: '/'}} />
+		};
+
+		const tmpError = authError || loginError;
+		if (
+			(tmpError && !hasSetErrorMsg) ||
+			(hasSetLoginError && error.code !== tmpError.code)
+		) {
+			this.setErrorMessage(tmpError);
 		};
 
 		return !signupInstead ? (
@@ -73,12 +108,12 @@ class Login extends React.Component {
 								autoComplete: 'current-password',
 							}}
 						/>
-						<input type="submit" value="Log in" />
+						<input type="submit" value="Log in" tabIndex="0" />
 					</form>
 					<p className="Signin__or">or Log in with</p>
 					<div className="Signin__options">
 						{
-							['google', 'github', 'apple'].map((provider, i) =>
+							['google', 'github', 'facebook'].map((provider, i) =>
 								<button
 									className="option"
 									name={provider}
@@ -88,6 +123,7 @@ class Login extends React.Component {
 										provider[0].toUpperCase() +
 										provider.substring(1)
 									}
+									tabIndex="0"
 									key={i}
 								>
 									<img
@@ -107,26 +143,37 @@ class Login extends React.Component {
 									this.setState({signupInstead: true})
 								}
 							}
+							tabIndex="0"
 						>
 							Create one
 						</span>
 					</p>
 				</div>
+				{
+					isAuthenticating ?
+					<span className="loader" /> :
+					null
+				}
 				<Misc.Footer />
 			</div>
 		) : (
 			<Redirect to={{pathname: '/signup'}} />
-		);
+		)
 	};
 };
 
-const mapStateToProps = state => ({
-	fbRdcr: state.firebaseReducer,
-})
+const mapStateToProps = state => {
+	const {loginError, hasSetLoginError} = state.authReducer;
+	return {
+		fbRdcr: state.firebaseReducer,
+		loginError,
+		hasSetLoginError
+	};
+};
 
 const mapDispatchToProps = {
-	logIn,
-}
+	signIn,
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
