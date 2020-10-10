@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { toggleGroupForm, modifyGroup } from '../../store/actions'
+import { toggleGroupForm, modifyGroup } from 'store/actions'
 import { form } from '.';
 
 
@@ -62,28 +62,28 @@ class GroupForm extends React.Component {
 				className={` ${mode}-mode`}
 				submitCallback={this.handleSubmit}
 			>
-				<form.FormField label="Group Name">
-					<input
-						autoFocus
-						type="text"
-						placeholder="Enter group name"
-						name="name"
-						id="group-name"
-						value={name}
-						onChange={({target}) => this.setState({
+				<form.InputField
+					label="Group Name"
+					inputAttrs={{
+						autoFocus: true,
+						type:"text",
+						placeholder:"Enter group name",
+						name:"name",
+						id:"group-name",
+						value:name,
+						onChange:({target}) => this.setState({
 							name: target.value
-						})}
-						required
-					/>
-				</form.FormField>
-
-				<form.FormField label="Select Contacts" />
+						}),
+						required:true,
+					}}
+				/>
+				<form.InputField label="Select Contacts" />
 					{/*
 						memberCount ? null :
 						<p className="alert">
 							Please select at least one contact
 						</p>
-				</form.FormField>
+				</form.InputField>
 					*/}
 				<div className="checklist">
 					{
@@ -93,15 +93,17 @@ class GroupForm extends React.Component {
 							((a.name > b.name) ? 1 : 0)
 						)
 						.map(contact =>
-							<form.FormField key={contact.id}>
-								<input
-									type="checkbox"
-									name={contact.id}
-									checked={Boolean(members[contact.id])}
-									onChange={this.handleSelection}
-								/>
+							<form.InputField
+								key={contact.id}
+								inputAttrs={{
+									type:"checkbox",
+									name:contact.id,
+									checked:Boolean(members[contact.id]),
+									onChange:this.handleSelection,
+								}}
+							>
 								{contact.name || contact.number}
-							</form.FormField>
+							</form.InputField>
 						)
 					}
 				</div>

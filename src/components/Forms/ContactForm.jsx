@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleContactForm, modifyContact } from '../../store/actions';
+import { toggleContactForm, modifyContact } from 'store/actions';
 import { fields, form } from '.';
 import { v4 as uuid4 } from 'uuid';
 
@@ -76,17 +76,19 @@ class ContactForm extends React.Component {
 						// when in preview mode,
 						// don't display a field that has no value
 						mode === 'preview' && !this.state[field.name] ? null :
-						<form.InputField label={field.label} key={i}>
-							<input
-								autoFocus={!i}
-								type={field.type}
-								placeholder={field.placeholder}
-								disabled={disabled}
-								name={field.name}
-								value={this.state[field.name]}
-								onChange={this.handleInputChange}
-							/>
-						</form.InputField>
+						<form.InputField
+							label={field.label}
+							inputAttrs={{
+								autoFocus:!i,
+								type:field.type,
+								placeholder:field.placeholder,
+								disabled,
+								name:field.name,
+								value:this.state[field.name],
+								onChange:this.handleInputChange,
+							}}
+							key={i}
+						/>
 					)
 				}
 				{

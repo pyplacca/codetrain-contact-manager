@@ -1,11 +1,12 @@
 import React from 'react'
 
 
-export function InputField ({label, children}) {
+export function InputField ({label, children, inputAttrs}) {
 	return (
 		<section className="field">
-			{label ? <label>{label}</label> : null}
-			{children}
+			{ label ? <label>{label}</label> : null }
+			{ inputAttrs ? <input {...inputAttrs} /> : null }
+			{ children }
 		</section>
 	)
 }
