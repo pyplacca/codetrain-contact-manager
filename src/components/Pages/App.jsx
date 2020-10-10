@@ -52,7 +52,6 @@ class App extends React.Component {
 
 	render () {
 		const { view, groups, fbRdcr, signOut } = this.props
-		// console.log(fbRdcr)
 		const user = fbRdcr.auth.providerData[0]; // logged in user's info
 		const groupNames = Object.keys(groups);
 		let {contacts} = this.props;
@@ -71,8 +70,7 @@ class App extends React.Component {
 				{/* Page header */}
 				<Misc.Header
 					name={user.displayName || user.email}
-					dp={null}
-					// dp={user.photoURL}
+					dp={user.photoURL}
 					signOutFunc={signOut}
 				/>
 				{/* Main area */}
