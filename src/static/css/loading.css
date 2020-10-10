@@ -1,0 +1,47 @@
+.Loading {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	backdrop-filter: blur(3px);
+}
+
+.Loading__text {
+	color: var(--color-primary);
+	font-family: 'Product Sans', sans-serif;
+	letter-spacing: .2rem;
+	word-spacing: .6rem;
+	font-weight: 500;
+}
+
+.Loading__loader {
+	width: var(--size);
+	height: var(--size);
+	margin-top: var(--size);
+	border: 2px solid var(--color-primary);
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-radius: 50%;
+	-webkit-animation: animateLoader 1s linear 0s infinite;
+	-moz-animation: animateLoader 1s linear 0s infinite;
+	-ms-animation: animateLoader 1s linear 0s infinite;
+	-o-animation: animateLoader 1s linear 0s infinite;
+	animation: animateLoader 1s linear 0s infinite;
+}
+
+.Loading__signature {
+	font-family: Roboto, sans-serif;
+	position: absolute;
+	bottom: 50px;
+	font-size: .85rem;
+	color: var(--grey-dark);
+}
+
+@keyframes animateLoader {
+	to {
+		transform: rotate(360deg);
+	}
+}

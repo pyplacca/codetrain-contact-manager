@@ -1,59 +1,42 @@
 /*
 Table of Content
 
-	1. root (variables)
+	1. BASE STYLES (general / reset)
+		1.1. Reset
+		1.1. Rest of elements
+		1.2. Scrollbars
 
-	2. BASE STYLES (general / reset)
-		2.1. Reset
-		2.1. Rest of elements
-		2.2. Scrollbars
+	2. MAIN STYLES AND OVERRIDES
+		2.1. Content Category
+		2.2. Content Display
+		2.3. Card Segment
+		2.4. Card
+		2.5. Buttons and buttons icons
+		2.6. Shortcuts
+		2.7. Form modal
+		2.8. Form inputs
 
-	3. MAIN STYLES AND OVERRIDES
-		4.1. Content Category
-		4.2. Content Display
-		4.3. Card Segment
-		4.4. Card
-		4.5. Buttons and buttons icons
-		4.6. Shortcuts
-		4.7. Form modal
-		4.8. Form inputs
+	3. ANIMATION KEYFRAMES
 
-	4. ANIMATION KEYFRAMES
-
-	5. MEDIA QUERIES
+	4. MEDIA QUERIES
 */
-
-
-:root {
-	--spacing: 12px;
-
-	/* colors */
-	--color-primary: orange;
-	--color-secondary: royalblue;
-	--red: #ff2222;
-	--red-light: #ff5c5c;
-	--grey-light: #d8d8d8;
-	--grey-mid: #b5b5b5;
-	--grey-dark: #777;
-
-	/* accents */
-	--radius: 15px;
-}
 
 
 /* BASE STYLES */
 
-/* Reset */
-
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: TitiBold, sans-serif;
 }
 
 /* Rest of elements */
 
 .App,
+.App__container,
 .content-display,
 .content-category,
 .content-category .head,
@@ -80,7 +63,6 @@ Table of Content
 }
 
 button {
-	--size: 25px;
 	width: var(--size);
 	height: var(--size);
 	padding: 2.5px;
@@ -149,11 +131,19 @@ button span {
 /* MAIN STYLES AND OVERRIDES */
 
 .App {
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.App__container {
 	/*margin: auto;*/
 	padding: 50px 0px;
 	justify-content: center;
 	flex-flow: row wrap;
+	flex-grow: 1;
+	margin-bottom: auto;
 	background-color: #fff;
+	font-family: RoboLight, sans-serif;
 }
 
 /* # Content Category */
@@ -210,6 +200,7 @@ button span {
 	position: sticky;
 	top: 0;
 	background-color: inherit;
+	font: TitiSemi, sans-serif;
 }
 
 /* Card */
@@ -246,10 +237,12 @@ button span {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow-x: hidden;
+	font-family: Robo, sans-serif;
 }
 
 .content-display .card.contact .info .name {
 	font-weight: 600;
+	margin-bottom: 3px;
 }
 
 .content-display .card.contact .info .number {
@@ -314,6 +307,7 @@ button span {
 	justify-content: center;
 	margin-top: 1rem;
 	padding: 0 var(--spacing);
+	font-family: TitiSemi, sans-serif;
 }
 
 .shortcut {
@@ -322,7 +316,7 @@ button span {
 }
 
 .shortcut a {
-	font-family: Roboto, sans-serif;
+	font-family: Robo, sans-serif;
 	font-size: .9rem;
 	color: var(--grey-light);
 	text-decoration: none;
@@ -379,6 +373,7 @@ button span {
 	padding: var(--spacing) 0;
 	text-transform: capitalize;
 	font-weight: bold;
+	font-family: Robo, sans-serif;
 	font-size: .9rem;
 }
 
@@ -396,7 +391,7 @@ button span {
 .form-modal .form-main input:not([type="submit"]) {
 	/*border: none;*/
 	font-size: .95em;
-	font-family: Roboto, serif;
+	font-family: Robo, serif;
 	transition: border ease-in-out .3s;
 }
 
@@ -420,11 +415,12 @@ button span {
 
 .form-modal .form-main input[type="submit"],
 .form-modal .form-main input[type="button"] {
-	text-transform: uppercase;
-	background-color: var(--color-primary);
 	color: #fff;
+	background-color: var(--color-primary);
+	border-radius: calc(var(--radius) * .25);
+	font-family: TitiSemi, sans-serif;
+	text-transform: uppercase;
 	overflow: hidden;
-	border-radius: calc(var(--radius) * .25)
 }
 
 .form-modal .form-main input[type="button"] {

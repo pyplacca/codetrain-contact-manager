@@ -1,0 +1,50 @@
+:root {
+	--spacing: 12px;
+	--spacing-dbl: calc(var(--spacing) * 2);
+	--spacing-half: calc(var(--spacing) * .5);
+
+	/* colors */
+	--color-primary: orange;
+	--color-secondary: royalblue;
+	--red: #ff2222;
+	--red-light: #ff5c5c;
+	--grey-light: #d8d8d8;
+	--grey-mid: #b5b5b5;
+	--grey-dark: #777;
+
+	/* accents */
+	--radius: 15px;
+	--size: 25px;
+}
+
+
+/* Reset */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+/* Fonts */
+
+@font-face {
+	font-family: TitiSemi;
+	src: url('../fonts/TitilliumWeb-SemiBold.ttf');
+}
+
+@font-face {
+	font-family: TitiBold;
+	src: url('../fonts/TitilliumWeb-Bold.ttf');
+}
+
+@font-face {
+	font-family: RoboLight;
+	src: url('../fonts/Roboto-Light.ttf');
+}
+
+@font-face {
+	font-family: Robo;
+	src: url('../fonts/Roboto-Regular.ttf');
+}

@@ -1,0 +1,23 @@
+.Footer,
+.Footer__signature {
+	display: flex;
+	align-items: center;
+}
+
+.Footer {
+	width: 100%;
+	padding: var(--spacing);
+	justify-content: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+	background-color: var(--color-primary);
+	color: #fff;
+}
+
+.Footer > * {
+	margin: var(--spacing-half);
+}
+
+.Footer__signature > *:not(:last-child) {
+	margin-right: var(--spacing);
+}
