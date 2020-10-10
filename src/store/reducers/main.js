@@ -1,4 +1,4 @@
-const initialState = {
+const mainState = {
 	// Each contact entry is an object with integer(s), string(s) and/or array(s)
 	contacts: {},
 	groups: {},
@@ -20,7 +20,7 @@ const initialState = {
 }
 
 
-export default function mainReducer (state=initialState, action) {
+export default function mainReducer (state=mainState, action) {
 	const { type, payload } = action
 
 	switch (type) {
