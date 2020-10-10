@@ -18,8 +18,7 @@
 .Signin .title,
 .Signin .sub_title,
 .Signin__or,
-.Signin .instead,
-.Signin__error {
+.Signin .instead {
 	text-align: center;
 	padding: 0 var(--spacing);
 	max-width: 350px;
@@ -49,7 +48,7 @@
 
 .Signin form {
 	width: clamp(270px, 80%, 420px);
-	margin: calc(var(--spacing) * 2);
+	margin: var(--spacing-dbl);
 }
 
 .Signin form .field {
@@ -58,6 +57,9 @@
 
 .Signin form label {
 	display: none;
+	padding-bottom: var(--spacing-half);
+	font-size: .9rem;
+	color: var(--grey-mid);
 }
 
 .Signin form input {
@@ -69,17 +71,19 @@
 	font-size: .9rem;
 }
 
+.Signin form input:focus,
+.Signin form input[type="submit"]:focus {
+	border-color: var(--grey-dark);
+}
+
 .Signin form input:not([type="submit"]) {
 	--bgs: 20px;
 	text-align: unset;
-	padding-left: calc(var(--bgs) + var(--spacing) * 2);
+	padding-left: calc(var(--bgs) + var(--spacing-dbl));
 	background-size: var(--bgs) auto;
 	background-repeat: no-repeat;
 	background-position: var(--spacing) center;
-}
-
-.Signin form input:not([type="submit"]):focus {
-	border-color: var(--grey-dark);
+	font-family: RoboLight, sans-serif;
 }
 
 .Signin form input:not([type="submit"]):focus::placeholder {
@@ -93,6 +97,7 @@
 	border: none;
 	font-family: TitiSemi, sans-serif;
 	text-transform: uppercase;
+	border: 1px solid transparent;
 }
 
 .Signin form input[type="email"] {
@@ -134,13 +139,15 @@
 .Signin__options .option {
 	--size: 45px;
 	--pad: calc(var(--spacing) * .75);
+	--bdc: var(--grey-mid);
 
 	align-items: center;
 	width: unset !important;
 	height: unset !important;
 
-	padding: var(--pad);
-	border-radius: var(--size);
+	padding: var(--spacing-half);
+	border: 1px solid transparent;
+	border-radius: 50%;
 
 	font-size: 1rem;
 	text-align: center;
@@ -153,6 +160,10 @@
 	-ms-transition: border-color .2s ease-in-out;
 	-o-transition: border-color .2s ease-in-out;
 	transition: border-color .2s ease-in-out;
+}
+
+.Signin__options .option:focus {
+	border-color: var(--bdc);
 }
 
 .Signin__options .option img {
@@ -170,11 +181,12 @@
 }
 
 .Signin .instead .anchor {
+	outline: none;
 	color: var(--color-primary);
 	cursor: pointer;
 }
 
-.Signin .instead .anchor:hover {
+.Signin .instead .anchor:focus {
 	text-decoration: underline;
 }
 
@@ -185,9 +197,13 @@
 }
 
 
-/*@media (hover: hover) {
-	.option:hover {
-		border-color: #fff;
+@media (hover: hover) {
+	.Signin__options .option:hover {
+		border-color: var(--bdc);
+	}
+
+	.Signin .instead .anchor:hover {
+		text-decoration: underline;
 	}
 }
-*/
+
