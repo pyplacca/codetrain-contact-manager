@@ -1,16 +1,24 @@
-// import React from "react";
-// import { BrowserRouter, Route } from 'react-router-dom';
-// import { App, Login, Misc } from './components';
+import React from "react";
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Misc, Pages } from 'components';
 
 
 export default function Router () {
-	return null
-	/*
 	return (
 		<BrowserRouter>
-			<Misc.ProtectedRoute exact path="/" component={App} />
-			<Route exact path="/login" component={Login} />
+			<Misc.ProtectedRoute
+				exact
+				path="/"
+				component={Pages.App}
+			/>
+			<Route
+				path="/login"
+				component={Pages.Login}
+			/>
+			<Route
+				path="/signup"
+				component={Pages.Signup}
+			/>
 		</BrowserRouter>
 	)
-	*/
 }
