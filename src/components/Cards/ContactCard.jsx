@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeContactModProps, toggleContactForm, eraseData } from '../../store/actions';
+import { changeContactModProps, toggleContactForm, eraseData } from 'store/actions';
 // import { unmountComponentAtNode } from 'react-dom';
-import { Misc } from '../.';
+import { Misc } from 'components';
 
 
 class ContactCard extends React.Component {
