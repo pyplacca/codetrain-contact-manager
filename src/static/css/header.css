@@ -1,6 +1,12 @@
 .Header {
 	display: flex;
+	align-items: center;
 	padding: var(--spacing) var(--spacing-dbl);
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+	border-bottom: 1px solid #f0f0f0;
+	z-index: 100;
 }
 
 .Header__profile {
@@ -21,6 +27,7 @@
 	position: absolute;
 	right: 0;
 	font-family: RoboLight, sans-serif;
+	cursor: default;
 
 	opacity: 0;
 	-webkit-transform: scale(0);
@@ -53,7 +60,7 @@
 }
 
 .Header__profile__menu {
-	--bdc: var(--grey-light);
+	--bdc: #f0f0f0;
 	--pos: 100%;
 	width: 170px;
 	top: var(--pos);
@@ -79,13 +86,12 @@
 }
 
 .Header__profile__menu .username {
-	background-color: #f6f6f6;
+	color: var(--grey-mid);
+	font-size: .8rem;
 }
 
 .Header__profile__menu .signout_btn {
 	font-family: Robo, sans-serif;
-	/*background-color: var(--color-primary);*/
-	/*color: #fff;*/
 	height: unset;
 	cursor: pointer;
 }
