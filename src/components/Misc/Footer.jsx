@@ -1,11 +1,11 @@
 import React from 'react';
-// import "../../static/css/footer.css";
-import "static/css/footer.css";
+import "../../static/css/footer.css";
+// import "static/css/footer.css";
 
 
 export default function Footer () {
 	return (
-		<div className="Footer">
+		<footer className="Footer">
 			<p>
 				{
 					'Contact Manager v' +
@@ -15,6 +15,6 @@ export default function Footer () {
 			<div className="Footer__signature">
 				<p>&copy; 2020 - David Placca - Codetrain Gen 14</p>
 			</div>
-		</div>
+		</footer>
 	);
 };

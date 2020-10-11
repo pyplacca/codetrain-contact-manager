@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { changeContactModProps, toggleContactForm, eraseData } from '../../store/actions';
-import { changeContactModProps, toggleContactForm, eraseData } from 'store/actions';
+import { changeContactModProps, toggleContactForm, eraseData } from '../../store/actions';
+// import { changeContactModProps, toggleContactForm, eraseData } from 'store/actions';
 // import * as Misc from '../components/Misc';
-import { Misc } from 'components';
+import * as Icons from '../Misc/Icons';
 
 
 class ContactCard extends React.Component {
@@ -69,13 +69,13 @@ class ContactCard extends React.Component {
 						title="Edit"
 						onClick={this.toggleEdit}
 					>
-						<Misc.Icons.Edit />
+						<Icons.Edit />
 					</button>
 					<button
 						title="Delete"
 						onClick={this.deleteContact}
 					>
-						<Misc.Icons.Delete />
+						<Icons.Delete />
 					</button>
 				</div>
 			</section>

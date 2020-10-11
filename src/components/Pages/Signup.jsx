@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-// import * as Forms from '../../components/Forms';
-// import * as Misc from '../../components/Misc';
-import { Forms, Misc } from 'components';
-// import { signUp, signIn } from '../../store/actions';
-import { signUp, signIn } from 'store/actions';
-// import "../../static/css/signin.css";
-import "static/css/signin.css";
+import { InputField } from '../Forms/form';
+import Loading from '../Misc/Loading';
+import Footer from '../Misc/Footer';
+// import { Forms, Misc } from 'components';
+import { signUp, signIn } from '../../store/actions';
+// import { signUp, signIn } from 'store/actions';
+import "../../static/css/signin.css";
+// import "static/css/signin.css";
 
 
 class Signup extends React.Component {
@@ -45,12 +46,11 @@ class Signup extends React.Component {
 	setErrorMessage (error) {
 		let [{code, email, message}, errorType] = [error,];
 		[errorType, code] = code.split('/');
+		console.log(error)
 
 		if (errorType === 'auth') {
-			message = code.includes('exists') ? (
-				'An account already exists with' + email +
-				'Please log in instead with the credentials linked to that email'
-			) : ''
+			// 'An account already exists with' + email +
+			// 'Please log in instead with the credentials linked to that email'
 			this.setState({
 				error,
 				errorMsg: message,
@@ -80,7 +80,7 @@ class Signup extends React.Component {
 		const {auth, authError} = fbRdcr;
 
 		if (!auth.isLoaded) {
-			return <Misc.Loading />
+			return <Loading />
 		};
 
 		if (auth.isLoaded && auth.uid) {
@@ -90,7 +90,7 @@ class Signup extends React.Component {
 		const tmpError = authError || signupError;
 		if (
 			(tmpError && !hasSetError) ||
-			(hasSetSignupError && error.code !== tmpError.code)
+			(hasSetSignupError && (error && error.code !== tmpError.code))
 		) {
 			this.setErrorMessage(tmpError)
 		}
@@ -106,7 +106,7 @@ class Signup extends React.Component {
 					</p>
 					<form onSubmit={this.signupWithEmail}>
 						<p className="Signin__error">{errorMsg}</p>
-						<Forms.form.InputField
+						<InputField
 							label="Email"
 							inputAttrs={{
 								type: 'email',
@@ -116,7 +116,7 @@ class Signup extends React.Component {
 								autoComplete: 'username',
 							}}
 						/>
-						<Forms.form.InputField
+						<InputField
 							label="Password"
 							inputAttrs={{
 								type: 'password',
@@ -126,7 +126,7 @@ class Signup extends React.Component {
 								autoComplete: 'new-password',
 							}}
 						/>
-						<Forms.form.InputField
+						<InputField
 							label="Confirm password"
 							inputAttrs={{
 								type: 'password',
@@ -182,7 +182,7 @@ class Signup extends React.Component {
 						null
 					}
 				</div>
-				<Misc.Footer />
+				<Footer />
 			</div>
 		) : (
 			<Redirect to={{pathname: '/login'}} />
@@ -191,6 +191,7 @@ class Signup extends React.Component {
 };
 
 const mapStateToProps = state => {
+	console.log(state)
 	const {signupError, hasSetSignupError} = state.authReducer
 	return {
 		fbRdcr: state.firebaseReducer,

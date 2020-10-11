@@ -1,6 +1,6 @@
 import React from 'react'
-// import { ContactCard } from "./ContactCard"
-import { ContactCard } from "."
+import ContactCard from "./ContactCard"
+// import { ContactCard } from "."
 
 
 export default function CardSegment ({title, collection}) {

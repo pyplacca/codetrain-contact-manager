@@ -19,6 +19,7 @@
 .env.production.local
 
 npm-debug.log*
+debug.log*
 yarn-debug.log*
 yarn-error.log*
 
@@ -26,3 +27,8 @@ yarn-error.log*
 /.firebase
 .firebaserc
 firebase.json
+
+
+# temporarily hide these
+index_js
+jsconfig_json

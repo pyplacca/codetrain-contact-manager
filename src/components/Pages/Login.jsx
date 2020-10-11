@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Forms, Misc } from 'components';
-// import * as Forms from './components/Forms';
-// import * as Misc from './components/Misc';
-import { signIn } from 'store/actions';
-// import { signIn } from '../../store/actions';
-import "static/css/signin.css";
-// import "../../static/css/signin.css";
+// import { Forms, Misc } from 'components';
+import { InputField } from '../Forms/form';
+import Loading from '../Misc/Loading';
+import Footer from '../Misc/Footer';
+// import { signIn } from 'store/actions';
+import { signIn } from '../../store/actions';
+// import "static/css/signin.css";
+import "../../static/css/signin.css";
 
 
 class Login extends React.Component {
@@ -45,12 +46,16 @@ class Login extends React.Component {
 		[errorType, code] = code.split('/');
 
 		if (errorType === 'auth') {
-			if (code === 'user-not-found') {
-				message = 'No login credentials found. Please create an account instead';
-			};
-			if (code === 'wrong-password') {
-				message = 'The password you entered is invalid';
+			const codeMsg = {
+				'user-not-found': 'No login credentials found. ' +
+					'You need to first have an account to login',
+
+				'wrong-password': 'The password you entered is invalid',
+
+				'timeout': 'Could not establish connection. ' +
+					'Please check your network and try again'
 			}
+			message = codeMsg[code] || message
 			this.setState({
 				error,
 				errorMsg: message,
@@ -68,7 +73,7 @@ class Login extends React.Component {
 		const {auth, authError} = fbRdcr;
 
 		if (!auth.isLoaded) {
-			return <Misc.Loading />
+			return <Loading />
 		};
 
 		if (auth.isLoaded && auth.uid) {
@@ -78,7 +83,7 @@ class Login extends React.Component {
 		const tmpError = authError || loginError;
 		if (
 			(tmpError && !hasSetErrorMsg) ||
-			(hasSetLoginError && error.code !== tmpError.code)
+			(hasSetLoginError && (error && error.code !== tmpError.code))
 		) {
 			this.setErrorMessage(tmpError);
 		};
@@ -92,7 +97,7 @@ class Login extends React.Component {
 					</p>
 					<form onSubmit={this.loginWithEmail}>
 						<p className="Signin__error">{errorMsg}</p>
-						<Forms.form.InputField
+						<InputField
 							label="Email"
 							inputAttrs={{
 								type: 'email',
@@ -102,7 +107,7 @@ class Login extends React.Component {
 								autoComplete: 'username',
 							}}
 						/>
-						<Forms.form.InputField
+						<InputField
 							label="Password"
 							inputAttrs={{
 								type: 'password',
@@ -158,7 +163,7 @@ class Login extends React.Component {
 						null
 					}
 				</div>
-				<Misc.Footer />
+				<Footer />
 			</div>
 		) : (
 			<Redirect to={{pathname: '/signup'}} />

@@ -2,14 +2,21 @@ import React from "react";
 // Redux store subscriber
 import { connect } from 'react-redux'
 // components
-// import * as Cards from '../../components/Cards';
-// import * as Misc from '../../components/Misc';
-// import * as Forms from '../../components/Forms';
-import { Misc, Cards, Forms } from "components";
+import CardSegment from '../Cards/CardSegment';
+import GroupCard from '../Cards/GroupCard';
+import Header from '../Misc/Header';
+import Footer from '../Misc/Footer';
+import ContentCategory from '../Misc/ContentCategory';
+import ContentDisplay from '../Misc/ContentDisplay';
+import * as Buttons from '../Misc/Buttons';
+import fields from '../Forms/fields';
+import ContactForm from '../Forms/ContactForm';
+import GroupForm from '../Forms/GroupForm';
+// import { Misc, Cards, Forms } from "components";
 
 // styles
-// import "../../static/css/app.css";
-import "static/css/app.css";
+import "../../static/css/app.css";
+// import "static/css/app.css";
 // store actions
 import {
 	toggleContactForm,
@@ -18,7 +25,7 @@ import {
 	changeGroupModProps,
 	retrieveData,
 	signOut
-} from 'store/actions'
+} from '../../store/actions'
 
 
 class App extends React.Component {
@@ -32,7 +39,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			Forms.fields.map(obj => [obj.name, ''])
+			fields.map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',
@@ -73,7 +80,7 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				{/* Page header */}
-				<Misc.Header
+				<Header
 					name={user.displayName || user.email}
 					dp={user.photoURL}
 					signOutFunc={signOut}
@@ -81,7 +88,7 @@ class App extends React.Component {
 				{/* Main area */}
 				<div className="App__container">
 					{/* Contacts Category */}
-					<Misc.ContentCategory id="contacts">
+					<ContentCategory id="contacts">
 						<div className="head">
 							<div>
 								<h2>Contacts</h2>
@@ -91,15 +98,15 @@ class App extends React.Component {
 									(contactsCount !== 1 ? 's' : '')
 								}</p>
 							</div>
-							<Misc.Buttons.Add clickCallback={this.newContactForm} />
+							<Buttons.Add clickCallback={this.newContactForm} />
 						</div>
-						<Misc.ContentDisplay>
+						<ContentDisplay>
 							{
 								contactsCount
 								?
 								Object.keys(contacts).sort().map(
 									(key, i) =>
-										<Cards.CardSegment
+										<CardSegment
 											title={key}
 											collection={
 												// sort contacts in each segment
@@ -121,7 +128,7 @@ class App extends React.Component {
 									icon above.
 								</p>
 							}
-						</Misc.ContentDisplay>
+						</ContentDisplay>
 
 						{/* Contacts segment shortcuts */}
 						<ul className="contact-shortcuts">
@@ -140,14 +147,14 @@ class App extends React.Component {
 								)
 							}
 						</ul>
-					</Misc.ContentCategory>
+					</ContentCategory>
 
 					{/* Groups Category */}
-					<Misc.ContentCategory id="groups">
+					<ContentCategory id="groups">
 						<div className="head">
 							<h2>Groups</h2>
 						</div>
-						<Misc.ContentDisplay>
+						<ContentDisplay>
 							{
 								!contactsCount
 								?
@@ -164,7 +171,7 @@ class App extends React.Component {
 									// a group card is automatically deleted once there are
 									// no contacts present in that group after update.
 									groupNames.sort().map((name, i) =>
-										<Cards.GroupCard
+										<GroupCard
 											name={name}
 											count={Object.keys(groups[name]).length}
 											key={i}
@@ -180,24 +187,24 @@ class App extends React.Component {
 									</p>
 								)
 							}
-						</Misc.ContentDisplay>
-						<Misc.Buttons.Add
+						</ContentDisplay>
+						<Buttons.Add
 							clickCallback={
 								contactsCount ? this.newGroupForm : null
 							}
 						/>
-					</Misc.ContentCategory>
+					</ContentCategory>
 
 					{/*
 						Both contact and group forms are multipurposed.
 						They can be used to create, edit and preview a contact / group
 					*/}
 					{[
-						view.contactForm === 'open' ? <Forms.ContactForm key={1} /> : null,
-						view.groupForm === 'open' ? <Forms.GroupForm key={2}/> : null
+						view.contactForm === 'open' ? <ContactForm key={1} /> : null,
+						view.groupForm === 'open' ? <GroupForm key={2}/> : null
 					]}
 				</div>
-				<Misc.Footer />
+				<Footer />
 			</div>
 		);
 	}

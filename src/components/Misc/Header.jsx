@@ -1,6 +1,6 @@
 import React from 'react';
-// import '../../static/css/header.css';
-import 'static/css/header.css';
+import '../../static/css/header.css';
+// import 'static/css/header.css';
 
 
 class Header extends React.Component {
@@ -36,7 +36,7 @@ class Header extends React.Component {
 						"Header__profile__menu" +
 						(this.state.showMenu ? ' show' : '')
 					}>
-						<p className="username" title={name}>{name}</p>
+						<p className="username" title={name}>{name || 'Unknown'}</p>
 						<button
 							className="signout_btn"
 							onClick={signOutFunc}

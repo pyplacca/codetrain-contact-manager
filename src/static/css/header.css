@@ -74,7 +74,7 @@
 	width: 100%;
 	text-align: left;
 	font-size: .9rem;
-	padding: var(--spacing-half) var(--spacing);
+	padding: var(--spacing);
 	background-color: #fff;
 	white-space: nowrap;
 	text-overflow: ellipsis;

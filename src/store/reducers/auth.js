@@ -19,8 +19,8 @@ export default function authReducer (state=authState, action) {
 		case 'SET_SIGN_UP_ERROR':
 			return {
 				...state,
-				loginError: payload,
-				hasSetSigninError: Boolean(payload)
+				signupError: payload,
+				hasSetSignupError: Boolean(payload)
 			}
 
 		default: return state

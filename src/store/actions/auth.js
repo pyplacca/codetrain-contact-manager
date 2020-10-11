@@ -37,10 +37,10 @@ export function signUp (email, password) {
 			type: 'SET_SIGN_UP_ERROR',
 			payload: null
 		}))
-		.catch(err => dispatch({
+		.catch(err => {console.log(err); dispatch({
 			type: 'SET_SIGN_UP_ERROR',
 			payload: err
-		}));
+		})});
 	};
 };
 

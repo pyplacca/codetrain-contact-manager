@@ -1,6 +1,6 @@
 import React from 'react';
-// import { Icons } from './Icons';
-import { Icons } from '.';
+import * as Icons from './Icons';
+// import { Icons } from '.';
 
 
 export class Add extends React.Component {
