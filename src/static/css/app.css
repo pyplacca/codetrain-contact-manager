@@ -167,11 +167,11 @@ button span {
 }
 
 .content-category#contacts {
-	width: clamp(300px, 50%, 500px);
+	width: clamp(300px, 85%, 500px);
 }
 
 .content-category#groups {
-	width: clamp(300px, 50%, 400px);
+	width: clamp(300px, 85%, 400px);
 }
 
 /* Content Display */
