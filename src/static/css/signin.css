@@ -137,7 +137,7 @@
 }
 
 .Signin__options .option {
-	--size: 45px;
+	--size: 50px;
 	--pad: calc(var(--spacing) * .75);
 	--bdc: var(--grey-mid);
 
@@ -146,6 +146,7 @@
 	height: unset !important;
 
 	padding: var(--spacing-half);
+	margin: 0 var(--spacing-half);
 	border: 1px solid transparent;
 	border-radius: 50%;
 
