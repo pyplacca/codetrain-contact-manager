@@ -152,12 +152,12 @@ class Login extends React.Component {
 							Create one
 						</span>
 					</p>
+					{
+						isAuthenticating ?
+						<span className="loader" /> :
+						null
+					}
 				</div>
-				{
-					isAuthenticating ?
-					<span className="loader" /> :
-					null
-				}
 				<Misc.Footer />
 			</div>
 		) : (
