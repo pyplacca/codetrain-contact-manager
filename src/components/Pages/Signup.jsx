@@ -47,10 +47,10 @@ class Signup extends React.Component {
 		[errorType, code] = code.split('/');
 
 		if (errorType === 'auth') {
-			if (code.includes('exists')) {
-				message = 'An account already exists with' + email +
-					'Please log in instead with the credentials linked to that email'
-			};
+			message = code.includes('exists') ? (
+				'An account already exists with' + email +
+				'Please log in instead with the credentials linked to that email'
+			) : ''
 			this.setState({
 				error,
 				errorMsg: message,
@@ -61,18 +61,15 @@ class Signup extends React.Component {
 	}
 
 	checkPassword(pw1, pw2) {
-		if (pw1 !== pw2) {
-			return {
+		return pw1.length < 6 ? {
+			message: 'Password too short. Must be at least 6 characters long',
+			code: 'auth/short-password'
+		} : (
+			pw1 !== pw2 ? {
 				message: 'Passwords do not match. Please check and try again',
 				code: 'auth/password-mismatch'
-			}
-		} else if (pw1.length < 6) {
-			return {
-				message: 'Password too short. Must be at least 6 characters long',
-				code: 'auth/short-password'
-			}
-		}
-		return {}
+			} : {}
+		)
 	}
 
 	render () {
