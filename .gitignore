@@ -28,7 +28,5 @@ yarn-error.log*
 .firebaserc
 firebase.json
 
-
-# temporarily hide these
-index_js
-jsconfig_json
+# env
+.env
