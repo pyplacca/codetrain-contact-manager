@@ -6,7 +6,7 @@
 	top: 0;
 	background-color: #fff;
 	border-bottom: 1px solid #f0f0f0;
-	z-index: 100;
+	z-index: 5;
 }
 
 .Header__profile {

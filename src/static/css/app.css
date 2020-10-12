@@ -332,7 +332,7 @@ button span {
 
 .form-modal {
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	padding: calc(var(--spacing) * 2);
 
 	justify-content: center;
@@ -373,7 +373,7 @@ button span {
 	text-transform: capitalize;
 	font-weight: bold;
 	font-family: Robo, sans-serif;
-	font-size: .9rem;
+	/*font-size: .9rem;*/
 }
 
 .form-modal .form-main input {
