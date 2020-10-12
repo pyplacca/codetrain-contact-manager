@@ -1,9 +1,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-// import { toggleGroupForm, modifyGroup } from '../../store/actions'
 import { toggleGroupForm, modifyGroup } from 'store/actions'
-// import * as form from '../objects/form';
 import { form } from 'components/objects';
 
 

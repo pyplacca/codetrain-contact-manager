@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './static/css/global.css';
-// import 'static/css/global.css';
+import 'static/css/global.css';
 import Router from './Router';
 import { Provider } from 'react-redux'
-import store from './store/config'
+import store from 'store/config'
 import * as serviceWorker from './serviceWorker';
 
 

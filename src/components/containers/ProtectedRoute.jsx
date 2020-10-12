@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-// import Loading from './Loading';
 import { Loading } from '.'
 
 class ProtectedRoute extends React.Component {
@@ -11,7 +10,6 @@ class ProtectedRoute extends React.Component {
 
 		if (!isLoaded) {
 			return <Loading />
-			// return <Misc.Loading />
 		}
 		if (isLoaded) {
 			if (uid) {

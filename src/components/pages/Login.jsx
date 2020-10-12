@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-// import { Forms, Misc } from 'components';
 import { InputField } from '../objects/form';
-// import Loading from './Loading';
 import Footer from '../containers/Footer';
-// import { signIn } from 'store/actions';
-import { signIn } from '../../store/actions';
-// import "static/css/signin.css";
-import "../../static/css/signin.css";
+import { signIn } from 'store/actions';
+import "static/css/signin.css";
 
 
 class Login extends React.Component {
@@ -71,10 +67,6 @@ class Login extends React.Component {
 		} = this.state;
 		const {fbRdcr, loginError, hasSetLoginError} = this.props;
 		const {auth, authError} = fbRdcr;
-
-		// if (!auth.isLoaded) {
-		// 	return <Loading />
-		// };
 
 		if (!auth.isLoaded || (auth.isLoaded && auth.uid)) {
 			return <Redirect to={{pathname: '/'}} />

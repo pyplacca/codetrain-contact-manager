@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { signUp, signIn } from 'store/actions';
 import { InputField } from '../objects/form';
-// import Loading from './Loading';
 import Footer from '../containers/Footer';
-// import { Forms, Misc } from 'components';
-import { signUp, signIn } from '../../store/actions';
-// import { signUp, signIn } from 'store/actions';
-import "../../static/css/signin.css";
-// import "static/css/signin.css";
+import "static/css/signin.css";
 
 
 class Signup extends React.Component {

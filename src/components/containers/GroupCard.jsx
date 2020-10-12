@@ -5,11 +5,8 @@ import {
 	changeGroupModProps,
 	toggleGroupForm,
 	eraseData
-} from '../../store/actions';
-// import { changeGroupModProps, toggleGroupForm, eraseData } from 'store/actions';
-// import * as Icons from '../objects/Icons';
+} from 'store/actions';
 import { Objects } from 'components';
-// import { Misc } from 'components';
 
 
 class GroupCard extends React.Component {
