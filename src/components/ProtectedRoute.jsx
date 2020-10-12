@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import Loading from './Loading';
 // import { Misc } from 'components'
 
 class ProtectedRoute extends React.Component {
@@ -10,8 +9,7 @@ class ProtectedRoute extends React.Component {
 		const {isLoaded, uid} = fbauth;
 
 		if (!isLoaded) {
-			return <Loading />
-			// return <Misc.Loading />
+			return null
 		}
 		if (isLoaded) {
 			if (uid) {
