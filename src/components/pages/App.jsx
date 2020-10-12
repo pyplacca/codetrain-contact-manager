@@ -2,21 +2,21 @@ import React from "react";
 // Redux store subscriber
 import { connect } from 'react-redux'
 // components
-import ContentCategory from '../containers/ContentCategory';
-import ContentDisplay from '../containers/ContentDisplay';
-import ContactForm from '../containers/ContactForm';
-import CardSegment from '../containers/CardSegment';
-import GroupCard from '../containers/GroupCard';
-import GroupForm from '../containers/GroupForm';
-import Header from '../containers/Header';
-import Footer from '../containers/Footer';
-import * as Buttons from '../objects/Buttons';
-import fields from '../objects/fields.js';
-// import { Misc, Cards, Forms } from "components";
+// import ContentCategory from '../containers/ContentCategory';
+// import ContentDisplay from '../containers/ContentDisplay';
+// import ContactForm from '../containers/ContactForm';
+// import CardSegment from '../containers/CardSegment';
+// import GroupCard from '../containers/GroupCard';
+// import GroupForm from '../containers/GroupForm';
+// import Header from '../containers/Header';
+// import Footer from '../containers/Footer';
+// import * as Buttons from '../objects/Buttons';
+// import fields from '../objects/fields.js';
+import { Objects, Containers, Pages } from "components";
 
 // styles
-import "../../static/css/app.css";
-// import "static/css/app.css";
+// import "../../static/css/app.css";
+import "static/css/app.css";
 // store actions
 import {
 	toggleContactForm,
@@ -25,7 +25,8 @@ import {
 	changeGroupModProps,
 	retrieveData,
 	signOut
-} from '../../store/actions'
+} from 'store/actions'
+// } from '../../store/actions'
 
 
 class App extends React.Component {
@@ -39,7 +40,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			fields.map(obj => [obj.name, ''])
+			Objects.fields.map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',
@@ -80,7 +81,7 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				{/* Page header */}
-				<Header
+				<Containers.Header
 					name={user.displayName || user.email}
 					dp={user.photoURL}
 					signOutFunc={signOut}
@@ -88,7 +89,7 @@ class App extends React.Component {
 				{/* Main area */}
 				<div className="App__container">
 					{/* Contacts Category */}
-					<ContentCategory id="contacts">
+					<Containers.ContentCategory id="contacts">
 						<div className="head">
 							<div>
 								<h2>Contacts</h2>
@@ -98,15 +99,15 @@ class App extends React.Component {
 									(contactsCount !== 1 ? 's' : '')
 								}</p>
 							</div>
-							<Buttons.Add clickCallback={this.newContactForm} />
+							<Objects.Buttons.Add clickCallback={this.newContactForm} />
 						</div>
-						<ContentDisplay>
+						<Containers.ContentDisplay>
 							{
 								contactsCount
 								?
 								Object.keys(contacts).sort().map(
 									(key, i) =>
-										<CardSegment
+										<Containers.CardSegment
 											title={key}
 											collection={
 												// sort contacts in each segment
@@ -128,7 +129,7 @@ class App extends React.Component {
 									icon above.
 								</p>
 							}
-						</ContentDisplay>
+						</Containers.ContentDisplay>
 
 						{/* Contacts segment shortcuts */}
 						<ul className="contact-shortcuts">
@@ -147,14 +148,14 @@ class App extends React.Component {
 								)
 							}
 						</ul>
-					</ContentCategory>
+					</Containers.ContentCategory>
 
 					{/* Groups Category */}
-					<ContentCategory id="groups">
+					<Containers.ContentCategory id="groups">
 						<div className="head">
 							<h2>Groups</h2>
 						</div>
-						<ContentDisplay>
+						<Containers.ContentDisplay>
 							{
 								!contactsCount
 								?
@@ -171,7 +172,7 @@ class App extends React.Component {
 									// a group card is automatically deleted once there are
 									// no contacts present in that group after update.
 									groupNames.sort().map((name, i) =>
-										<GroupCard
+										<Containers.GroupCard
 											name={name}
 											count={Object.keys(groups[name]).length}
 											key={i}
@@ -187,24 +188,24 @@ class App extends React.Component {
 									</p>
 								)
 							}
-						</ContentDisplay>
-						<Buttons.Add
+						</Containers.ContentDisplay>
+						<Objects.Buttons.Add
 							clickCallback={
 								contactsCount ? this.newGroupForm : null
 							}
 						/>
-					</ContentCategory>
+					</Containers.ContentCategory>
 
 					{/*
 						Both contact and group forms are multipurposed.
 						They can be used to create, edit and preview a contact / group
 					*/}
 					{[
-						view.contactForm === 'open' ? <ContactForm key={1} /> : null,
-						view.groupForm === 'open' ? <GroupForm key={2}/> : null
+						view.contactForm === 'open' ? <Containers.ContactForm key={1} /> : null,
+						view.groupForm === 'open' ? <Containers.GroupForm key={2}/> : null
 					]}
 				</div>
-				<Footer />
+				<Containers.Footer />
 			</div>
 		);
 	}
