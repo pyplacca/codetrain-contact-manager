@@ -39,7 +39,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			fields.map(obj => [obj.name, ''])
+			fields().map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',
