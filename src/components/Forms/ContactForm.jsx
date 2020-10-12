@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleContactForm, modifyContact } from '../../store/actions';
 // import { toggleContactForm, modifyContact } from 'store/actions';
 import * as form from './form';
-import fields from './fields.js';
+import fields from './fields';
 // import { fields, form } from '.';
 import { v4 as uuid4 } from 'uuid';
 
