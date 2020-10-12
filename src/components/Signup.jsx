@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { InputField } from './form';
-import Loading from './Loading';
+// import Loading from './Loading';
 import Footer from './Footer';
 // import { Forms, Misc } from 'components';
 import { signUp, signIn } from '../store/actions';
