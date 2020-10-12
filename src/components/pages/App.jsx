@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 // import Footer from '../containers/Footer';
 // import * as Buttons from '../objects/Buttons';
 // import fields from '../objects/fields.js';
-import { Objects, Containers, Pages } from "components";
+import { Objects, Containers } from "components";
 
 // styles
 // import "../../static/css/app.css";
