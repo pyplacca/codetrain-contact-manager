@@ -9,7 +9,7 @@ import Footer from '../Misc/Footer';
 import ContentCategory from '../Misc/ContentCategory';
 import ContentDisplay from '../Misc/ContentDisplay';
 import * as Buttons from '../Misc/Buttons';
-import fields from '../Forms/fields';
+import fields from '../Forms/fields.js';
 import ContactForm from '../Forms/ContactForm';
 import GroupForm from '../Forms/GroupForm';
 // import { Misc, Cards, Forms } from "components";

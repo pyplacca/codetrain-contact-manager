@@ -44,7 +44,7 @@ class Signup extends React.Component {
 	};
 
 	setErrorMessage (error) {
-		let [{code, email, message}, errorType] = [error,];
+		let [{code, /*email,*/ message}, errorType] = [error,];
 		[errorType, code] = code.split('/');
 		console.log(error)
 
