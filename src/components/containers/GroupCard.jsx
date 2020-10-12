@@ -5,9 +5,9 @@ import {
 	changeGroupModProps,
 	toggleGroupForm,
 	eraseData
-} from '../store/actions';
+} from '../../store/actions';
 // import { changeGroupModProps, toggleGroupForm, eraseData } from 'store/actions';
-import * as Icons from './Icons';
+import * as Icons from '../objects/Icons';
 // import { Misc } from 'components';
 
 

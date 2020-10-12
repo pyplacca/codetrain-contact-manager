@@ -5,10 +5,10 @@ import {
 	changeContactModProps,
 	toggleContactForm,
 	eraseData
-} from '../store/actions';
+} from '../../store/actions';
 // import { changeContactModProps, toggleContactForm, eraseData } from 'store/actions';
 // import * as Misc from '../components/Misc';
-import * as Icons from './Icons';
+import * as Icons from '../objects/Icons';
 
 
 class ContactCard extends React.Component {

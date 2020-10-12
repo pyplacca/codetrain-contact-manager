@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleContactForm, modifyContact } from '../store/actions';
+import { toggleContactForm, modifyContact } from '../../store/actions';
 // import { toggleContactForm, modifyContact } from 'store/actions';
-import * as form from './form';
-import fields from './fields.js';
+import * as form from '../objects/form';
+import fields from '../objects/fields.js';
 // import { fields, form } from '.';
 import { v4 as uuid4 } from 'uuid';
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { InputField } from './form';
+import { InputField } from '../objects/form';
 // import Loading from './Loading';
-import Footer from './Footer';
+import Footer from '../containers/Footer';
 // import { Forms, Misc } from 'components';
-import { signUp, signIn } from '../store/actions';
+import { signUp, signIn } from '../../store/actions';
 // import { signUp, signIn } from 'store/actions';
-import "../static/css/signin.css";
+import "../../static/css/signin.css";
 // import "static/css/signin.css";
 
 

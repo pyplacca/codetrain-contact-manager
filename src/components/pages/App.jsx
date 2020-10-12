@@ -2,20 +2,20 @@ import React from "react";
 // Redux store subscriber
 import { connect } from 'react-redux'
 // components
-import CardSegment from './CardSegment';
-import GroupCard from './GroupCard';
-import Header from './Header';
-import Footer from './Footer';
-import ContentCategory from './ContentCategory';
-import ContentDisplay from './ContentDisplay';
-import * as Buttons from './Buttons';
-import fields from './fields.js';
-import ContactForm from './ContactForm';
-import GroupForm from './GroupForm';
+import ContentCategory from '../containers/ContentCategory';
+import ContentDisplay from '../containers/ContentDisplay';
+import ContactForm from '../containers/ContactForm';
+import CardSegment from '../containers/CardSegment';
+import GroupCard from '../containers/GroupCard';
+import GroupForm from '../containers/GroupForm';
+import Header from '../containers/Header';
+import Footer from '../containers/Footer';
+import * as Buttons from '../objects/Buttons';
+import fields from '../objects/fields.js';
 // import { Misc, Cards, Forms } from "components";
 
 // styles
-import "../static/css/app.css";
+import "../../static/css/app.css";
 // import "static/css/app.css";
 // store actions
 import {
@@ -25,7 +25,7 @@ import {
 	changeGroupModProps,
 	retrieveData,
 	signOut
-} from '../store/actions'
+} from '../../store/actions'
 
 
 class App extends React.Component {
