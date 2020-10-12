@@ -79,11 +79,11 @@ class Signup extends React.Component {
 		const {fbRdcr, signupError, hasSetSignupError} = this.props;
 		const {auth, authError} = fbRdcr;
 
-		if (!auth.isLoaded) {
-			return <Loading />
-		};
+		// if (!auth.isLoaded) {
+		// 	return <Loading />
+		// };
 
-		if (auth.isLoaded && auth.uid) {
+		if (!auth.isLoaded || (auth.isLoaded && auth.uid)) {
 			return <Redirect to={{pathname: '/'}} />
 		};
 

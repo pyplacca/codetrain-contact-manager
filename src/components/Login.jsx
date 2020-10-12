@@ -72,11 +72,11 @@ class Login extends React.Component {
 		const {fbRdcr, loginError, hasSetLoginError} = this.props;
 		const {auth, authError} = fbRdcr;
 
-		if (!auth.isLoaded) {
-			return <Loading />
-		};
+		// if (!auth.isLoaded) {
+		// 	return <Loading />
+		// };
 
-		if (auth.isLoaded && auth.uid) {
+		if (!auth.isLoaded || (auth.isLoaded && auth.uid)) {
 			return <Redirect to={{pathname: '/'}} />
 		};
 
