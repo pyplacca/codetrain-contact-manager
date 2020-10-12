@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleContactForm, modifyContact } from '../../store/actions';
+import { toggleContactForm, modifyContact } from '../store/actions';
 // import { toggleContactForm, modifyContact } from 'store/actions';
 import * as form from './form';
 import fields from './fields.js';
@@ -75,7 +75,7 @@ class ContactForm extends React.Component {
 					null
 				}
 				{
-					fields().map((field, i) =>
+					fields.map((field, i) =>
 						// when in preview mode,
 						// don't display a field that has no value
 						mode === 'preview' && !this.state[field.name] ? null :

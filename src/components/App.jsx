@@ -2,20 +2,20 @@ import React from "react";
 // Redux store subscriber
 import { connect } from 'react-redux'
 // components
-import CardSegment from '../Cards/CardSegment';
-import GroupCard from '../Cards/GroupCard';
-import Header from '../Misc/Header';
-import Footer from '../Misc/Footer';
-import ContentCategory from '../Misc/ContentCategory';
-import ContentDisplay from '../Misc/ContentDisplay';
-import * as Buttons from '../Misc/Buttons';
-import fields from '../Forms/fields.js';
-import ContactForm from '../Forms/ContactForm';
-import GroupForm from '../Forms/GroupForm';
+import CardSegment from './CardSegment';
+import GroupCard from './GroupCard';
+import Header from './Header';
+import Footer from './Footer';
+import ContentCategory from './ContentCategory';
+import ContentDisplay from './ContentDisplay';
+import * as Buttons from './Buttons';
+import fields from './fields.js';
+import ContactForm from './ContactForm';
+import GroupForm from './GroupForm';
 // import { Misc, Cards, Forms } from "components";
 
 // styles
-import "../../static/css/app.css";
+import "../static/css/app.css";
 // import "static/css/app.css";
 // store actions
 import {
@@ -25,7 +25,7 @@ import {
 	changeGroupModProps,
 	retrieveData,
 	signOut
-} from '../../store/actions'
+} from '../store/actions'
 
 
 class App extends React.Component {
@@ -39,7 +39,7 @@ class App extends React.Component {
 
 	newContactForm () {
 		const entry = Object.fromEntries(
-			fields().map(obj => [obj.name, ''])
+			fields.map(obj => [obj.name, ''])
 		)
 		this.props.changeContactModProps({
 			mode: 'add',

@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { InputField } from '../Forms/form';
-import Loading from '../Misc/Loading';
-import Footer from '../Misc/Footer';
+import { InputField } from './form';
+import Loading from './Loading';
+import Footer from './Footer';
 // import { Forms, Misc } from 'components';
-import { signUp, signIn } from '../../store/actions';
+import { signUp, signIn } from '../store/actions';
 // import { signUp, signIn } from 'store/actions';
-import "../../static/css/signin.css";
+import "../static/css/signin.css";
 // import "static/css/signin.css";
 
 
@@ -46,7 +46,7 @@ class Signup extends React.Component {
 	setErrorMessage (error) {
 		let [{code, /*email,*/ message}, errorType] = [error,];
 		[errorType, code] = code.split('/');
-		console.log(error)
+		// console.log(error)
 
 		if (errorType === 'auth') {
 			// 'An account already exists with' + email +
@@ -191,7 +191,7 @@ class Signup extends React.Component {
 };
 
 const mapStateToProps = state => {
-	console.log(state)
+	// console.log(state)
 	const {signupError, hasSetSignupError} = state.authReducer
 	return {
 		fbRdcr: state.firebaseReducer,

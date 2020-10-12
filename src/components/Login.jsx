@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 // import { Forms, Misc } from 'components';
-import { InputField } from '../Forms/form';
-import Loading from '../Misc/Loading';
-import Footer from '../Misc/Footer';
+import { InputField } from './form';
+import Loading from './Loading';
+import Footer from './Footer';
 // import { signIn } from 'store/actions';
-import { signIn } from '../../store/actions';
+import { signIn } from '../store/actions';
 // import "static/css/signin.css";
-import "../../static/css/signin.css";
+import "../static/css/signin.css";
 
 
 class Login extends React.Component {

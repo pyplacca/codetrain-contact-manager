@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route } from 'react-router-dom';
-import ProtectedRoute from './components/Misc/ProtectedRoute';
-import App from './components/Pages/App';
-import Login from './components/Pages/Login';
-import Signup from './components/Pages/Signup';
+import ProtectedRoute from './components/ProtectedRoute';
+import App from './components/App';
+import Login from './components/Login';
+import Signup from './components/Signup';
 // import { Misc, Pages } from 'components';
 
 

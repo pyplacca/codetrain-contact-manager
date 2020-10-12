@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeGroupModProps, toggleGroupForm, eraseData } from '../../store/actions';
+import {
+	changeGroupModProps,
+	toggleGroupForm,
+	eraseData
+} from '../store/actions';
 // import { changeGroupModProps, toggleGroupForm, eraseData } from 'store/actions';
-import * as Icons from '../Misc/Icons';
+import * as Icons from './Icons';
 // import { Misc } from 'components';
 
 

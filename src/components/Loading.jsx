@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../static/css/loading.css';
+import '../static/css/loading.css';
 // import 'static/css/loading.css';
 
 export default function Loading () {
