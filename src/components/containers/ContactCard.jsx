@@ -44,7 +44,10 @@ class ContactCard extends React.Component {
 
 	togglePreview (event) {
 		event.stopPropagation();
-		const { changeContactModProps, toggleContactForm } = this.props;
+		const {
+			changeContactModProps,
+			toggleContactForm
+		} = this.props;
 
 		changeContactModProps({
 			mode: 'preview',
@@ -64,7 +67,9 @@ class ContactCard extends React.Component {
 					onClick={this.togglePreview}
 				>
 					<h4 className="name">{name}</h4>
-					<p className="number">{info.number || 'No number'}</p>
+					<p className="number">
+						{ info.number || 'No number' }
+					</p>
 				</div>
 				<div className="modify">
 					<button
@@ -82,7 +87,7 @@ class ContactCard extends React.Component {
 				</div>
 			</section>
 		)
-	}
+	};
 };
 
 const mapStateToProps = state => ({

@@ -3,10 +3,11 @@ const authState = {
 	hasSetLoginError: false,
 	signupError: null,
 	hasSetSignupError: false,
-}
+};
 
 export default function authReducer (state=authState, action) {
 	const {type, payload} = action;
+
 	switch (type) {
 
 		case 'SET_LOG_IN_ERROR':
@@ -24,5 +25,5 @@ export default function authReducer (state=authState, action) {
 			}
 
 		default: return state
-	}
-}
+	};
+};

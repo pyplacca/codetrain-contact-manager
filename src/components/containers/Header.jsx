@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'static/css/header.css';
 
 
@@ -16,14 +17,12 @@ class Header extends React.Component {
 		return (
 			<header className="Header">
 				<h3 className="Header__app_title">
-					{
-						process.env.REACT_APP_NAME
-					}
+					{ process.env.REACT_APP_NAME }
 				</h3>
 				<div className="Header__profile">
 					<img
 						className="Header__profile__image"
-						src={dp || "assets/images/user.png"}
+						src={dp}
 						alt="user profile"
 						onClick={
 							() => this.setState({
@@ -46,6 +45,17 @@ class Header extends React.Component {
 		);
 	};
 };
+
+Header.defaultProps = {
+	dp: "assets/images/user.png",
+	name: 'Unknown',
+}
+
+Header.propTypes = {
+	dp: PropTypes.string,
+	name: PropTypes.string,
+	signOutFunc: PropTypes.func
+}
 
 
 export default Header

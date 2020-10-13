@@ -49,7 +49,7 @@
 	src: url('../fonts/Roboto-Regular.ttf');
 }
 
-.loader {
+.spinner {
 	width: var(--size);
 	height: var(--size);
 	margin-top: var(--size);

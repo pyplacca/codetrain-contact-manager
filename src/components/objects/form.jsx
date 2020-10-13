@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 
 export function InputField ({label, children, inputAttrs}) {
@@ -8,8 +8,8 @@ export function InputField ({label, children, inputAttrs}) {
 			{ inputAttrs ? <input {...inputAttrs} /> : null }
 			{ children }
 		</section>
-	)
-}
+	);
+};
 
 export function Form ({
 	children,
@@ -30,7 +30,7 @@ export function Form ({
 			}}
 			id={id}
 		>
-			<div className={"form-main" + (className || '')}>
+			<div className={"form-main " + (className || '')}>
 				{title ? <h2 className="title">{title}</h2> : null}
 				{
 					<span
@@ -46,5 +46,5 @@ export function Form ({
 				</form>
 			</div>
 		</div>
-	)
-}
+	);
+};

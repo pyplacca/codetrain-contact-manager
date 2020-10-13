@@ -10,6 +10,7 @@ import "static/css/signin.css";
 class Signup extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			loginInstead: false,
 			isLoggingIn: false,
@@ -19,13 +20,14 @@ class Signup extends React.Component {
 			errorMsg: '',
 			hasSetError: false,
 		};
+
 		this.signupWithEmail = this.signupWithEmail.bind(this);
 		this.signupWithProvider = this.signupWithProvider.bind(this);
-	}
+	};
 
 	signupWithProvider ({currentTarget}) {
 		this.props.signIn(currentTarget.name);
-	}
+	};
 
 	signupWithEmail (event) {
 		event.preventDefault()
@@ -36,7 +38,7 @@ class Signup extends React.Component {
 			this.props.signUp(email.value, password.value);
 		} else {
 			this.setErrorMessage(check)
-		}
+		};
 	};
 
 	setErrorMessage (error) {
@@ -53,8 +55,8 @@ class Signup extends React.Component {
 				hasSetError: true,
 				isAuthenticating: false
 			});
-		}
-	}
+		};
+	};
 
 	checkPassword(pw1, pw2) {
 		return pw1.length < 6 ? {
@@ -66,7 +68,7 @@ class Signup extends React.Component {
 				code: 'auth/password-mismatch'
 			} : {}
 		)
-	}
+	};
 
 	render () {
 		const {
@@ -88,8 +90,8 @@ class Signup extends React.Component {
 			(tmpError && !hasSetError) ||
 			(hasSetSignupError && (error && error.code !== tmpError.code))
 		) {
-			this.setErrorMessage(tmpError)
-		}
+			this.setErrorMessage(tmpError);
+		};
 
 		return !loginInstead ? (
 			<div className="Signin">
@@ -174,7 +176,7 @@ class Signup extends React.Component {
 					</p>
 					{
 						isAuthenticating ?
-						<span className="loader" /> :
+						<span className="spinner" /> :
 						null
 					}
 				</div>
@@ -187,19 +189,18 @@ class Signup extends React.Component {
 };
 
 const mapStateToProps = state => {
-	// console.log(state)
-	const {signupError, hasSetSignupError} = state.authReducer
+	const {signupError, hasSetSignupError} = state.authReducer;
 	return {
 		fbRdcr: state.firebaseReducer,
 		signupError,
 		hasSetSignupError
-	}
-}
+	};
+};
 
 const mapDispatchToProps = {
 	signUp,
 	signIn
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

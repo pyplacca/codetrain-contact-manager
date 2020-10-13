@@ -9,7 +9,8 @@ import "static/css/signin.css";
 
 class Login extends React.Component {
 	constructor(props) {
-		super(props)
+		super(props);
+
 		this.state = {
 			signupInstead: false,
 			isLoggingIn: false,
@@ -18,19 +19,20 @@ class Login extends React.Component {
 			error: null,
 			errorMsg: '',
 			hasSetErrorMsg: false
-		}
-		this.loginWithEmail = this.loginWithEmail.bind(this)
-		this.loginWithProvider = this.loginWithProvider.bind(this)
-	}
+		};
+
+		this.loginWithEmail = this.loginWithEmail.bind(this);
+		this.loginWithProvider = this.loginWithProvider.bind(this);
+	};
 
 	loginWithProvider ({currentTarget}) {
-		this.props.signIn(currentTarget.name)
-	}
+		this.props.signIn(currentTarget.name);
+	};
 
 	loginWithEmail (event) {
-		event.preventDefault()
+		event.preventDefault();
 		const {email, password} = event.target.elements;
-		this.setState({isAuthenticating: true})
+		this.setState({isAuthenticating: true});
 		this.props.signIn('email', {
 			email: email.value,
 			password: password.value
@@ -50,15 +52,15 @@ class Login extends React.Component {
 
 				'timeout': 'Could not establish connection. ' +
 					'Please check your network and try again'
-			}
-			message = codeMsg[code] || message
+			};
+			message = codeMsg[code] || message;
 			this.setState({
 				error,
 				errorMsg: message,
 				hasSetErrorMsg: true,
 				isAuthenticating: false
 			});
-		}
+		};
 	};
 
 	render () {
@@ -69,7 +71,7 @@ class Login extends React.Component {
 		const {auth, authError} = fbRdcr;
 
 		if (!auth.isLoaded || (auth.isLoaded && auth.uid)) {
-			return <Redirect to={{pathname: '/'}} />
+			return <Redirect to={{pathname: '/'}} />;
 		};
 
 		const tmpError = authError || loginError;
@@ -151,7 +153,7 @@ class Login extends React.Component {
 					</p>
 					{
 						isAuthenticating ?
-						<span className="loader" /> :
+						<span className="spinner" /> :
 						null
 					}
 				</div>
