@@ -185,6 +185,7 @@
 	outline: none;
 	color: var(--color-primary);
 	cursor: pointer;
+	text-decoration: none;
 }
 
 .Signin .instead .anchor:focus {

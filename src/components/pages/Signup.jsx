@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect, Link } from 'react-router-dom';
 import { signUp, signIn } from 'store/actions';
 import { InputField } from '../objects/form';
 import Footer from '../containers/Footer';
@@ -12,7 +12,6 @@ class Signup extends React.Component {
 		super(props);
 
 		this.state = {
-			loginInstead: false,
 			isLoggingIn: false,
 			isAuthenticating: false,
 			// showPassword: false
@@ -47,6 +46,14 @@ class Signup extends React.Component {
 		// console.log(error)
 
 		if (errorType === 'auth') {
+			const codeMsg = {
+				'timeout': 'Could not establish connection. ' +
+					'Please check your network and try again',
+
+				'network-request-failed': 'A network error occured. ' +
+					'Please check your internet connection and try again.'
+			};
+			message = codeMsg[code] || message;
 			// 'An account already exists with' + email +
 			// 'Please log in instead with the credentials linked to that email'
 			this.setState({
@@ -72,14 +79,10 @@ class Signup extends React.Component {
 
 	render () {
 		const {
-			loginInstead, errorMsg, hasSetError, error, isAuthenticating
+			errorMsg, hasSetError, error, isAuthenticating
 		} = this.state;
 		const {fbRdcr, signupError, hasSetSignupError} = this.props;
 		const {auth, authError} = fbRdcr;
-
-		// if (!auth.isLoaded) {
-		// 	return <Loading />
-		// };
 
 		if (!auth.isLoaded || (auth.isLoaded && auth.uid)) {
 			return <Redirect to={{pathname: '/'}} />
@@ -93,7 +96,7 @@ class Signup extends React.Component {
 			this.setErrorMessage(tmpError);
 		};
 
-		return !loginInstead ? (
+		return (
 			<div className="Signin">
 				<div className="Signin__container">
 					<h1 className="title">Create an Account</h1>
@@ -162,17 +165,13 @@ class Signup extends React.Component {
 					</div>
 					<p className="instead">
 						Already have an account? &nbsp;
-						<span
+						<Link
+							to="/login"
 							className="anchor"
-							onClick={
-								event => {
-									this.setState({loginInstead: true})
-								}
-							}
 							tabIndex="0"
 						>
 							Log in instead
-						</span>
+						</Link>
 					</p>
 					{
 						isAuthenticating ?
@@ -182,8 +181,6 @@ class Signup extends React.Component {
 				</div>
 				<Footer />
 			</div>
-		) : (
-			<Redirect to={{pathname: '/login'}} />
 		)
 	};
 };

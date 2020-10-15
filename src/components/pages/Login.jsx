@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { InputField } from '../objects/form';
 import Footer from '../containers/Footer';
 import { signIn } from 'store/actions';
@@ -12,7 +12,6 @@ class Login extends React.Component {
 		super(props);
 
 		this.state = {
-			signupInstead: false,
 			isLoggingIn: false,
 			isAuthenticating: false,
 			// showPassword: false
@@ -51,21 +50,30 @@ class Login extends React.Component {
 				'wrong-password': 'The password you entered is invalid',
 
 				'timeout': 'Could not establish connection. ' +
-					'Please check your network and try again'
+					'Please check your network and try again',
+
+				'network-request-failed': 'A network error occured. ' +
+					'Please check your internet connection and try again.'
 			};
 			message = codeMsg[code] || message;
-			this.setState({
-				error,
-				errorMsg: message,
-				hasSetErrorMsg: true,
-				isAuthenticating: false
+			this.setState(() => {
+				return {
+					error,
+					errorMsg: message,
+					hasSetErrorMsg: true,
+					isAuthenticating: false
+				}
 			});
 		};
 	};
 
+	componentDidMount () {
+
+	}
+
 	render () {
 		const {
-			errorMsg, signupInstead, hasSetErrorMsg, error, isAuthenticating
+			errorMsg, hasSetErrorMsg, error, isAuthenticating
 		} = this.state;
 		const {fbRdcr, loginError, hasSetLoginError} = this.props;
 		const {auth, authError} = fbRdcr;
@@ -82,7 +90,7 @@ class Login extends React.Component {
 			this.setErrorMessage(tmpError);
 		};
 
-		return !signupInstead ? (
+		return (
 			<div className="Signin">
 				<div className="Signin__container">
 					<h1 className="title">Welcome Back</h1>
@@ -139,17 +147,13 @@ class Login extends React.Component {
 					</div>
 					<p className="instead">
 						Dont have an account? &nbsp;
-						<span
+						<Link
 							className="anchor"
-							onClick={
-								event => {
-									this.setState({signupInstead: true})
-								}
-							}
 							tabIndex="0"
+							to="/signup"
 						>
 							Create one
-						</span>
+						</Link>
 					</p>
 					{
 						isAuthenticating ?
@@ -159,8 +163,6 @@ class Login extends React.Component {
 				</div>
 				<Footer />
 			</div>
-		) : (
-			<Redirect to={{pathname: '/signup'}} />
 		)
 	};
 };
