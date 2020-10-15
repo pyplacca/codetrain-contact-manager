@@ -12,15 +12,14 @@ import {
 	firebaseReducer
 } from 'react-redux-firebase';
 import { getFirestore, reduxFirestore } from 'redux-firestore';
-import { mainReducer, authReducer } from './reducers'
+import * as reducers from './reducers'
 
 
 // integrate firebase with redux store
 export default createStore(
 	combineReducers({
 		firebaseReducer,
-		mainReducer,
-		authReducer,
+		...reducers
 	}),
 	// middleware
 	compose(
