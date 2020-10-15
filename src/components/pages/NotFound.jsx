@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Footer } from 'components/containers'
 import 'static/css/404.css';
 
 
@@ -17,6 +18,7 @@ export default function NotFound () {
 					className="redirect"
 				>home</Link>
 			</p>
+			<Footer />
 		</div>
 	)
 }

@@ -1,12 +1,13 @@
 .page404 {
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	padding: 15vh var(--spacing-dbl);
+	padding: 15vh 0 0 0;
 	align-items: center;
 	justify-content: center;
 }
 
-.page404 > * {
+.page404 > *:not(:last-child) {
 	margin-bottom: 1rem;
 }
 
