@@ -2,7 +2,7 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	padding: 15vh 0 0 0;
+	padding: 10vh 0 0 0;
 	align-items: center;
 	justify-content: center;
 }
@@ -13,7 +13,7 @@
 
 .page404 .text-404 {
 	font-family: TitiBold;
-	font-size: 5rem;
+	font-size: 8.5rem;
 	letter-spacing: 1.5rem;
 	color: var(--color-primary);
 }
